@@ -1,0 +1,35 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "stick_of_dynamite",
+	"textures": {
+		"0": "examplemod:item/stick_of_dynamite",
+		"particle": "examplemod:item/stick_of_dynamite"
+	},
+	"elements": [
+		{
+			"from": [7, 3, 7],
+			"to": [9, 13, 9],
+			"faces": {
+				"north": {"uv": [2, 14, 0, 4], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [0, 0, 10, 2], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [4, 4, 2, 14], "texture": "#0"},
+				"west": {"uv": [0, 2, 10, 4], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [8, 6, 10, 8], "texture": "#0"},
+				"down": {"uv": [8, 4, 10, 6], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"from": [8, 13, 5.5],
+			"to": [8, 17, 8.5],
+			"faces": {
+				"north": {"uv": [0, 4, 0, 0], "rotation": 180, "texture": "#0"},
+				"east": {"uv": [4, 4, 8, 7], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [0, 0, 0, 4], "texture": "#0"},
+				"west": {"uv": [4, 7, 8, 10], "rotation": 270, "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 3], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 3], "rotation": 180, "texture": "#0"}
+			}
+		}
+	],
+	"display": {}
+}

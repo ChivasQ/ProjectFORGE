@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "zinc",
+  "ingredients": [
+    {
+      "item": "examplemod:zinc_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "examplemod:zinc"
+  }
+}

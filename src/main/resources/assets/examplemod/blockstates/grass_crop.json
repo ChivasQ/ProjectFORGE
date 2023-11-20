@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "age=0": {"model": ""},
+    "age=1": {"model": ""},
+    "age=2": {"model": ""},
+    "age=3": {"model": ""},
+    "age=4": {"model": ""},
+    "age=5": {"model": ""},
+    "age=6": {"model": ""}
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "item.examplemod.zinc": "Zinc",
+  "item.examplemod.eight_ball": "шарик",
+  "item.examplemod.coord_finder": "Нахождение координат",
+  "item.examplemod.raw_zinc": "Цинковая руда",
+  "item.examplemod.stick_of_dynamite": "Динамитная шашка",
+  "item.examplemod.chalk": "Мел",
+  "item.examplemod.draw_area": "Зона",
+
+
+  "block.examplemod.zinc_block": "Zinc block",
+  "block.examplemod.asphalt": "Асфальт",
+  "block.examplemod.zinc_lamp": "Цинковая лампа",
+  "block.examplemod.zinc_ore": "Цинковая руда",
+  "block.examplemod.deepslate_zinc_ore": "Глубинносланцевая цинковая руда",
+  "creativetab.pocketdim_tab": "MOD"
+}

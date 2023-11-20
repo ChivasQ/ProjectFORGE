@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "examplemod:zinc_block",
+    "examplemod:zinc_ore",
+    "examplemod:deepslate_zinc_ore"
+  ]
+}
