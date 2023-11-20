@@ -4,6 +4,7 @@ import com.chivasss.pocket_dimestions.PocketDim;
 import com.chivasss.pocket_dimestions.entity.custom.CoreEntity;
 import com.chivasss.pocket_dimestions.entity.custom.PortalEntity;
 import com.chivasss.pocket_dimestions.entity.custom.RuneProjectileEntity;
+import com.chivasss.pocket_dimestions.entity.custom.RuneTurretEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -25,6 +26,10 @@ public class ModEntityTypes {
             ENTITY_TYPES.register("core",
                     () -> EntityType.Builder.of(CoreEntity::new, MobCategory.MISC).sized(1f,1f)
                             .build("core"));
+    public static final RegistryObject<EntityType<RuneTurretEntity>> RUNE_TURRET =
+            ENTITY_TYPES.register("rune_turret",
+                    () -> EntityType.Builder.of(RuneTurretEntity::new, MobCategory.MISC).sized(1.6f,4f)
+                            .build("rune_turret"));
 
     public static final RegistryObject<EntityType<RuneProjectileEntity>> RUNE =
             ENTITY_TYPES.register("rune",

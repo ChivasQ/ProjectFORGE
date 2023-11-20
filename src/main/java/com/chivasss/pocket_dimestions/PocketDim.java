@@ -4,6 +4,7 @@ import com.chivasss.pocket_dimestions.block.ModBlocks;
 import com.chivasss.pocket_dimestions.entity.ModEntityTypes;
 import com.chivasss.pocket_dimestions.entity.client.CoreRenderer;
 import com.chivasss.pocket_dimestions.entity.client.PortalRenderer;
+import com.chivasss.pocket_dimestions.entity.client.RuneTurretRenderer;
 import com.chivasss.pocket_dimestions.item.ModCreativeModTabs;
 import com.chivasss.pocket_dimestions.item.ModItems;
 //import com.chivasss.pocket_dimestions.world.dimension.ModDimensions;
@@ -66,6 +67,7 @@ public class PocketDim {
             EntityRenderers.register(ModEntityTypes.PORTAL_A.get(), PortalRenderer::new);
             EntityRenderers.register(ModEntityTypes.CORE.get(), CoreRenderer::new);
             EntityRenderers.register(ModEntityTypes.RUNE.get(), ThrownItemRenderer::new);
+            EntityRenderers.register(ModEntityTypes.RUNE_TURRET.get(), RuneTurretRenderer::new);
 
         }
     }

@@ -866,4 +866,37 @@ public class ModAnimationDefinitions {
                                     AnimationChannel.Interpolations.LINEAR),
                             new Keyframe(2f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
                                     AnimationChannel.Interpolations.LINEAR))).build();
+    public static final AnimationDefinition RUNE_TURRET_DEPARTURE = AnimationDefinition.Builder.withLength(0.75f)
+            .addAnimation("tower",
+                    new AnimationChannel(AnimationChannel.Targets.POSITION,
+                            new Keyframe(0f, KeyframeAnimations.posVec(0f, -88f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(0.2916767f, KeyframeAnimations.posVec(0f, 0f, 0f),
+                                    AnimationChannel.Interpolations.CATMULLROM)))
+            .addAnimation("turret",
+                    new AnimationChannel(AnimationChannel.Targets.POSITION,
+                            new Keyframe(0f, KeyframeAnimations.posVec(0f, -88f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(0.2916767f, KeyframeAnimations.posVec(0f, 0f, 0f),
+                                    AnimationChannel.Interpolations.CATMULLROM)))
+            .addAnimation("turret",
+                    new AnimationChannel(AnimationChannel.Targets.POSITION,
+                            new Keyframe(0f, KeyframeAnimations.posVec(0f, -30f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(0.2916767f, KeyframeAnimations.posVec(0f, -30f, 0f),
+                                    AnimationChannel.Interpolations.CATMULLROM),
+                            new Keyframe(0.4583433f, KeyframeAnimations.posVec(0f, 2.25f, 0f),
+                                    AnimationChannel.Interpolations.CATMULLROM),
+                            new Keyframe(0.5834334f, KeyframeAnimations.posVec(0f, 0f, 0f),
+                                    AnimationChannel.Interpolations.CATMULLROM)))
+            .addAnimation("turret",
+                    new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                            new Keyframe(0f, KeyframeAnimations.degreeVec(90f, 0f, 0f),
+                                    AnimationChannel.Interpolations.LINEAR),
+                            new Keyframe(0.2916767f, KeyframeAnimations.degreeVec(90f, 0f, 0f),
+                                    AnimationChannel.Interpolations.CATMULLROM),
+                            new Keyframe(0.4583433f, KeyframeAnimations.degreeVec(90f, 0f, 0f),
+                                    AnimationChannel.Interpolations.CATMULLROM),
+                            new Keyframe(0.5834334f, KeyframeAnimations.degreeVec(0f, 0f, 0f),
+                                    AnimationChannel.Interpolations.CATMULLROM))).build();
 }
