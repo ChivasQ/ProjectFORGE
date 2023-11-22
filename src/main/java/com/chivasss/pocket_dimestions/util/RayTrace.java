@@ -30,7 +30,7 @@ public class RayTrace {
 //    }
 
     @CheckForNull
-    public static ArrayList getEntityLookingAt(Player player, double range, float ticks) {
+    public static ArrayList getEntityLookingAt(Player player, double range, float ticks, boolean particles) {
         Level world = player.level();
 
         Vec3 look = player.getLookAngle();
@@ -40,12 +40,14 @@ public class RayTrace {
         ClipContext context = new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player);
 
         HitResult rayTraceResult = world.clip(context);
+
         double traceDistance = rayTraceResult.getLocation().distanceToSqr(start);
 
         AABB playerBox = player.getBoundingBox().expandTowards(look.scale(traceDistance)).expandTowards(1.0D, 1.0D, 1.0D);
 
         Predicate<Entity> filter = entity -> !entity.isSpectator() && entity.isPickable() && entity instanceof LivingEntity;
         ArrayList<EntityHitResult> arrayList = new ArrayList<EntityHitResult>();
+
         for (Entity possible : world.getEntities(player, playerBox, filter)) {
             AABB entityBox = possible.getBoundingBox(); //.deflate(0.3D) or .inflate(0.3D) to scale hitbox
             Optional<Vec3> optional = entityBox.clip(start, end);

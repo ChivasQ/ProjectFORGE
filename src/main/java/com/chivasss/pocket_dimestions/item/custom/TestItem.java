@@ -1,5 +1,6 @@
 package com.chivasss.pocket_dimestions.item.custom;
 
+import com.chivasss.pocket_dimestions.util.Particless;
 import com.chivasss.pocket_dimestions.util.RayTrace;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -31,14 +32,16 @@ public class TestItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         if (!pLevel.isClientSide()) {
-            ArrayList<EntityHitResult> entityHitResultList = RayTrace.getEntityLookingAt(pPlayer, range, 1.0f);
+            ArrayList<EntityHitResult> entityHitResultList = RayTrace.getEntityLookingAt(pPlayer, range, 1.0f, true);
             for (EntityHitResult entityHitResult : entityHitResultList){
                     Entity entity = entityHitResult.getEntity();
                 if (entity != null) {
                     entity.setTicksFrozen(100);
+
                     entity.hurt(pPlayer.damageSources().magic(), damage);
                 }
             }
+
         }
             return super.use(pLevel, pPlayer, pUsedHand);
 
