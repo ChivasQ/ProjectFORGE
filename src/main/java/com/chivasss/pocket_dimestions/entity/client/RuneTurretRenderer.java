@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class RuneTurretRenderer extends MobRenderer<RuneTurretEntity, RuneTurretModel<RuneTurretEntity>> {
     public RuneTurretRenderer(EntityRendererProvider.Context context) {
-        super(context, new RuneTurretModel<>(context.bakeLayer(ModModelLayers.RUNE_TURRET_LAYER)), 0.25f);
+        super(context, new RuneTurretModel<>(context.bakeLayer(ModModelLayers.RUNE_TURRET_LAYER)), 0f);
 
 
     }

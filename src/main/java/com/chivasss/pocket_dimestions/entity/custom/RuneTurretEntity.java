@@ -1,8 +1,12 @@
 package com.chivasss.pocket_dimestions.entity.custom;
 
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -14,6 +18,8 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
@@ -69,6 +75,18 @@ public class RuneTurretEntity extends AbstractGolem {
         return this.isAlive();
     }
 
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.level().isClientSide()) {
+            switch (this.getPose()) {
+                case EMERGING:
+                    this.clientDiggingParticles(this.departureAnimationState);
+                    break;
+            }
+        }
+    }
+
     public void lerpTo(double pX, double pY, double pZ, float pYaw, float pPitch, int pPosRotationIncrements, boolean pTeleport) {
         this.lerpSteps = 0;
         this.setPos(pX, pY, pZ);
@@ -84,11 +102,26 @@ public class RuneTurretEntity extends AbstractGolem {
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         this.setPose(Pose.EMERGING);
-        this.playSound(SoundEvents.WARDEN_AGITATED, 5.0F, 1.0F);
+        //this.playSound(SoundEvents.WARDEN_DIG, 5.0F, 1.0F);
 
 
         return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
     }
 
+    private void clientDiggingParticles(AnimationState pAnimationState) {
+        if ((float)pAnimationState.getAccumulatedTime() < 1000.0F) {
+            RandomSource randomsource = this.getRandom();
+            BlockState blockstate = this.getBlockStateOn();
+            if (blockstate.getRenderShape() != RenderShape.INVISIBLE) {
+                for(int i = 0; i < 30; ++i) {
+                    double d0 = this.getX() + (double) Mth.randomBetween(randomsource, -1F, 1F);
+                    double d1 = this.getY();
+                    double d2 = this.getZ() + (double)Mth.randomBetween(randomsource, -1F, 1F);
+                    this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, 0.0D, 0.0D, 0.0D);
+                }
+            }
+        }
+
+    }
 
 }

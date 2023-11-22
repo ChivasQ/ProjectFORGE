@@ -39,7 +39,7 @@ public class ModItems {
                     .durability(100)));
 
     public static final RegistryObject<Item> DRAW_AREA = ITEMS.register("draw_area",
-            () -> new DrawAreaItem(new Item.Properties()
+            () -> new TestItem(new Item.Properties()
                     .stacksTo(1)
                     .rarity(Rarity.EPIC)));
 

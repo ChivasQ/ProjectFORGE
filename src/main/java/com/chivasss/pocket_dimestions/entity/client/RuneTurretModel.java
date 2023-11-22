@@ -31,6 +31,7 @@ public class RuneTurretModel<T extends Entity> extends HierarchicalModel<T> {
 
 
 
+
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
@@ -51,7 +52,8 @@ public class RuneTurretModel<T extends Entity> extends HierarchicalModel<T> {
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
-        this.animate(((RuneTurretEntity)entity).departureAnimationState, ModAnimationDefinitions.RUNE_TURRET_DEPARTURE, ageInTicks);
+        this.animate(((RuneTurretEntity)entity).departureAnimationState, ModAnimationDefinitions.RUNE_TURRET_DEPARTURE, ageInTicks, 1f);
+
     }
 
 

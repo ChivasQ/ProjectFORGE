@@ -1,7 +1,10 @@
 package com.chivasss.pocket_dimestions.entity.custom;
 
 import com.google.common.cache.CacheBuilder;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -16,7 +19,7 @@ public class CoreEntity extends Animal {
     public CoreEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
     }
-
+    private final ServerBossEvent bossEvent = (ServerBossEvent)(new ServerBossEvent(this.getDisplayName(), BossEvent.BossBarColor.PURPLE, BossEvent.BossBarOverlay.PROGRESS)).setDarkenScreen(true);
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
 
@@ -36,8 +39,23 @@ public class CoreEntity extends Animal {
         } else {
             --this.idleAnimationTimeOut;
         }
+
     }
 
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+
+        this.bossEvent.setProgress(this.getHealth() / this.getMaxHealth());
+    }
+    public void startSeenByPlayer(ServerPlayer pPlayer) {
+        super.startSeenByPlayer(pPlayer);
+        this.bossEvent.addPlayer(pPlayer);
+    }
+    public void stopSeenByPlayer(ServerPlayer pPlayer) {
+        super.stopSeenByPlayer(pPlayer);
+        this.bossEvent.removePlayer(pPlayer);
+    }
     @Override
     protected void updateWalkAnimation(float v) {
         float f;

@@ -14,7 +14,7 @@ public class CoreRenderer extends MobRenderer<CoreEntity, CoreModel<CoreEntity>>
 
 
     public CoreRenderer(EntityRendererProvider.Context context) {
-        super(context, new CoreModel<>(context.bakeLayer(ModModelLayers.CORE_LAYER)), 0.25f);
+        super(context, new CoreModel<>(context.bakeLayer(ModModelLayers.CORE_LAYER)), 0f);
 
 
     }
