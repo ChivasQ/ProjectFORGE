@@ -8,6 +8,7 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
 public class RuneProjectileEntity extends ThrowableItemProjectile {
@@ -23,6 +24,10 @@ public class RuneProjectileEntity extends ThrowableItemProjectile {
         super(ModEntityTypes.RUNE.get(), livingEntity, pLevel);
     }
 
+    @Override
+    protected float getGravity() {
+        return 0f;
+    }
 
     @Override
     protected Item getDefaultItem() {
@@ -42,4 +47,13 @@ public class RuneProjectileEntity extends ThrowableItemProjectile {
 //    private boolean trySummonWarden(ServerLevel pLevel) {
 //        return this.warningLevel < 4 ? false : SpawnUtil.trySpawnMob(EntityType.WARDEN, MobSpawnType.TRIGGERED, pLevel, this.getBlockPos(), 20, 5, 6, SpawnUtil.Strategy.ON_TOP_OF_COLLIDER).isPresent();
 //    }
+
+    @Override
+    protected void onHitEntity(EntityHitResult pResult) {
+        pResult.getEntity().hurt(pResult.getEntity().damageSources().magic(), 1);
+
+
+
+        super.onHitEntity(pResult);
+    }
 }

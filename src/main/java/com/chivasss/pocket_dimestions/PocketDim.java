@@ -11,6 +11,7 @@ import com.chivasss.pocket_dimestions.item.ModItems;
 import com.chivasss.pocket_dimestions.world.dimension.ModDimensions;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -66,7 +67,7 @@ public class PocketDim {
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntityTypes.PORTAL_A.get(), PortalRenderer::new);
             EntityRenderers.register(ModEntityTypes.CORE.get(), CoreRenderer::new);
-            EntityRenderers.register(ModEntityTypes.RUNE.get(), ThrownItemRenderer::new);
+            EntityRenderers.register(ModEntityTypes.RUNE.get(), NoopRenderer::new);
             EntityRenderers.register(ModEntityTypes.RUNE_TURRET.get(), RuneTurretRenderer::new);
 
         }

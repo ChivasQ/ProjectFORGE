@@ -33,7 +33,7 @@ public class ModEntityTypes {
 
     public static final RegistryObject<EntityType<RuneProjectileEntity>> RUNE =
             ENTITY_TYPES.register("rune",
-                    () -> EntityType.Builder.<RuneProjectileEntity>of(RuneProjectileEntity::new, MobCategory.MISC).sized(1f,1f)
+                    () -> EntityType.Builder.<RuneProjectileEntity>of(RuneProjectileEntity::new, MobCategory.MISC).sized(0.1f,0.1f)
                             .build("rune"));
 
     public static void register(IEventBus eventBus) {
