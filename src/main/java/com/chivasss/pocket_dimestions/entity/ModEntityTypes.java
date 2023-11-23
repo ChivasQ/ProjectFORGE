@@ -28,7 +28,7 @@ public class ModEntityTypes {
                             .build("core"));
     public static final RegistryObject<EntityType<RuneTurretEntity>> RUNE_TURRET =
             ENTITY_TYPES.register("rune_turret",
-                    () -> EntityType.Builder.of(RuneTurretEntity::new, MobCategory.MISC).sized(1.5f,4f)
+                    () -> EntityType.Builder.of(RuneTurretEntity::new, MobCategory.MISC).sized(1.5f,7.4f)
                             .build("rune_turret"));
 
     public static final RegistryObject<EntityType<RuneProjectileEntity>> RUNE =

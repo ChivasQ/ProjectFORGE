@@ -19,19 +19,12 @@ import java.util.function.Predicate;
 
 public class RayTrace {
     private RayTrace() {
-        //this.getTraceResultCoords = rayTraceResult;
         // nothing to do
     }
 
-//    @CheckForNull
-//    public static EntityHitResult getEntityLookingAt(Player player, double range)
-//    {
-//        return getEntityLookingAt(player, range, 1.0F);
-//    }
 
 
-    //@CheckForNull
-    public static Pair<ArrayList<EntityHitResult>, BlockHitResult> getEntityLookingAt(Player player, double range, float ticks) {
+    public static Pair<ArrayList<EntityHitResult>, HitResult> getEntityLookingAt(Player player, double range, float ticks) {
         Level level = player.level();
 
         Vec3 look = player.getLookAngle();
@@ -41,10 +34,9 @@ public class RayTrace {
         ClipContext context = new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player);
 
         HitResult rayTraceResult = level.clip(context);
-        BlockHitResult rayTraceBockResult = (BlockHitResult) rayTraceResult;
-        //player.sendSystemMessage(Component.literal(rayTraceBockResult.getBlockPos() + " " + rayTraceBockResult.getDirection()));
+
         double traceDistance = rayTraceResult.getLocation().distanceToSqr(start);
-        //ParticlePresets.clientParticles(rayTraceResult, level, player);
+
         AABB playerBox = player.getBoundingBox().expandTowards(look.scale(traceDistance)).expandTowards(1.0D, 1.0D, 1.0D);
 
         Predicate<Entity> filter = entity -> !entity.isSpectator() && entity.isPickable() && entity instanceof LivingEntity;
@@ -60,11 +52,10 @@ public class RayTrace {
                 if (distance < traceDistance) {
                     EntityHitResult ent = new EntityHitResult(possible, position);
                     arrayList.add(ent);
-                    //ent.getEntity().hurt(player.damageSources().magic(),2);
                 }
             }
         }
-        return new Pair<ArrayList<EntityHitResult>, BlockHitResult>(arrayList, rayTraceBockResult);
+        return new Pair<ArrayList<EntityHitResult>, HitResult>(arrayList, rayTraceResult);
     }
 
     @CheckForNull

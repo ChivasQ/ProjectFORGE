@@ -50,7 +50,7 @@ public class TestItem extends Item {
                 }
             }
         }
-        ParticlePresets.clientParticles((BlockHitResult) pair.getB(), pLevel, pPlayer);
+        ParticlePresets.clientSidedParticles((HitResult) pair.getB(), pLevel, pPlayer, 12, -0.5F, 0.5F);
 
         return super.use(pLevel, pPlayer, pUsedHand);
 

@@ -17,21 +17,22 @@ public class ParticlePresets {
 
 
 
-    public static void clientParticles(BlockHitResult hitResult, Level level, Player player) {
+    public static void clientSidedParticles(HitResult hitResult, Level level, Player player, int iter, float min, float max) {
+        BlockHitResult blockHitResult = (BlockHitResult) hitResult;
         RandomSource randomsource = RandomSource.create();
-        double d0 = hitResult.getBlockPos().getX();
-        double d1 = hitResult.getBlockPos().getY();
-        double d2 = hitResult.getBlockPos().getZ();
-        BlockState blockstate = level.getBlockState(hitResult.getBlockPos());
-        player.sendSystemMessage(Component.literal(String.valueOf(blockstate)));
+        double d0 = blockHitResult.getBlockPos().getX();
+        double d1 = blockHitResult.getBlockPos().getY();
+        double d2 = blockHitResult.getBlockPos().getZ();
+        BlockState blockstate = level.getBlockState(blockHitResult.getBlockPos());
+        //player.sendSystemMessage(Component.literal(String.valueOf(blockstate)));
         if (blockstate.getRenderShape() != RenderShape.INVISIBLE) {
-            switch (hitResult.getDirection()) {
+            switch (blockHitResult.getDirection()) {
                 case UP:
                 {
-                    for(int i = 0; i < 12; ++i) {
-                        d0 = hitResult.getBlockPos().getX()+0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);
-                        d1 = hitResult.getBlockPos().getY()+1;
-                        d2 = hitResult.getBlockPos().getZ()+0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);
+                    for(int i = 0; i < iter; ++i) {
+                        d0 = hitResult.getLocation().x + (double) Mth.randomBetween(randomsource, min, max);
+                        d1 = hitResult.getLocation().y;
+                        d2 = hitResult.getLocation().z + (double) Mth.randomBetween(randomsource, min, max);
                         level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, 0.0D, 1.0D, 0.0D);
                     }
                     break;
@@ -39,10 +40,10 @@ public class ParticlePresets {
 
                 case DOWN:
                 {
-                    for(int i = 0; i < 12; ++i) {
-                        d0 = hitResult.getBlockPos().getX() + 0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);
-                        d1 = hitResult.getBlockPos().getY();
-                        d2 = hitResult.getBlockPos().getZ() + 0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);
+                    for(int i = 0; i < iter; ++i) {
+                        d0 = hitResult.getLocation().x + (double) Mth.randomBetween(randomsource, min, max);
+                        d1 = hitResult.getLocation().y - .1F;
+                        d2 = hitResult.getLocation().z + (double) Mth.randomBetween(randomsource, min, max);
                         level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, 0.0D, -1.0D, 0.0D);
                     }
                     break;
@@ -50,40 +51,40 @@ public class ParticlePresets {
 
                 case EAST:
                 {
-                    for(int i = 0; i < 12; ++i) {
-                        d0 = hitResult.getBlockPos().getX() + 1;
-                        d1 = hitResult.getBlockPos().getY() + 0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);
-                        d2 = hitResult.getBlockPos().getZ() + 0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);
+                    for(int i = 0; i < iter; ++i) {
+                        d0 = hitResult.getLocation().x;
+                        d1 = hitResult.getLocation().y + (double) Mth.randomBetween(randomsource, min, max);
+                        d2 = hitResult.getLocation().z + (double) Mth.randomBetween(randomsource, min, max);
                         level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, 1.0D, 0D, 0.0D);
                     }
                     break;
                 }
                 case WEST:
                 {
-                    for(int i = 0; i < 12; ++i) {
-                        d0 = hitResult.getBlockPos().getX();
-                        d1 = hitResult.getBlockPos().getY() + 0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);
-                        d2 = hitResult.getBlockPos().getZ() + 0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);
+                    for(int i = 0; i < iter; ++i) {
+                        d0 = hitResult.getLocation().x - .1F;
+                        d1 = hitResult.getLocation().y + (double) Mth.randomBetween(randomsource, min, max);
+                        d2 = hitResult.getLocation().z + (double) Mth.randomBetween(randomsource, min, max);
                         level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, -1.0D, 0D, 0.0D);
                     }
                     break;
                 }
                 case NORTH:
                 {
-                    for(int i = 0; i < 12; ++i) {
-                        d0 = hitResult.getBlockPos().getX() + 0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);;
-                        d1 = hitResult.getBlockPos().getY() + 0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);
-                        d2 = hitResult.getBlockPos().getZ();
+                    for(int i = 0; i < iter; ++i) {
+                        d0 = hitResult.getLocation().x + (double) Mth.randomBetween(randomsource, min, max);;
+                        d1 = hitResult.getLocation().y + (double) Mth.randomBetween(randomsource, min, max);
+                        d2 = hitResult.getLocation().z - .1F;
                         level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, 0D, 0D, -1.0D);
                     }
                     break;
                 }
                 case SOUTH:
                 {
-                    for(int i = 0; i < 12; ++i) {
-                        d0 = hitResult.getBlockPos().getX() + 0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);;
-                        d1 = hitResult.getBlockPos().getY() + 0.5 + (double) Mth.randomBetween(randomsource, -1F, 1F);
-                        d2 = hitResult.getBlockPos().getZ() + 1;
+                    for(int i = 0; i < iter; ++i) {
+                        d0 = hitResult.getLocation().x + (double) Mth.randomBetween(randomsource, min, max);;
+                        d1 = hitResult.getLocation().y + (double) Mth.randomBetween(randomsource, min, max);
+                        d2 = hitResult.getLocation().z + .1F;
                         level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, 0D, 0D, 1.0D);
                     }
                     break;

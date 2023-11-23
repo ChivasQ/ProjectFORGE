@@ -18,7 +18,7 @@ public class RuneTurretRenderer extends MobRenderer<RuneTurretEntity, RuneTurret
 
     @Override
     public ResourceLocation getTextureLocation(RuneTurretEntity pEntity) {
-        return new ResourceLocation(PocketDim.MODID, "textures/entity/turrel_entity.png");
+        return new ResourceLocation(PocketDim.MODID, "textures/entity/quartz_collumn.png");
     }
 
     @Override

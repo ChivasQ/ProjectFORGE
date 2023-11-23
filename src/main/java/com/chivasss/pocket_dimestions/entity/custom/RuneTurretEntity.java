@@ -25,6 +25,8 @@ import javax.annotation.Nullable;
 
 public class RuneTurretEntity extends AbstractGolem {
     public AnimationState departureAnimationState = new AnimationState();
+    public final AnimationState idleAnimationState = new AnimationState();
+    private int idleAnimationTimeOut = 0;
 
     public RuneTurretEntity(EntityType<? extends AbstractGolem> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -34,6 +36,17 @@ public class RuneTurretEntity extends AbstractGolem {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Player.class, 16.0F, 1F, false));
     }
+
+    private void setupAnimationStates() {
+        if(this.idleAnimationTimeOut <= 0) {
+            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
+            this.idleAnimationState.start(this.tickCount);
+        } else {
+            --this.idleAnimationTimeOut;
+        }
+
+    }
+
 
     public static AttributeSupplier.Builder createAttributes() {
         return Animal.createLivingAttributes()
@@ -84,6 +97,7 @@ public class RuneTurretEntity extends AbstractGolem {
                     this.clientDiggingParticles(this.departureAnimationState);
                     break;
             }
+            setupAnimationStates();
         }
     }
 
@@ -114,9 +128,9 @@ public class RuneTurretEntity extends AbstractGolem {
             BlockState blockstate = this.getBlockStateOn();
             if (blockstate.getRenderShape() != RenderShape.INVISIBLE) {
                 for(int i = 0; i < 30; ++i) {
-                    double d0 = this.getX() + (double) Mth.randomBetween(randomsource, -1F, 1F);
+                    double d0 = this.getX() + .25 + (double) Mth.randomBetween(randomsource, -1F, 1F);
                     double d1 = this.getY();
-                    double d2 = this.getZ() + (double)Mth.randomBetween(randomsource, -1F, 1F);
+                    double d2 = this.getZ() - .25 + (double)Mth.randomBetween(randomsource, -1F, 1F);
                     this.level().addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate), d0, d1, d2, 0.0D, 0.0D, 0.0D);
                 }
             }
