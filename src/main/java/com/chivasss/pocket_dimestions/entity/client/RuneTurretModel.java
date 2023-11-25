@@ -14,9 +14,12 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import org.joml.Vector3f;
+
+import java.util.Random;
 
 public class RuneTurretModel<T extends Entity> extends HierarchicalModel<T> {
     private final ModelPart tower;
@@ -100,6 +103,8 @@ public class RuneTurretModel<T extends Entity> extends HierarchicalModel<T> {
 //        pHeadPitch = Mth.clamp(pHeadPitch, -25.0F, 45.0F);
 //        this.tower.setRotation(0,0,0);
 //        this.turret_main.setRotation(0,0,0);
+
+
         this.head.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
         this.head.xRot = pHeadPitch * ((float)Math.PI / 180F);
     }

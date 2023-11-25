@@ -17,7 +17,7 @@ public class ParticlePresets {
 
 
 
-    public static void clientSidedParticles(HitResult hitResult, Level level, Player player, int iter, float min, float max) {
+    public static void clientSidedParticles(HitResult hitResult, Level level, int iter, float min, float max) {
         BlockHitResult blockHitResult = (BlockHitResult) hitResult;
         RandomSource randomsource = RandomSource.create();
         double d0 = blockHitResult.getBlockPos().getX();

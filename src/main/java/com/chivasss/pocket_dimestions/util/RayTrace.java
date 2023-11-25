@@ -1,8 +1,7 @@
 package com.chivasss.pocket_dimestions.util;
 
 
-import net.minecraft.client.particle.Particle;
-import net.minecraft.network.chat.Component;
+import com.chivasss.pocket_dimestions.entity.custom.RuneTurretEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +12,6 @@ import oshi.util.tuples.Pair;
 
 import javax.annotation.CheckForNull;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -24,7 +22,7 @@ public class RayTrace {
 
 
 
-    public static Pair<ArrayList<EntityHitResult>, HitResult> getEntityLookingAt(Player player, double range, float ticks) {
+    public static Pair<ArrayList<EntityHitResult>, HitResult> getEntityLookingAt(RuneTurretEntity player, double range, float ticks) {
         Level level = player.level();
 
         Vec3 look = player.getLookAngle();
