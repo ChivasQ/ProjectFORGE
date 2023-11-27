@@ -185,7 +185,7 @@ public class RuneTurretEntity extends Monster implements RangedAttackMob {
 
         Vec3 end = new Vec3(this.getX() + look.x * SHORT_LASER_RANGE, this.getEyeY() + look.y * SHORT_LASER_RANGE, this.getZ() + look.z * SHORT_LASER_RANGE);
         ClipContext context = new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this);
-        pTarget.sendSystemMessage(Component.literal(String.valueOf(end)));
+        //pTarget.sendSystemMessage(Component.literal(String.valueOf(end)));
         HitResult rayTraceResult = level.clip(context);
 
         double traceDistance = rayTraceResult.getLocation().distanceToSqr(start);
@@ -203,8 +203,6 @@ public class RuneTurretEntity extends Monster implements RangedAttackMob {
                 if (distance < traceDistance) {
                     possible.setTicksFrozen(100);
                     possible.hurt(this.damageSources().indirectMagic(this, pTarget), SHORT_LASER_DAMAGE);
-
-
                 }
             }
         }

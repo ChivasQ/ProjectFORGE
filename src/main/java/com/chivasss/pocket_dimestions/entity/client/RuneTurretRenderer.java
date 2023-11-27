@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -105,27 +106,31 @@ public class RuneTurretRenderer extends MobRenderer<RuneTurretEntity, RuneTurret
             float f28 = 0.4999F;
             float f29 = -1.0F + f2;
             float f30 = f4 * 2.5F + f29;
+            RandomSource randomsource = RandomSource.create();
+            float f31 = 0;
+            if (pEntity.tickCount % 20 == 0) {
+                f31 = Mth.randomBetween(randomsource, -10, 10);
+            }
+
             VertexConsumer vertexconsumer = pBuffer.getBuffer(BEAM_RENDER_TYPE);
             PoseStack.Pose posestack$pose = pMatrixStack.last();
             Matrix4f matrix4f = posestack$pose.pose();
             Matrix3f matrix3f = posestack$pose.normal();
-            vertex(vertexconsumer, matrix4f, matrix3f, f19, f4, f20, j, k, l, 0.4999F, f30);
+            vertex(vertexconsumer, matrix4f, matrix3f, f19+f31, f4, f20, j, k, l, 0.4999F, f30);
             vertex(vertexconsumer, matrix4f, matrix3f, f19, 0.0F, f20, j, k, l, 0.4999F, f29);
-            vertex(vertexconsumer, matrix4f, matrix3f, f21, 0.0F, f22, j, k, l, 0.0F, f29);
+            vertex(vertexconsumer, matrix4f, matrix3f, f21+f31, 0.0F, f22, j, k, l, 0.0F, f29);
             vertex(vertexconsumer, matrix4f, matrix3f, f21, f4, f22, j, k, l, 0.0F, f30);
-            vertex(vertexconsumer, matrix4f, matrix3f, f23, f4, f24, j, k, l, 0.4999F, f30);
+            vertex(vertexconsumer, matrix4f, matrix3f, f23+f31, f4, f24, j, k, l, 0.4999F, f30);
             vertex(vertexconsumer, matrix4f, matrix3f, f23, 0.0F, f24, j, k, l, 0.4999F, f29);
-            vertex(vertexconsumer, matrix4f, matrix3f, f25, 0.0F, f26, j, k, l, 0.0F, f29);
+            vertex(vertexconsumer, matrix4f, matrix3f, f25+f31, 0.0F, f26, j, k, l, 0.0F, f29);
             vertex(vertexconsumer, matrix4f, matrix3f, f25, f4, f26, j, k, l, 0.0F, f30);
-            float f31 = 0.0F;
-            if (pEntity.tickCount % 2 == 0) {
-                f31 = 0.5F;
-            }
+            //float f31 = 0.0F;
 
-            vertex(vertexconsumer, matrix4f, matrix3f, f11, f4, f12, j, k, l, 0.5F, f31 + 0.5F);
-            vertex(vertexconsumer, matrix4f, matrix3f, f13, f4, f14, j, k, l, 1.0F, f31 + 0.5F);
-            vertex(vertexconsumer, matrix4f, matrix3f, f17, f4, f18, j, k, l, 1.0F, f31);
-            vertex(vertexconsumer, matrix4f, matrix3f, f15, f4, f16, j, k, l, 0.5F, f31);
+
+//            vertex(vertexconsumer, matrix4f, matrix3f, f11, f4, f12, j, k, l, 0.5F, f31 + 0.5F);
+//            vertex(vertexconsumer, matrix4f, matrix3f, f13, f4, f14, j, k, l, 1.0F, f31 + 0.5F);
+//            vertex(vertexconsumer, matrix4f, matrix3f, f17, f4, f18, j, k, l, 1.0F, f31);
+//            vertex(vertexconsumer, matrix4f, matrix3f, f15, f4, f16, j, k, l, 0.5F, f31);
             pMatrixStack.popPose();
         }
 
