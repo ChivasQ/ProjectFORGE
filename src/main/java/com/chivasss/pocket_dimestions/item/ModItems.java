@@ -55,6 +55,10 @@ public class ModItems {
             () -> new RuneItem(new Item.Properties()
                     .stacksTo(1)));
 
+    public static final RegistryObject<Item> BORE = ITEMS.register("bore",
+            () -> new Bore(new Item.Properties()
+                    .stacksTo(1)));
+
 
 
     public static void register(IEventBus eventBus) {

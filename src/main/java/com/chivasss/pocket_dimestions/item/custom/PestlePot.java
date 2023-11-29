@@ -29,6 +29,10 @@ public class PestlePot extends Item {
         consumer.accept(new IClientItemExtensions() {
             private static final HumanoidModel.ArmPose EXAMPLE_POSE = HumanoidModel.ArmPose.create("EXAMPLE", false, (model, entity, arm) -> {
                 if (arm == HumanoidArm.RIGHT) {
+                    model.body.xRot = 112.5F;
+                    model.body.yRot = 112.5F;
+                    model.head.yRot = 112.5F;
+
                     model.rightArm.xRot = (float) (112.5);
                     model.rightArm.yRot = (float) (112.5);
                     model.leftArm.xRot = (float) (67.5);
@@ -80,7 +84,7 @@ public class PestlePot extends Item {
     }
 
     public UseAnim getUseAnimation(ItemStack p_40935_) {
-        return UseAnim.CUSTOM;
+        return UseAnim.BOW;
     }
 
 //    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
