@@ -30,7 +30,7 @@ public class ModCreativeModTabs {
                                 pOutput.accept(ModItems.STICK_OF_DYNAMITE.get());
                                 pOutput.accept(ModItems.ZINC.get());
 
-
+                                pOutput.accept(ModBlocks.CAST_IRON_BLOCK.get());
                                 pOutput.accept(ModBlocks.ASPHALT.get());
                                 pOutput.accept(ModBlocks.ZINC_BLOCK.get());
                                 pOutput.accept(ModBlocks.ZINC_LAMP.get());

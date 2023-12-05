@@ -33,6 +33,9 @@ public class ModBlocks {
             .strength(7f)
             .requiresCorrectToolForDrops()));
 
+    public static final RegistryObject<Block> CAST_IRON_BLOCK = registerBlock("cast_iron_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
+            .strength(8f)
+            .requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> ZINC_LAMP = registerBlock("zinc_lamp", () -> new ZincLamp(BlockBehaviour.Properties.copy(Blocks.STONE)
             .strength(3f)
