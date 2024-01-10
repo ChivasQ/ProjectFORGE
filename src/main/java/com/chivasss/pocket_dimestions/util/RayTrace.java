@@ -25,7 +25,7 @@ public class RayTrace {
 
 
 
-    public static Pair<ArrayList<EntityHitResult>, HitResult> getEntityLookingAt(RuneTurretEntity player, double range, float ticks) {
+    public static void getEntityLookingAt(RuneTurretEntity player, double range, float ticks) {
         Level level = player.level();
 
         Vec3 look = player.getLookAngle();
@@ -51,12 +51,12 @@ public class RayTrace {
                 double distance = start.distanceToSqr(position);
 
                 if (distance < traceDistance) {
-                    EntityHitResult ent = new EntityHitResult(possible, position);
-                    arrayList.add(ent);
+
+
                 }
             }
         }
-        return new Pair<ArrayList<EntityHitResult>, HitResult>(arrayList, rayTraceResult);
+        //return new Pair<ArrayList<EntityHitResult>, HitResult>(arrayList, rayTraceResult);
     }
 
     @CheckForNull

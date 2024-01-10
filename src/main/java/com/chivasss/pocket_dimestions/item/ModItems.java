@@ -2,8 +2,8 @@ package com.chivasss.pocket_dimestions.item;
 
 import com.chivasss.pocket_dimestions.PocketDim;
 import com.chivasss.pocket_dimestions.item.custom.*;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.armortrim.TrimPatterns;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -59,6 +59,20 @@ public class ModItems {
             () -> new Bore(new Item.Properties()
                     .stacksTo(1)));
 
+    public static final RegistryObject<Item> ALEBARDA = ITEMS.register("alebarda",
+            () -> new CastIronAlebarda(Tiers.NETHERITE, 6, -3F,new Item.Properties()));
+
+    public static final RegistryObject<Item> MOD_TRIM_PART1 = ITEMS.register("mod_trim_part1",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> MOD_TRIM_PART2 = ITEMS.register("mod_trim_part2",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> MOD_TRIM = ITEMS.register("mod_trim",
+            () -> SmithingTemplateItem.createArmorTrimTemplate(TrimPatterns.WARD));
+
+    public static final RegistryObject<Item> QUARTZ_SWORD = ITEMS.register("quartz_sword",
+            () -> new SwordItem(Tiers.DIAMOND, 6, -1F,new Item.Properties()));
 
 
     public static void register(IEventBus eventBus) {

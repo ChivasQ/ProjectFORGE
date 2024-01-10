@@ -29,11 +29,25 @@ public class ModCreativeModTabs {
                                 pOutput.accept(ModItems.RAW_ZINC.get());
                                 pOutput.accept(ModItems.STICK_OF_DYNAMITE.get());
                                 pOutput.accept(ModItems.ZINC.get());
+                                pOutput.accept(ModItems.ALEBARDA.get());
+                                pOutput.accept(ModItems.MOD_TRIM_PART1.get());
+                                pOutput.accept(ModItems.MOD_TRIM_PART2.get());
+                                pOutput.accept(ModItems.MOD_TRIM.get());
+                                pOutput.accept(ModItems.QUARTZ_SWORD.get());
 
                                 pOutput.accept(ModBlocks.CAST_IRON_BLOCK.get());
                                 pOutput.accept(ModBlocks.ASPHALT.get());
                                 pOutput.accept(ModBlocks.ZINC_BLOCK.get());
                                 pOutput.accept(ModBlocks.ZINC_LAMP.get());
+                                pOutput.accept(ModBlocks.ALTAR.get());
+                                pOutput.accept(ModBlocks.ZINC_ORE.get());
+                                pOutput.accept(ModBlocks.DEEPSLATE_ZINC_ORE.get());
+                                pOutput.accept(ModBlocks.CRACKED_QUARTZ_BRICKS.get());
+                                pOutput.accept(ModBlocks.CHISELED_QUARTZ_BLOCK.get());
+                                pOutput.accept(ModBlocks.SAND_QUARTZ.get());
+                                pOutput.accept(ModBlocks.SUSPICIOUS_SAND_QUARTZ.get());
+                                pOutput.accept(ModBlocks.THERMAL_QUARTZ.get());
+                                pOutput.accept(ModBlocks.ELECTRO_TURRET_BLOCK.get());
                             })
                             .build());
 

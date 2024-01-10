@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "examplemod:block/suspicious_sand_quartz_3_top",
+    "side": "examplemod:block/suspicious_sand_quartz_3_side"
+  }
+}

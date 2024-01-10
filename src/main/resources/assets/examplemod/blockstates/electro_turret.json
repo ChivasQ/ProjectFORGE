@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=false": { "model": "examplemod:block/electro_turret" },
+    "powered=true": { "model": "examplemod:block/electro_turret_powered" }
+  }
+}
