@@ -186,7 +186,6 @@ public class RuneTurretEntity extends Monster {
 
     @Override
     public void tick() {
-        super.tick();
         if (this.level().isClientSide()) {
             switch (this.getPose()) {
                 case EMERGING:
@@ -195,7 +194,27 @@ public class RuneTurretEntity extends Monster {
             }
             setupAnimationStates();
         }
+
+        super.tick();
+
     }
+
+
+    private void tickLerp() {
+        if (this.isControlledByLocalInstance()) {
+            this.lerpSteps = 0;
+            this.syncPacketPositionCodec(this.getX(), this.getY(), this.getZ());
+        }
+
+        if (true) {
+            double d0 = this.getX() + (this.lerpX - this.getX()) / (double)this.lerpSteps;
+            double d1 = this.getY() + (this.lerpY - this.getY()) / (double)this.lerpSteps;
+            double d2 = this.getZ() + (this.lerpZ - this.getZ()) / (double)this.lerpSteps;
+            --this.lerpSteps;
+            this.setPos(d0, d1, d2);
+        }
+    }
+
 
     private void clientDiggingParticles(AnimationState pAnimationState) {
         if ((float)pAnimationState.getAccumulatedTime() < 1000.0F) {

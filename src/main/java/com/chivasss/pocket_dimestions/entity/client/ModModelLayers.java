@@ -11,4 +11,6 @@ public class ModModelLayers {
             new ResourceLocation(PocketDim.MODID, "rune_turret_layer"), "main");
     public static final ModelLayerLocation BORE_LAYER = new ModelLayerLocation(
             new ResourceLocation(PocketDim.MODID, "bore_layer"), "main");
+    public static final ModelLayerLocation TEST1_LAYER = new ModelLayerLocation(
+            new ResourceLocation(PocketDim.MODID, "magi_shield_texture"), "main");
 }

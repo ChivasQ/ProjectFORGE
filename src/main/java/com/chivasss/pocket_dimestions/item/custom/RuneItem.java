@@ -20,7 +20,7 @@ public class RuneItem extends Item {
         if (!pLevel.isClientSide) {
             RuneProjectileEntity thrownrune = new RuneProjectileEntity(pLevel, pPlayer);
             thrownrune.setItem(itemstack);
-            thrownrune.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 1F, 1.0F);
+            thrownrune.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0F, 0.5F, 1.0F);
             pLevel.addFreshEntity(thrownrune);
         }
 

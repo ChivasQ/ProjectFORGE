@@ -7,17 +7,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
@@ -27,7 +27,11 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class Bore extends Item {
+public class Bore extends DiggerItem {
+    public Bore(float pAttackDamageModifier, float pAttackSpeedModifier, Tier pTier, TagKey<Block> pBlocks, Properties pProperties) {
+        super(pAttackDamageModifier, pAttackSpeedModifier, pTier, pBlocks, pProperties);
+    }
+
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
@@ -39,15 +43,21 @@ public class Bore extends Item {
         });
     }
 
-    public Bore(Properties pProperties) {
-        super(pProperties);
-    }
+
 
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
         entity.playSound(SoundEvents.SPYGLASS_USE, 1.0F, 1.0F);
         ItemStack itemstack = entity.getItemInHand(hand);
+
+        entity.startUsingItem(hand);
+        return InteractionResultHolder.consume(itemstack);
+
+    }
+
+    @Override
+    public void onUseTick(Level world, LivingEntity entity, ItemStack pStack, int pRemainingUseDuration) {
 
         Vec3 look = entity.getLookAngle();
         Vec3 start = entity.getEyePosition(1F);
@@ -61,22 +71,21 @@ public class Bore extends Item {
             double traceDistance = rayTraceResult.getLocation().distanceToSqr(start);
             //entity.sendSystemMessage(Component.literal(String.valueOf(traceDistance)));
             if (traceDistance <= range) {
+                BlockHitResult blockHitResult = (BlockHitResult) rayTraceResult;
 
-                itemstack.hurtAndBreak(1, entity, (p_40992_) -> {
-                    p_40992_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-                });
+                world.destroyBlock(blockHitResult.getBlockPos(), true);
+                BlockState pState = world.getBlockState(blockHitResult.getBlockPos());
 
-                entity.startUsingItem(hand);
-                return InteractionResultHolder.consume(itemstack);
-            } else {
+
+//                itemstack.hurtAndBreak(1, entity, (p_40992_) -> {
+//                    p_40992_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+//                });
+
 
             }
-
         }
-        return InteractionResultHolder.fail(itemstack);
+        super.onUseTick(world, entity, pStack, pRemainingUseDuration);
     }
-
-
 
     public int getUseDuration(ItemStack p_42933_) {
         return 72000;

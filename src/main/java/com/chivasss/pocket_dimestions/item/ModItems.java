@@ -2,6 +2,7 @@ package com.chivasss.pocket_dimestions.item;
 
 import com.chivasss.pocket_dimestions.PocketDim;
 import com.chivasss.pocket_dimestions.item.custom.*;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.armortrim.TrimPatterns;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -55,8 +56,12 @@ public class ModItems {
             () -> new RuneItem(new Item.Properties()
                     .stacksTo(1)));
 
+    public static final RegistryObject<Item> MURMILLON_AMULET = ITEMS.register("murmillon_amulet",
+            () -> new MurmillonAmuletItem(new Item.Properties()
+                    .stacksTo(1).rarity(Rarity.UNCOMMON)));
+
     public static final RegistryObject<Item> BORE = ITEMS.register("bore",
-            () -> new Bore(new Item.Properties()
+            () -> new Bore(1,1, Tiers.NETHERITE, BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties()
                     .stacksTo(1)));
 
     public static final RegistryObject<Item> ALEBARDA = ITEMS.register("alebarda",

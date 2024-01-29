@@ -65,10 +65,7 @@ public class StickofDynamiteProj extends ThrowableItemProjectile {
         if (!this.level().isClientSide) {
             this.level().explode(this, this.getX(), this.getY(), this.getZ(), 2.0F, Level.ExplosionInteraction.TNT);
             this.level().broadcastEntityEvent(this, (byte)3);
-
             this.discard();
-
-
         }
 
     }

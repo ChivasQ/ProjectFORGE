@@ -3,9 +3,7 @@ package com.chivasss.pocket_dimestions;
 import com.chivasss.pocket_dimestions.block.ModBlocks;
 import com.chivasss.pocket_dimestions.block.entity.ModBlockEntites;
 import com.chivasss.pocket_dimestions.entity.ModEntityTypes;
-import com.chivasss.pocket_dimestions.entity.client.CoreRenderer;
-import com.chivasss.pocket_dimestions.entity.client.PortalRenderer;
-import com.chivasss.pocket_dimestions.entity.client.RuneTurretRenderer;
+import com.chivasss.pocket_dimestions.entity.client.*;
 import com.chivasss.pocket_dimestions.item.ModCreativeModTabs;
 import com.chivasss.pocket_dimestions.item.ModItems;
 import com.chivasss.pocket_dimestions.screen.AltarColumnScreen;
@@ -88,6 +86,9 @@ public class PocketDim {
             EntityRenderers.register(ModEntityTypes.CORE.get(), CoreRenderer::new);
             EntityRenderers.register(ModEntityTypes.RUNE.get(), NoopRenderer::new);
             EntityRenderers.register(ModEntityTypes.RUNE_TURRET.get(), RuneTurretRenderer::new);
+            EntityRenderers.register(ModEntityTypes.TEST.get(), (context) -> new Test1EntityRenderer<>(context, ModModelLayers.TEST1_LAYER));
+            EntityRenderers.register(ModEntityTypes.BOLA.get(), NoopRenderer::new);
+
 
             MenuScreens.register(ModMenuTypes.ALTAR_COLUMN_MENU.get(), AltarColumnScreen::new);
         }
