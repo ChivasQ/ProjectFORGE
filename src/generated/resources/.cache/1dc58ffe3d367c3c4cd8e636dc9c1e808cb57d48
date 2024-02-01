@@ -1,0 +1,7 @@
+// 1.20.1	2024-02-01T19:13:46.5674369	Tags for minecraft:block mod id examplemod
+1829799d09afb9fee10186684a2be301dfaaf6a1 data/forge/tags/blocks/needs_netherite_tool.json
+1749b6b99f5b45d09f1e12590b4474ecb1bbfde8 data/minecraft/tags/blocks/mineable/pickaxe.json
+7b5d7bf6453457f71e16fa7af1b336e9f1ccd008 data/minecraft/tags/blocks/mineable/shovel.json
+a01ca5a323a7e1e30239c79bbc88b16b2b7ab8d0 data/minecraft/tags/blocks/needs_diamond_tool.json
+a01ca5a323a7e1e30239c79bbc88b16b2b7ab8d0 data/minecraft/tags/blocks/needs_iron_tool.json
+a01ca5a323a7e1e30239c79bbc88b16b2b7ab8d0 data/minecraft/tags/blocks/needs_stone_tool.json

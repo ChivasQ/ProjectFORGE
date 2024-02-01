@@ -1,10 +1,10 @@
 package com.chivasss.pocket_dimestions.item;
 
 import com.chivasss.pocket_dimestions.PocketDim;
+import com.chivasss.pocket_dimestions.item.armortrim.ModTrimPatterns;
 import com.chivasss.pocket_dimestions.item.custom.*;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.armortrim.TrimPatterns;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -74,7 +74,7 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> MOD_TRIM = ITEMS.register("mod_trim",
-            () -> SmithingTemplateItem.createArmorTrimTemplate(TrimPatterns.WARD));
+            () -> SmithingTemplateItem.createArmorTrimTemplate(ModTrimPatterns.MOD_TRIM));
 
     public static final RegistryObject<Item> QUARTZ_SWORD = ITEMS.register("quartz_sword",
             () -> new SwordItem(Tiers.DIAMOND, 6, -1F,new Item.Properties()));

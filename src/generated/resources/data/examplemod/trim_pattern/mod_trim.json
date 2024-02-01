@@ -1,0 +1,7 @@
+{
+  "asset_id": "examplemod:mod_trim",
+  "description": {
+    "translate": "trim_pattern.examplemod.mod_trim"
+  },
+  "template_item": "examplemod:mod_trim"
+}

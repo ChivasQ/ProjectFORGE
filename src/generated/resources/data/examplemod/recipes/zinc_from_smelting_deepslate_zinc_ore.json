@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.25,
+  "group": "zinc",
+  "ingredient": {
+    "item": "examplemod:deepslate_zinc_ore"
+  },
+  "result": "examplemod:zinc"
+}

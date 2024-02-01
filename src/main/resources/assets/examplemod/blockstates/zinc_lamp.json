@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "lit=false": { "model": "examplemod:block/zinc_lamp_lit" },
-    "lit=true": { "model": "examplemod:block/zinc_lamp" }
-  }
-}

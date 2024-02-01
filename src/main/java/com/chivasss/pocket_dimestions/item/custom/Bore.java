@@ -58,32 +58,31 @@ public class Bore extends DiggerItem {
 
     @Override
     public void onUseTick(Level world, LivingEntity entity, ItemStack pStack, int pRemainingUseDuration) {
-
         Vec3 look = entity.getLookAngle();
         Vec3 start = entity.getEyePosition(1F);
         double range = 32;
-        if (!world.isClientSide) {
-            Vec3 end = new Vec3(entity.getX() + look.x * range, entity.getEyeY() + look.y * range, entity.getZ() + look.z * range);
-            ClipContext context = new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity);
+//        if (!world.isClientSide) {
+//            Vec3 end = new Vec3(entity.getX() + look.x * range, entity.getEyeY() + look.y * range, entity.getZ() + look.z * range);
+//            ClipContext context = new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity);
+//
+//            HitResult rayTraceResult = world.clip(context);
+//
+//            double traceDistance = rayTraceResult.getLocation().distanceToSqr(start);
+//            //entity.sendSystemMessage(Component.literal(String.valueOf(traceDistance)));
+//            if (traceDistance <= range) {
+//                BlockHitResult blockHitResult = (BlockHitResult) rayTraceResult;
+//
+//                world.destroyBlock(blockHitResult.getBlockPos(), true);
+//                BlockState pState = world.getBlockState(blockHitResult.getBlockPos());
+//
+//
+////                itemstack.hurtAndBreak(1, entity, (p_40992_) -> {
+////                    p_40992_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+////                });
+//
+//
+//            }
 
-            HitResult rayTraceResult = world.clip(context);
-
-            double traceDistance = rayTraceResult.getLocation().distanceToSqr(start);
-            //entity.sendSystemMessage(Component.literal(String.valueOf(traceDistance)));
-            if (traceDistance <= range) {
-                BlockHitResult blockHitResult = (BlockHitResult) rayTraceResult;
-
-                world.destroyBlock(blockHitResult.getBlockPos(), true);
-                BlockState pState = world.getBlockState(blockHitResult.getBlockPos());
-
-
-//                itemstack.hurtAndBreak(1, entity, (p_40992_) -> {
-//                    p_40992_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-//                });
-
-
-            }
-        }
         super.onUseTick(world, entity, pStack, pRemainingUseDuration);
     }
 
