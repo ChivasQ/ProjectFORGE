@@ -4,5 +4,11 @@
     "sounds": [
       "examplemod:some_sound"
     ]
+  },
+  "symbiote_scream": {
+    "subtitles": "sounds.examplemod.symbiote_scream",
+    "sounds": [
+      "examplemod:symbiote_scream"
+    ]
   }
 }

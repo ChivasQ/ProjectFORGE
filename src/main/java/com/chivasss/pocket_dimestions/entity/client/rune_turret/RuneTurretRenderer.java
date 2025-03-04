@@ -1,7 +1,8 @@
-package com.chivasss.pocket_dimestions.entity.client;
+package com.chivasss.pocket_dimestions.entity.client.rune_turret;
 
 import com.chivasss.pocket_dimestions.PocketDim;
-import com.chivasss.pocket_dimestions.entity.custom.RuneTurretEntity;
+import com.chivasss.pocket_dimestions.entity.client.ModModelLayers;
+import com.chivasss.pocket_dimestions.entity.custom.rune_turret.RuneTurretEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -20,7 +21,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-import static com.chivasss.pocket_dimestions.entity.custom.RuneTurretEntity.entityPositions;
+import static com.chivasss.pocket_dimestions.entity.custom.rune_turret.RuneTurretEntity.entityPositions;
 
 @OnlyIn(Dist.CLIENT)
 public class RuneTurretRenderer extends MobRenderer<RuneTurretEntity, RuneTurretModel<RuneTurretEntity>> {

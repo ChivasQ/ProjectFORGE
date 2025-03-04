@@ -1,7 +1,7 @@
 package com.chivasss.pocket_dimestions.util;
 
 
-import com.chivasss.pocket_dimestions.entity.custom.RuneTurretEntity;
+import com.chivasss.pocket_dimestions.entity.custom.rune_turret.RuneTurretEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +11,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import oshi.util.tuples.Pair;
 
 import javax.annotation.CheckForNull;
 import java.util.ArrayList;

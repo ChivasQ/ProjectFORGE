@@ -79,6 +79,12 @@ public class ModItems {
     public static final RegistryObject<Item> QUARTZ_SWORD = ITEMS.register("quartz_sword",
             () -> new SwordItem(Tiers.DIAMOND, 6, -1F,new Item.Properties()));
 
+    public static final RegistryObject<Item> INFECTION_ITEM = ITEMS.register("experimental_infection_item",
+            () -> new Infection(new Item.Properties()));
+
+    public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test123",
+            () -> new TestItem1(new Item.Properties().stacksTo(1)));
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

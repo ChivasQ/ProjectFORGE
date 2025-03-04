@@ -49,6 +49,15 @@ public class ModCreativeModTabs {
                                 pOutput.accept(ModBlocks.SUSPICIOUS_SAND_QUARTZ.get());
                                 pOutput.accept(ModBlocks.THERMAL_QUARTZ.get());
                                 pOutput.accept(ModBlocks.ELECTRO_TURRET_BLOCK.get());
+
+
+
+
+
+
+
+
+                                pOutput.accept(ModItems.INFECTION_ITEM.get());
                             })
                             .build());
 

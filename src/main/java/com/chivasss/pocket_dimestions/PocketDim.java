@@ -2,8 +2,13 @@ package com.chivasss.pocket_dimestions;
 
 import com.chivasss.pocket_dimestions.block.ModBlocks;
 import com.chivasss.pocket_dimestions.block.entity.ModBlockEntites;
+import com.chivasss.pocket_dimestions.effect.ModEffects;
 import com.chivasss.pocket_dimestions.entity.ModEntityTypes;
 import com.chivasss.pocket_dimestions.entity.client.*;
+import com.chivasss.pocket_dimestions.entity.client.rune_turret.RuneTurretRenderer;
+import com.chivasss.pocket_dimestions.entity.client.sandworm.SandwormRenderer;
+import com.chivasss.pocket_dimestions.entity.client.spidertron.SpidertronRenderer;
+import com.chivasss.pocket_dimestions.entity.custom.symbiote.SymbioteRenderer;
 import com.chivasss.pocket_dimestions.item.ModCreativeModTabs;
 import com.chivasss.pocket_dimestions.item.ModItems;
 import com.chivasss.pocket_dimestions.screen.AltarColumnScreen;
@@ -12,7 +17,6 @@ import com.chivasss.pocket_dimestions.sound.ModSounds;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,7 +33,7 @@ import org.slf4j.Logger;
 ⣿⠱⠅⣸⣵⣿⣿⣿⡏⠛⠛⠙⠛⠿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣷⣸⡏⠛⠟⡛⣍⡿⠧⡉⠃⢤⢀⡤⢉⠙⢻⣿
 ⣿⣦⣿⣿⡿⢿⣿⡯⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣻⣿⣷⣰⡔⡜⣧⣒⣪⣒⣢⡕⡈⢆⠢⠩⢿⣿⣿⣿
 ⣿⣿⣿⣿⡇⠈⠁⡀⠀⣀⣠⣤⣶⣶⣷⣿⣿⣿⣶⣶⣶⣤⣀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣷⣝⡾⢧⣿⣿⠽⠽⠀⠀⠀⡈⣿
-⣿⣿⣿⠟⢰⣸⠦⠻⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣽⣯⣿⣿⣿⣿⣿⢿⣯⡙⠘⠂⠒⢮⠑⠢⣿
+⣿⣿⣿⠟⢰⣸⠦⠻⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣽⣯⣿⣿⣿⣿⣿⢿⣯⡙⠘⠂⠒⢮⠑⠢
 ⣿⣿⣿⣯⡻⠶⡟⢋⣤⣿⣿⠿⣿⣿⣿⣿⣿⡿⣛⡅⠀⠀⠀⠀⠀⠀⠀⠉⢽⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⡿⢷⡍⢻⣿⣽⣑⠝⢦⠀⣿⣿
 ⣿⣿⣿⣿⣷⡌⠀⣾⣿⣿⣿⣿⣇⠁⠀⠉⠉⠉⣿⣿⣿⣶⣤⣤⠀⠀⠀⠀⠼⣿⣾⢯⡿⢰⡿⠋⠙⣿⣿⣷⣦⠀⠇⡾⠿⡿⡿⢧⠨⢡⣿
 ⣿⣿⣿⣿⡟⠀⠀⠈⠻⠿⠿⢿⣿⣷⡀⠀⠀⠀⣿⣿⣿⣿⡿⠟⠀⠀⠀⠀⠀⠈⠻⡏⠃⠛⡁⠸⡽⠝⠛⢛⠩⢂⣤⣿⢽⣚⣓⣮⢦⣿⣿⣿
@@ -61,6 +65,7 @@ public class PocketDim {
         ModBlockEntites.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModSounds.register(modEventBus);
+        ModEffects.register(modEventBus);
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -90,7 +95,9 @@ public class PocketDim {
             EntityRenderers.register(ModEntityTypes.RUNE_TURRET.get(), RuneTurretRenderer::new);
             EntityRenderers.register(ModEntityTypes.TEST.get(), (context) -> new Test1EntityRenderer<>(context, ModModelLayers.TEST1_LAYER));
             EntityRenderers.register(ModEntityTypes.BOLA.get(), NoopRenderer::new);
-
+            EntityRenderers.register(ModEntityTypes.SANDWORM.get(), (context) -> new SandwormRenderer<>(context, ModModelLayers.LAYER_LOCATION));
+            EntityRenderers.register(ModEntityTypes.SPIDERTRON.get(), (context) -> new SpidertronRenderer<>(context, ModModelLayers.SPIDERTRON_LAYER));
+            EntityRenderers.register(ModEntityTypes.SYMBIOTE.get(), (context) -> new SymbioteRenderer(context, ModModelLayers.SYMBIOTE_LAYER));
 
             MenuScreens.register(ModMenuTypes.ALTAR_COLUMN_MENU.get(), AltarColumnScreen::new);
         }

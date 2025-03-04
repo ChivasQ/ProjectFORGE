@@ -1,4 +1,4 @@
-package com.chivasss.pocket_dimestions.world.entity;
+package com.chivasss.pocket_dimestions.entity.custom;
 
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;

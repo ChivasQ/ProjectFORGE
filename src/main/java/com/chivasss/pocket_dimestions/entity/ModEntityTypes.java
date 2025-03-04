@@ -2,8 +2,13 @@ package com.chivasss.pocket_dimestions.entity;
 
 import com.chivasss.pocket_dimestions.PocketDim;
 import com.chivasss.pocket_dimestions.entity.custom.*;
+import com.chivasss.pocket_dimestions.entity.custom.rune_turret.RuneTurretEntity;
+import com.chivasss.pocket_dimestions.entity.custom.sandworm.Sandworm;
+import com.chivasss.pocket_dimestions.entity.custom.spidertron.Spidertron;
+import com.chivasss.pocket_dimestions.entity.custom.symbiote.SymbioteEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -44,6 +49,31 @@ public class ModEntityTypes {
             ENTITY_TYPES.register("bola",
                     () -> EntityType.Builder.<BolaProjectileEntity>of(BolaProjectileEntity::new, MobCategory.MISC).sized(0.2f,0.2f)
                             .build("bola"));
+
+    public static final RegistryObject<EntityType<Sandworm>> SANDWORM =
+            ENTITY_TYPES.register("sandworm",
+        () -> EntityType.Builder.of(Sandworm::new, MobCategory.MONSTER).fireImmune().sized(1F, 5.0F).clientTrackingRange(10)
+                .build("sandworm"));
+
+
+    public static final RegistryObject<EntityType<Spidertron>> SPIDERTRON = registerMob(
+            "spidertron", Spidertron::new, MobCategory.CREATURE,0.5f,0.5f);
+
+    public static final RegistryObject<EntityType<SymbioteEntity>> SYMBIOTE = registerMob(
+            "symbiote", SymbioteEntity::new, MobCategory.CREATURE,0.75f,2f);
+
+
+
+
+
+
+    public static <T extends Mob> RegistryObject<EntityType<T>> registerMob(String name, EntityType.EntityFactory<T> entity, MobCategory category,
+                                                                            float width, float height) {
+        RegistryObject<EntityType<T>> entityType = ENTITY_TYPES.register(name,
+                () -> EntityType.Builder.of(entity, category).sized(width, height).build(name));
+
+        return entityType;
+    }
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

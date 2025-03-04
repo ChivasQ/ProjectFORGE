@@ -14,6 +14,8 @@ public class ModSounds {
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, PocketDim.MODID);
 
     public static final RegistryObject<SoundEvent> SOME_SOUND = registerSoundEvent("some_sound");
+    public static final RegistryObject<SoundEvent> SYMBIOTE_SCREAM = registerSoundEvent("symbiote_scream");
+
 
 
 

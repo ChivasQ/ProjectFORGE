@@ -1,4 +1,4 @@
-package com.chivasss.pocket_dimestions.entity.custom;
+package com.chivasss.pocket_dimestions.entity.custom.rune_turret;
 
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;

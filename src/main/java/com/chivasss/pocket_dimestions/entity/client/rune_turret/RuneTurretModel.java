@@ -1,8 +1,8 @@
-package com.chivasss.pocket_dimestions.entity.client;
+package com.chivasss.pocket_dimestions.entity.client.rune_turret;
 
 
 import com.chivasss.pocket_dimestions.entity.animations.ModAnimationDefinitions;
-import com.chivasss.pocket_dimestions.entity.custom.RuneTurretEntity;
+import com.chivasss.pocket_dimestions.entity.custom.rune_turret.RuneTurretEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.HierarchicalModel;

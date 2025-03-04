@@ -38,7 +38,7 @@ public class Test1Entity extends Entity implements TraceableEntity {
             Vec3 vec3 = getOwner().getPosition(1).add(0,2,0);
             //this.move(MoverType.SELF, getOwner().getPosition(1).add(0,2,0));
             //this.lerpTo(vec3.x,vec3.y,vec3.z, 0,0,0,false);
-            //this.moveTo(getOwner().getPosition(1).add(0, 2, 0));
+            this.moveTo(getOwner().getPosition(1).add(0, 2, 0));
             //this.lookAt(EntityAnchorArgument.Anchor.FEET, getOwner().getPosition(1));
             //this.teleportTo(vec3.x,vec3.y,vec3.z);
         }
