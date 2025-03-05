@@ -85,6 +85,8 @@ public class ModItems {
     public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test123",
             () -> new TestItem1(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> PROGRESSIVE_BREAKER = ITEMS.register("pickaxe",
+            () -> new BlockBreakerItem(new Item.Properties().stacksTo(1)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
