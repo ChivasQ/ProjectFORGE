@@ -2,10 +2,13 @@ package com.chivasss.pocket_dimestions.item.custom;
 
 
 import com.chivasss.pocket_dimestions.entity.client.BoreItemRenderer;
+import com.chivasss.pocket_dimestions.item.ModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -23,12 +26,15 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class Bore extends DiggerItem {
     private double distance = 0.0;
     private boolean isInUse = false;
-    private float curBlockDamage = 0;
+    private static final HashMap<UUID, Bore.BlockBreakingProgress> breakingProgress = new HashMap<>();
+    private static final int BREAK_TIME = 2; // 1 секунда (20 тиков)
     public Bore(float pAttackDamageModifier, float pAttackSpeedModifier, Tier pTier, TagKey<Block> pBlocks, Properties pProperties) {
         super(pAttackDamageModifier, pAttackSpeedModifier, pTier, pBlocks, pProperties);
     }
@@ -100,9 +106,9 @@ public class Bore extends DiggerItem {
     public void onUseTick(Level world, LivingEntity entity, ItemStack pStack, int pRemainingUseDuration) {
         Vec3 look = entity.getLookAngle();
         Vec3 start = entity.getEyePosition(1F);
+        Player player = (Player) entity;
         this.setInUse(true);
         double range = 64;
-        if (!world.isClientSide) {
             Vec3 end = new Vec3(entity.getX() + look.x * range, entity.getEyeY() + look.y * range, entity.getZ() + look.z * range);
             ClipContext context = new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, entity);
 
@@ -112,19 +118,29 @@ public class Bore extends DiggerItem {
             this.setDistance(traceDistance);
 
             if (traceDistance <= range) {
-                //world.destroyBlock(rayTraceResult.getBlockPos(), true);
-                BlockState pState = world.getBlockState(rayTraceResult.getBlockPos());
-                float relative = pState.getDestroyProgress((Player) entity, world, rayTraceResult.getBlockPos());
-                curBlockDamage += relative;
+                BlockPos targetPos = rayTraceResult.getBlockPos();
+                BlockState blockState = world.getBlockState(targetPos);
 
-                world.destroyBlockProgress(entity.getId(), rayTraceResult.getBlockPos(), (int) (curBlockDamage * 10.0F) - 1);
+                if (!blockState.isAir() && blockState.getDestroySpeed(world, targetPos) >= 0) {
+                    Bore.BlockBreakingProgress progress = breakingProgress.computeIfAbsent(player.getUUID(),
+                            uuid -> new Bore.BlockBreakingProgress(targetPos, 0));
 
-                curBlockDamage += 0.01F;
+                    if (!targetPos.equals(progress.pos)) {
+                        world.destroyBlockProgress(player.getId(), progress.pos, -1); // Сбрасываем анимацию, если цель изменилась
+                        breakingProgress.put(player.getUUID(), new Bore.BlockBreakingProgress(targetPos, 0));
+                    }
+
+                    progress.progress++;
+                    world.destroyBlockProgress(player.getId(), targetPos, (int) ((progress.progress / (float) BREAK_TIME) * 10));
+                    player.displayClientMessage(Component.literal("Прогресс: " + (int) ((progress.progress / (float) BREAK_TIME) * 100) + "%"), true);
+
+                    if (!world.isClientSide() && progress.progress >= BREAK_TIME) {
+                        world.destroyBlock(targetPos, true, player);
+                        breakingProgress.remove(player.getUUID());
+                    }
+                }
             }
-
-
         super.onUseTick(world, entity, pStack, pRemainingUseDuration);
-        }
     }
 
     public int getUseDuration(ItemStack p_42933_) {
@@ -157,6 +173,7 @@ public class Bore extends DiggerItem {
     public boolean isInUse() {
         return isInUse;
     }
+
     public void setInUse(boolean inUse) {
         isInUse = inUse;
     }
@@ -166,6 +183,14 @@ public class Bore extends DiggerItem {
     public void setDistance(double distance) {
         this.distance = distance;
     }
+    private static class BlockBreakingProgress {
+        BlockPos pos;
+        int progress;
 
+        BlockBreakingProgress(BlockPos pos, int progress) {
+            this.pos = pos;
+            this.progress = progress;
+        }
+    }
 
 }
