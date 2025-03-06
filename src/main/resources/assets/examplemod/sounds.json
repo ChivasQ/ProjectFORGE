@@ -10,5 +10,17 @@
     "sounds": [
       "examplemod:symbiote_scream"
     ]
+  },
+  "laserbore_loop": {
+    "subtitles": "sounds.examplemod.laserbore_loop",
+    "sounds": [
+      "examplemod:laserbore_loop"
+    ]
+  },
+  "laserbore_overheat_start": {
+    "subtitles": "sounds.examplemod.laserbore_overheat_start",
+    "sounds": [
+      "examplemod:laserbore_overheat_start"
+    ]
   }
 }

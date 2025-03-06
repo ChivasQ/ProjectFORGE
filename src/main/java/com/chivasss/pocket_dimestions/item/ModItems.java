@@ -61,7 +61,7 @@ public class ModItems {
                     .stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     public static final RegistryObject<Item> BORE = ITEMS.register("bore",
-            () -> new Bore(1,1, Tiers.NETHERITE, BlockTags.MINEABLE_WITH_PICKAXE, new Item.Properties()
+            () -> new Bore(new Item.Properties()
                     .stacksTo(1)));
 
     public static final RegistryObject<Item> ALEBARDA = ITEMS.register("alebarda",
