@@ -77,11 +77,13 @@ public class BoreItemRenderer extends BlockEntityWithoutLevelRenderer {
             boolean isInUse = false;
             int n = 0;
             if (pStack.getItem() instanceof Bore bore) {
-                isInUse = bore.isInUse();
+                isInUse = Minecraft.getInstance().player.isUsingItem();
                 beamDistance = bore.getDistance();
-                heating = bore.getCooldownTimer();
-                isOverheated = bore.isOverheated();
-                n = bore.getN();
+                if (pStack.getTag() != null) {
+                    heating = pStack.getTag().getInt("cooldownTimer");
+                }
+                isOverheated = pStack.getTag().getBoolean("isOverheated");
+                n = pStack.getTag().getInt("temperature");
             }
 
             int beamHeight = (int) beamDistance;
@@ -92,7 +94,7 @@ public class BoreItemRenderer extends BlockEntityWithoutLevelRenderer {
             pPoseStack.pushPose();
             if (pDisplayContext == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) pPoseStack.scale(1.5F, 1.5F, 1.5F);
 
-            if (! (pDisplayContext == ItemDisplayContext.GROUND) && isInUse) {
+            if (!(pDisplayContext == ItemDisplayContext.GROUND) && pStack.equals(Minecraft.getInstance().player.getUseItem())) {
                 pPoseStack.mulPose(Axis.XP.rotationDegrees(- 90.0F));
                 pPoseStack.translate(0.03D, 0.4D, 0.2D);
                 renderBeaconBeam(pPoseStack, pBuffer, BEAM_LOCATION, 1.0f, 1.0f, gameTime, 0, beamHeight, beamColor, 0.09F, 0.25F);
@@ -105,13 +107,13 @@ public class BoreItemRenderer extends BlockEntityWithoutLevelRenderer {
             pPoseStack.scale(0.005F, - 0.005F, 0.005F);
             Font font = Minecraft.getInstance().gui.getFont();
 
-            if (isOverheated && ! isInUse) {
+            if (isOverheated) {
                 renderText(font, "🧊", 28, 0, 4, pPoseStack, pBuffer, pPackedLight);
-                renderText(font, numberToBar((float) heating, 42), 0, 38, 1, pPoseStack, pBuffer, pPackedLight);
+                renderText(font, numberToBar((float) 100-heating, 42), 0, 38, 1, pPoseStack, pBuffer, pPackedLight);
             } else if (! isOverheated && ! isInUse && n != 0) {
                 renderText(font, "🧊", 28, 0, 4, pPoseStack, pBuffer, pPackedLight);
                 renderText(font, numberToBar((float) n / 2F, 42), 0, 38, 1, pPoseStack, pBuffer, pPackedLight);
-            } else if (isInUse) {
+            } else if (isInUse && ! isOverheated) {
                 renderText(font, "🔥", 28, 0, 4, pPoseStack, pBuffer, pPackedLight);
                 renderText(font, numberToBar((float) n / 2F, 42), 0, 38, 1, pPoseStack, pBuffer, pPackedLight);
             }

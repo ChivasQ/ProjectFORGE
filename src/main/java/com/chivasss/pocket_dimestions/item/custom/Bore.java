@@ -1,6 +1,5 @@
 package com.chivasss.pocket_dimestions.item.custom;
 
-
 import com.chivasss.pocket_dimestions.entity.client.BoreItemRenderer;
 import com.chivasss.pocket_dimestions.sound.ModSounds;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -10,15 +9,10 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
-import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.BlockParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.TagKey;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -29,16 +23,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -51,13 +44,13 @@ public class Bore extends Item{
     private static final int OVERHEAT_TIME = 200;
     private int COOLDOWN = 100;
     private int COOLDOWN_BEFORE_COOLING = 20;
-    private int c = 0;
-    private int n = 0;
+    private int timeBeforeCooling = 0;
+    private int temperature = 0;
     private boolean isOverheated = false;
     private int cooldownTimer = 0;
     private boolean isInUse = false;
     private static final ConcurrentHashMap<UUID, BlockBreakingProgress> breakingProgress = new ConcurrentHashMap <>();
-    private static final int BREAK_TIME = 2; // 1 секунда (20 тиков)
+    private static final int BREAK_TIME = 10;
 
     public Bore(Properties pProperties) {
         super(pProperties);
@@ -78,7 +71,7 @@ public class Bore extends Item{
 
                 return this.renderer;
             }
-            private static final HumanoidModel.ArmPose EXAMPLE_POSE = HumanoidModel.ArmPose.create("EXAMPLE", false, (model, entity, arm) -> {
+            private static final HumanoidModel.ArmPose EXAMPLE_POSE = HumanoidModel.ArmPose.create("EXAMPLE", true, (model, entity, arm) -> {
                 if (arm == HumanoidArm.RIGHT) {
                     model.body.xRot = 112.5F;
                     model.body.yRot = 112.5F;
@@ -105,7 +98,7 @@ public class Bore extends Item{
             public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm, ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
                 Bore item = (Bore) itemInHand.getItem();
                 int i = arm == HumanoidArm.RIGHT ? 1 : -1;
-                if (item.isInUse()) {
+                if (player.isUsingItem()) {
                     poseStack.translate(i * 0.7F,  (Math.sin(partialTick / 50) + 1) * - 1F,  -1.2F);
                 }
                 else {
@@ -135,16 +128,20 @@ public class Bore extends Item{
     @Override
     public void onUseTick(Level world, LivingEntity entity, ItemStack pStack, int pRemainingUseDuration) {
         Player player = (Player) entity;
-        Vec3 d =  player.getLookAngle();
+        //Vec3 d =  player.getLookAngle();
         //world.addParticle(ParticleTypes.CLOUD, true, player.getX() + d.x,player.getEyeY() + d.y, player.getZ() + d.z, 0,0,0);
-        if (isOverheated) {
-            return;
-        }
+        CompoundTag tag = pStack.getOrCreateTag();
+        int temperature = tag.getInt("temperature");
+        boolean isOverheated = tag.getBoolean("isOverheated");
+
+        if (isOverheated) return;
         else stopCooldownSound();
+
         if (!isLoopingSoundPlaying() && entity != null && !world.isClientSide) {
             playLoopingSound(player);
         }
-        if (n < OVERHEAT_TIME) {
+
+        if (temperature < OVERHEAT_TIME) {
 
             Vec3 look = entity.getLookAngle();
             Vec3 start = entity.getEyePosition(1F);
@@ -192,14 +189,15 @@ public class Bore extends Item{
                     }
                 }
             }
-            c = 0;
-            n++;
+            tag.putInt("timeBeforeCooling", 0);
+            temperature++;
+            tag.putInt("temperature", temperature);
 
         } else {
             setInUse(false);
             setDistance(0);
-            n = 0;
-            isOverheated = true;
+            tag.putBoolean("isOverheated", true);
+            tag.putInt("cooldownTimer", 0);
             //player.displayClientMessage(Component.literal("!!! Перегрев !!!"), true);
             stopLoopingSound();
             playCooldownSound(player);
@@ -208,32 +206,45 @@ public class Bore extends Item{
     }
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+        if (pLevel.isClientSide()) return;
         Player player = (Player) pEntity;
+        CompoundTag tag = pStack.getOrCreateTag();
+        int temperature = tag.getInt("temperature");
+        boolean isOverheated = tag.getBoolean("isOverheated");
+        int cooldownTimer = tag.getInt("cooldownTimer");
 
         if (isOverheated) {
-            cooldownTimer++;
-
-            //player.displayClientMessage(Component.literal("Перегрев: ждите " + (COOLDOWN - cooldownTimer) + " тиков"), true);
-
+            tag.putInt("cooldownTimer", ++cooldownTimer);
             if (cooldownTimer >= COOLDOWN) {
-                isOverheated = false;
-                cooldownTimer = 0;
-                //player.displayClientMessage(Component.literal("Оружие остыло!"), true);
+                tag.putBoolean("isOverheated", false);
+                tag.putInt("temperature", 0);
             }
-        } else if (!isInUse && n > 0) {
-            if (c >= COOLDOWN_BEFORE_COOLING) {
-                n = Math.max(0, n - 1);
-                //player.displayClientMessage(Component.literal("Охлаждение... " + n), true);
+        } else if (!player.isUsingItem() && temperature > 0) {
+            int timeBeforeCooling = tag.getInt("timeBeforeCooling");
+            if (timeBeforeCooling >= COOLDOWN_BEFORE_COOLING) {
+                tag.putInt("temperature", Math.max(0, temperature - 1));
             } else {
-                c++;
+                tag.putInt("timeBeforeCooling", timeBeforeCooling + 1);
             }
-            if (n == 0) {
-                c = 0;
+            if (temperature == 0) {
+                tag.putInt("timeBeforeCooling", 0);
             }
         }
     }
 
-
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        if (pStack.hasTag()) {
+            boolean isOverheated = pStack.getTag().getBoolean("isOverheated");
+            int temperature = pStack.getTag().getInt("temperature");
+            int cooldownTimer = pStack.getTag().getInt("cooldownTimer");
+            int timeBeforeCooling = pStack.getTag().getInt("timeBeforeCooling");
+            pTooltipComponents.add(Component.literal("isOverheated: " + isOverheated));
+            pTooltipComponents.add(Component.literal("temperature: " + temperature));
+            pTooltipComponents.add(Component.literal("cooldownTimer: " + cooldownTimer));
+            pTooltipComponents.add(Component.literal("timeBeforeCooling: " + timeBeforeCooling));
+        }
+    }
 
     private void breakBlockInArea(Level world, Player player, BlockPos blockPos, int progress) {
         world.destroyBlockProgress(player.getId(), blockPos, progress);
@@ -345,8 +356,8 @@ public class Bore extends Item{
         return isOverheated;
     }
 
-    public int getN() {
-        return n;
+    public int getTemperature() {
+        return temperature;
     }
 
     private static class BlockBreakingProgress {
