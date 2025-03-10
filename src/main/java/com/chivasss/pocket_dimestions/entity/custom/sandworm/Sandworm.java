@@ -14,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.PartEntity;
 import org.slf4j.Logger;
-import software.bernie.shadowed.eliotlash.mclib.math.functions.utility.Lerp;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

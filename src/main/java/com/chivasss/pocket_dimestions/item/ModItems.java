@@ -64,8 +64,6 @@ public class ModItems {
             () -> new Bore(new Item.Properties()
                     .stacksTo(1)));
 
-    public static final RegistryObject<Item> ALEBARDA = ITEMS.register("alebarda",
-            () -> new CastIronAlebarda(Tiers.NETHERITE, 6, -3F,new Item.Properties()));
 
     public static final RegistryObject<Item> MOD_TRIM_PART1 = ITEMS.register("mod_trim_part1",
             () -> new Item(new Item.Properties()));

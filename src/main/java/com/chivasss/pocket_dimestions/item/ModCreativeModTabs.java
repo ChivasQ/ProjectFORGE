@@ -29,7 +29,7 @@ public class ModCreativeModTabs {
                                 pOutput.accept(ModItems.RAW_ZINC.get());
                                 pOutput.accept(ModItems.STICK_OF_DYNAMITE.get());
                                 pOutput.accept(ModItems.ZINC.get());
-                                pOutput.accept(ModItems.ALEBARDA.get());
+                                //pOutput.accept(ModItems.ALEBARDA.get());
                                 pOutput.accept(ModItems.MOD_TRIM_PART1.get());
                                 pOutput.accept(ModItems.MOD_TRIM_PART2.get());
                                 pOutput.accept(ModItems.MOD_TRIM.get());

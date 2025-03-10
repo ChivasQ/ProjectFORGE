@@ -142,7 +142,7 @@ public class AltarColumnBlockEntity extends BlockEntity implements MenuProvider 
     }
 
     private void craftItem() {
-        ItemStack result = new ItemStack(ModItems.ALEBARDA.get(),1);
+        ItemStack result = new ItemStack(ModItems.BORE.get(),1);
         this.itemStackHandler.extractItem(INPUT_SLOT_1, 1, false);
         this.itemStackHandler.extractItem(INPUT_SLOT_2, 1, false);
         this.itemStackHandler.extractItem(INPUT_SLOT_3, 1, false);

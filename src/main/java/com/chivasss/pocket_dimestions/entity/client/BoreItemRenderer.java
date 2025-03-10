@@ -77,16 +77,15 @@ public class BoreItemRenderer extends BlockEntityWithoutLevelRenderer {
             boolean isInUse = false;
             int n = 0;
             if (pStack.getItem() instanceof Bore bore) {
-                isInUse = Minecraft.getInstance().player.isUsingItem();
-                beamDistance = bore.getDistance();
+                //isInUse = Minecraft.getInstance().player.isUsingItem();
+                beamDistance = pStack.getTag().getDouble("distance");
                 if (pStack.getTag() != null) {
+                    isInUse = pStack.getTag().getBoolean("isInUse");
                     heating = pStack.getTag().getInt("cooldownTimer");
                 }
                 isOverheated = pStack.getTag().getBoolean("isOverheated");
                 n = pStack.getTag().getInt("temperature");
             }
-
-            int beamHeight = (int) beamDistance;
 
             VertexConsumer vertexConsumer = pBuffer.getBuffer(RenderType.entityCutout(TEXTURE));
             this.model.renderToBuffer(pPoseStack, vertexConsumer, pPackedLight, pPackedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
@@ -94,10 +93,10 @@ public class BoreItemRenderer extends BlockEntityWithoutLevelRenderer {
             pPoseStack.pushPose();
             if (pDisplayContext == ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) pPoseStack.scale(1.5F, 1.5F, 1.5F);
 
-            if (!(pDisplayContext == ItemDisplayContext.GROUND) && pStack.equals(Minecraft.getInstance().player.getUseItem())) {
+            if (!(pDisplayContext == ItemDisplayContext.GROUND) && isInUse) {
                 pPoseStack.mulPose(Axis.XP.rotationDegrees(- 90.0F));
                 pPoseStack.translate(0.03D, 0.4D, 0.2D);
-                renderBeaconBeam(pPoseStack, pBuffer, BEAM_LOCATION, 1.0f, 1.0f, gameTime, 0, beamHeight, beamColor, 0.09F, 0.25F);
+                renderBeaconBeam(pPoseStack, pBuffer, BEAM_LOCATION, 1.0f, 1.0f, gameTime, 0, beamDistance/8, beamColor, 0.09F, 0.25F);
             }
             pPoseStack.popPose();
             pPoseStack.pushPose();
@@ -136,8 +135,8 @@ public class BoreItemRenderer extends BlockEntityWithoutLevelRenderer {
         }
     }
 
-    public static void renderBeaconBeam(PoseStack pPoseStack, MultiBufferSource pBufferSource, ResourceLocation pBeamLocation, float pPartialTick, float pTextureScale, long pGameTime, int pYOffset, int pHeight, float[] pColors, float pBeamRadius, float pGlowRadius) {
-        int i = pYOffset + pHeight;
+    public static void renderBeaconBeam(PoseStack pPoseStack, MultiBufferSource pBufferSource, ResourceLocation pBeamLocation, float pPartialTick, float pTextureScale, long pGameTime, int pYOffset, double pHeight, float[] pColors, float pBeamRadius, float pGlowRadius) {
+        double i = pYOffset + pHeight;
         pPoseStack.pushPose();
         pPoseStack.translate(0.5D, 0.0D, 0.5D);
         float f = (float)Math.floorMod(pGameTime, 40) + pPartialTick;
@@ -154,7 +153,7 @@ public class BoreItemRenderer extends BlockEntityWithoutLevelRenderer {
         float f12 = -pBeamRadius;
         float f15 = -1.0F + f2;
         float f16 = (float)pHeight * pTextureScale * (0.5F / pBeamRadius) + f15;
-        renderPart(pPoseStack, pBufferSource.getBuffer(RenderType.beaconBeam(pBeamLocation, false)), f3, f4, f5, 1.0F, pYOffset, i, 0.0F, pBeamRadius, pBeamRadius, 0.0F, f9, 0.0F, 0.0F, f12, 0.0F, 1.0F, f16, f15);
+        renderPart(pPoseStack, pBufferSource.getBuffer(RenderType.beaconBeam(pBeamLocation, false)), f3, f4, f5, 1.0F, pYOffset, (int) i, 0.0F, pBeamRadius, pBeamRadius, 0.0F, f9, 0.0F, 0.0F, f12, 0.0F, 1.0F, f16, f15);
         pPoseStack.popPose();
         f6 = -pGlowRadius;
         float f7 = -pGlowRadius;
@@ -162,7 +161,7 @@ public class BoreItemRenderer extends BlockEntityWithoutLevelRenderer {
         f9 = -pGlowRadius;
         f15 = -1.0F + f2;
         f16 = (float)pHeight * pTextureScale + f15;
-        renderPart(pPoseStack, pBufferSource.getBuffer(RenderType.beaconBeam(pBeamLocation, true)), f3, f4, f5, 0.125F, pYOffset, i, f6, f7, pGlowRadius, f8, f9, pGlowRadius, pGlowRadius, pGlowRadius, 0.0F, 1.0F, f16, f15);
+        renderPart(pPoseStack, pBufferSource.getBuffer(RenderType.beaconBeam(pBeamLocation, true)), f3, f4, f5, 0.125F, pYOffset, (int) i, f6, f7, pGlowRadius, f8, f9, pGlowRadius, pGlowRadius, pGlowRadius, 0.0F, 1.0F, f16, f15);
 
         pPoseStack.popPose();
     }
