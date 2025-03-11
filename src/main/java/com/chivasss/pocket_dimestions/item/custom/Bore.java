@@ -43,7 +43,6 @@ import java.util.function.Consumer;
 public class Bore extends Item {
     private SoundInstance loopingSound;
     private SoundInstance cooldownSound;
-    private double distance = 0.0;
     private final double range = 128;
     private static final int OVERHEAT_TIME = 200;
     private int COOLDOWN = 80;
@@ -72,23 +71,25 @@ public class Bore extends Item {
 
                 return this.renderer;
             }
-            private static final HumanoidModel.ArmPose EXAMPLE_POSE1 = HumanoidModel.ArmPose.create("EXAMPLE1", false, (model, entity, arm) -> {
+            private static final HumanoidModel.ArmPose EXAMPLE_POSE1 = HumanoidModel.ArmPose.create("EXAMPLE1", true, (model, entity, arm) -> {
                 if ((arm == HumanoidArm.RIGHT) && (entity instanceof LivingEntity)) {
                     LivingEntity livingEntity = entity;
                     float pitch = livingEntity.getXRot();
                     float headYaw = livingEntity.getYHeadRot();
                     float bodyYaw = livingEntity.yBodyRot;
 
-
                     float yawDiff = headYaw - bodyYaw;
                     float pitchRadians = (pitch-90) * Mth.DEG_TO_RAD;
                     float yawRadians = yawDiff * Mth.DEG_TO_RAD;
 
-                    // Применяем углы к правой руке
                     model.rightArm.xRot = pitchRadians;
                     model.rightArm.yRot = yawRadians;
+                    model.leftArm.xRot = pitchRadians;
+                    model.leftArm.yRot = yawRadians+1;
 
                     model.rightArm.zRot = 0.0F;
+
+                    // TODO: FIX PROBLEM WITH LASER
                 }
             });
 
@@ -174,11 +175,9 @@ public class Bore extends Item {
             setDistance(0, tag);
             tag.putBoolean("isOverheated", true);
             tag.putInt("cooldownTimer", 0);
-            //player.displayClientMessage(Component.literal("!!! Перегрев !!!"), true);
             stopLoopingSound();
             playCooldownSound(player);
         }
-        //player.displayClientMessage(Component.literal(String.valueOf(n)), true);
     }
     private void breakBlockByLaser(Level world, double traceDistance, BlockHitResult rayTraceResult, Player player) {
         if (traceDistance <= range) {
@@ -186,30 +185,23 @@ public class Bore extends Item {
             BlockState blockState = world.getBlockState(targetPos);
 
             if (!blockState.isAir() && blockState.getDestroySpeed(world, targetPos) >= 0) {
-                // Получаем прогресс ломания для текущего блока
                 BlockBreakingProgress progress = breakingProgress.computeIfAbsent(player.getUUID(),
                         uuid -> new BlockBreakingProgress(targetPos, 0));
 
-                // Если игрок нацелился на другой блок, сбрасываем прогресс
                 if (!progress.pos.equals(targetPos)) {
-                    progress.progress = 0; // сброс прогресса
-                    progress.pos = targetPos; // обновляем позицию блока
+                    progress.progress = 0;
+                    progress.pos = targetPos;
                 }
 
-                // Увеличиваем прогресс для текущего блока
                 progress.progress++;
 
-                // Если прогресс не достиг максимума, продолжаем
                 if (progress.progress < BREAK_TIME) {
-                    // Отправляем пакет с прогрессом на клиент
                     if (!world.isClientSide()) {
                         S2CBreakBlockPacket packet = new S2CBreakBlockPacket(targetPos, (int) ((progress.progress / (float) BREAK_TIME) * 10));
                         PacketHandler.sendToAllClients(packet);
                     }
                 } else {
-                    // Разрушаем блок, если прогресс достиг максимума
                     if (!world.isClientSide()) {
-                        // Разрушаем блок на сервере и удаляем прогресс
                         world.destroyBlock(targetPos, true, player);
                         breakingProgress.remove(player.getUUID());
                     }

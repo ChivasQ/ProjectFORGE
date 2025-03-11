@@ -52,7 +52,7 @@ public class ModEntityTypes {
 
     public static final RegistryObject<EntityType<Sandworm>> SANDWORM =
             ENTITY_TYPES.register("sandworm",
-        () -> EntityType.Builder.of(Sandworm::new, MobCategory.MONSTER).fireImmune().sized(1F, 5.0F).clientTrackingRange(10)
+        () -> EntityType.Builder.of(Sandworm::new, MobCategory.MONSTER).fireImmune().sized(1.F, 1.0F).clientTrackingRange(10)
                 .build("sandworm"));
 
 

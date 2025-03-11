@@ -9,15 +9,18 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.PartEntity;
 
 import javax.annotation.Nullable;
 
 
 public class SandwormPart extends PartEntity<Sandworm> {
-    public final Sandworm parentMob;
-    public final String name;
-    private final EntityDimensions size;
+    public Sandworm parentMob;
+    public String name;
+    private EntityDimensions size;
+    public SandwormPart lastSegment;
+    public float segmentInternal = 2.8f;
 
     public SandwormPart(Sandworm pParentMob, String pName, float pWidth, float pHeight) {
         super(pParentMob);
@@ -26,7 +29,19 @@ public class SandwormPart extends PartEntity<Sandworm> {
         this.parentMob = pParentMob;
         this.name = pName;
     }
+    public Vec3 getNextPos(){
+        if(distanceToSqr(lastSegment)<1f) return position();
+        //this.lookAt(lastSegment.createCommandSourceStack().getAnchor(), 500,500);
+        Vec3 newPos = lastSegment.position().add(position().subtract(lastSegment.position()).normalize().scale(segmentInternal));
+        return newPos;
+    }
+    int discardTimer = 0;
+    int _discardTimer;
+    @Override
+    public void tick(){
+        super.tick();
 
+    }
     protected void defineSynchedData() {
     }
 
@@ -54,9 +69,9 @@ public class SandwormPart extends PartEntity<Sandworm> {
     /**
      * Called when the entity is attacked.
      */
-    public boolean hurt(DamageSource pSource, float pAmount) {
-        return this.isInvulnerableTo(pSource) ? false : this.parentMob.hurt(this, pSource, pAmount);
-    }
+//    public boolean hurt(DamageSource pSource, float pAmount) {
+//        return this.isInvulnerableTo(pSource) ? false : this.parentMob.hurt(this, pSource, pAmount);
+//    }
 
     /**
      * Returns {@code true} if Entity argument is equal to this Entity

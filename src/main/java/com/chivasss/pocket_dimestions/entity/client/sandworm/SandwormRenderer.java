@@ -54,6 +54,16 @@ public class SandwormRenderer<T extends Entity> extends EntityRenderer<Sandworm>
 //    }
 
 
+//    @Override
+//    public void render(Sandworm pEntity, float pEntityYaw, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
+//                pPoseStack.pushPose();
+//        pPoseStack.scale(-1.0F, -1.0F, 1.0F);
+//        VertexConsumer vertexconsumer = pBuffer.getBuffer(RENDER_TYPE);
+//        this.model.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+//        pPoseStack.popPose();
+//        super.render(pEntity, pEntityYaw, pPartialTick, pPoseStack, pBuffer, pPackedLight);
+//    }
+
     @Override
     public ResourceLocation getTextureLocation(Sandworm pEntity) {
         return SANDWORM_LOCATION;
