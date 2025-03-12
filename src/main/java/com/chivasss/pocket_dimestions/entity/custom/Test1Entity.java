@@ -42,17 +42,17 @@ public class Test1Entity extends Entity implements TraceableEntity {
             //this.lookAt(EntityAnchorArgument.Anchor.FEET, getOwner().getPosition(1));
             //this.teleportTo(vec3.x,vec3.y,vec3.z);
         }
-        this.tickLerp();
+//        this.tickLerp();
         super.tick();
     }
-    public void lerpTo(double pX, double pY, double pZ, float pYaw, float pPitch, int pPosRotationIncrements, boolean pTeleport) {
-        this.lerpX = pX;
-        this.lerpY = pY;
-        this.lerpZ = pZ;
-        this.lerpYRot = pYaw;
-        this.lerpXRot = pPitch;
-        this.lerpSteps = 5;
-    }
+//    public void lerpTo(double pX, double pY, double pZ, float pYaw, float pPitch, int pPosRotationIncrements, boolean pTeleport) {
+//        this.lerpX = pX;
+//        this.lerpY = pY;
+//        this.lerpZ = pZ;
+//        this.lerpYRot = pYaw;
+//        this.lerpXRot = pPitch;
+//        this.lerpSteps = 5;
+//    }
     private void tickLerp() {
         if (this.isControlledByLocalInstance()) {
             this.lerpSteps = 0;

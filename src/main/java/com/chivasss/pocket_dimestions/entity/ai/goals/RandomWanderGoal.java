@@ -3,51 +3,40 @@ package com.chivasss.pocket_dimestions.entity.ai.goals;
 
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
-
 public class RandomWanderGoal extends Goal {
-    private static Vec3 randomTarget;
+    private Vec3 randomTarget;
     private int tickToChangeTarget;
     private final int _tickToChangeTarget;
-    private boolean randomDirection;
-    private final Mob warm;
+    private final Mob mob;
+    private float targetYaw;
+    private float targetPitch;
 
     public RandomWanderGoal(Mob warm, int tickToChangeTarget) {
-        this.warm = warm;
+        this.mob = warm;
         findWanderTarget();
-        randomDirection = warm.getRandom().nextBoolean();
         this._tickToChangeTarget = tickToChangeTarget;
+        this.targetYaw = warm.getYRot();
+        this.targetPitch = warm.getXRot();
     }
 
     protected Vec3 findWanderTarget() {
-        randomTarget = warm.position().add(Math.random() * 20 - 10, Math.random() * 20 - 8, Math.random() * 20 - 10);
-        BlockPos pos = new BlockPos((int) randomTarget.x, (int) randomTarget.y, (int) randomTarget.z);
-        int delta = 0;
-        while (warm.level().getBlockState(pos).isAir() && pos.getY() > -65) {
-            pos = pos.below();
-            delta++;
-        }
-        float f0 = delta + warm.getRandom().nextIntBetweenInclusive(-3, 5);
-        float f1 = f0 < -65 ? -130 - f0 : f0;
-        randomTarget = randomTarget.subtract(0, f1, 0);
-
-        randomDirection = !randomDirection;
-        return randomTarget;
-    }
-
-    public static Vec3 getWanderTarget() {
+        randomTarget = mob.position().add(Math.random() * 20 - 10, Math.random() * 20 - 10, Math.random() * 20 - 10);
+        targetYaw = (float) (Math.atan2(randomTarget.z - mob.getZ(), randomTarget.x - mob.getX()) * (180F / Math.PI));
+        targetPitch = (float) (-Math.atan2(randomTarget.y - mob.getY(), mob.position().distanceTo(randomTarget)) * (180F / Math.PI));
         return randomTarget;
     }
 
     @Override
     public boolean canUse() {
         if (--tickToChangeTarget <= 0) {
-            tickToChangeTarget = _tickToChangeTarget + warm.getRandom().nextIntBetweenInclusive(0, 20);
+            tickToChangeTarget = _tickToChangeTarget + mob.getRandom().nextIntBetweenInclusive(0, 20);
             findWanderTarget();
         }
-        return warm.getTarget() == null;
+        return mob.getTarget() == null;
     }
 
     public boolean canContinueToUse() {
@@ -55,12 +44,19 @@ public class RandomWanderGoal extends Goal {
     }
 
     public void tick() {
-        double distance = warm.distanceToSqr(randomTarget);
+        float currentYaw = mob.getYRot();
+        float currentPitch = mob.getXRot();
 
-        if (distance > 16.0 * 16) {
-            warm.lookAt(EntityAnchorArgument.Anchor.EYES, randomTarget);
-//                warm.lookAt(EntityAnchorArgument.Anchor.EYES, randomTarget);
-        }
-        warm.addDeltaMovement(warm.getLookAngle().scale(0.04f));
+        float newYaw = Mth.rotLerp(0.1F, currentYaw, targetYaw);
+        float newPitch = Mth.rotLerp(0.1F, currentPitch, targetPitch);
+
+        mob.setYRot(newYaw);
+        mob.setYHeadRot(newYaw);
+        mob.setXRot(newPitch);
+
+        Vec3 lookDirection = Vec3.directionFromRotation(newPitch, newYaw).scale(0.04f);
+        System.out.println(lookDirection.toString());
+        //mob.getLookControl().setLookAt(lookDirection.normalize());
+        mob.addDeltaMovement(lookDirection);
     }
 }

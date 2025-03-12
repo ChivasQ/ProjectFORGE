@@ -35,8 +35,6 @@ public class SandwormPart extends PartEntity<Sandworm> {
         Vec3 newPos = lastSegment.position().add(position().subtract(lastSegment.position()).normalize().scale(segmentInternal));
         return newPos;
     }
-    int discardTimer = 0;
-    int _discardTimer;
     @Override
     public void tick(){
         super.tick();

@@ -1,72 +1,44 @@
 package com.chivasss.pocket_dimestions.entity.custom.sandworm;
 
 import com.chivasss.pocket_dimestions.entity.ai.goals.RandomWanderGoal;
-import com.chivasss.pocket_dimestions.util.SnakePoint;
-import com.mojang.logging.LogUtils;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.GoalSelector;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.PartEntity;
-import org.slf4j.Logger;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Sandworm extends Monster {
-    public final double[][] positions = new double[64][3];
-    public int posMarker = -1;
-    public List<SnakePoint> snakePath = new ArrayList<SnakePoint>();
-    private float bodySpace = 0.5f;
+    public List<Vec3> path = new ArrayList<Vec3>();
+    private float bodySpace = 1.1f;
     private SandwormPart[] bodies;
-    private SandwormPart bone1;
-    private SandwormPart bone2;
-    private SandwormPart bone3;
-    private SandwormPart bone4;
-    private SandwormPart bone5;
-    private SandwormPart bone6;
-    private SandwormPart bone7;
-    private SandwormPart bone8;
-    private SandwormPart bone9;
 
     public Sandworm(EntityType<? extends Sandworm> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.bone1 = new SandwormPart(this, "bone1", 1.0F, 1.0F);
-        this.bone2 = new SandwormPart(this, "bone2", 1.0F, 1.0F);
-        this.bone3 = new SandwormPart(this, "bone3", 1.0F, 1.0F);
-        this.bone4 = new SandwormPart(this, "bone4", 1.0F, 1.0F);
-        this.bone5 = new SandwormPart(this, "bone5", 1.0F, 1.0F);
-        this.bone6 = new SandwormPart(this, "bone6", 1.0F, 1.0F);
-        this.bone7 = new SandwormPart(this, "bone7", 1.0F, 1.0F);
-        this.bone8 = new SandwormPart(this, "bone8", 1.0F, 1.0F);
-        this.bone9 = new SandwormPart(this, "bone9", 1.0F, 1.0F);
-        this.bodies = new SandwormPart[]{
-                this.bone1,
-                this.bone2,
-                this.bone3,
-                this.bone4,
-                this.bone5,
-                this.bone6,
-                this.bone7,
-                this.bone8,
-                this.bone9,
-        };
-        //this.noPhysics = true;
-        this.setNoGravity(true);
 
+        int segmentCount = 20;
+        this.bodies = new SandwormPart[segmentCount];
+
+        for (int i = 0; i < segmentCount; i++) {
+            this.bodies[i] = new SandwormPart(this, "bone" + (i + 1), 1.0F, 1.0F);
+        }
+
+        this.setNoGravity(true);
         this.noCulling = true;
     }
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new RandomWanderGoal(this, 20));
+        this.goalSelector.addGoal(0, new RandomWanderGoal(this, 80));
+        //this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
 
     }
     public static AttributeSupplier.Builder createAttributes() {
@@ -88,10 +60,11 @@ public class Sandworm extends Monster {
         for(int j = 0; j < this.bodies.length; ++j) {
             avec3[j] = new Vec3(this.bodies[j].getX(), this.bodies[j].getY(), this.bodies[j].getZ());
         }
-        snakePath.add(0, new SnakePoint(this.getX(), this.getY(), this.getZ()));
-
-        if (snakePath.size() > 500) {
-            snakePath.remove(snakePath.size() - 1);
+        if(this.getDeltaMovement() != Vec3.ZERO) {
+            path.add(0, new Vec3(this.getX(), this.getY(), this.getZ()));
+        }
+        if (path.size() > 1000) {
+            path.remove(path.size() - 1);
         }
 
         for (int i = 0; i < bodies.length; i++) {
@@ -110,18 +83,20 @@ public class Sandworm extends Monster {
             this.bodies[l].xOld = avec3[l].x;
             this.bodies[l].yOld = avec3[l].y;
             this.bodies[l].zOld = avec3[l].z;
+            this.bodies[l].xRotO = 0;
+            this.bodies[l].yRotO = 0;
         }
 
-        //this.setDeltaMovement(0.00, 0.00, 0.00);
-        //this.move(MoverType.SELF, RandomWanderGoal.getWanderTarget().normalize().multiply(0.30,0.30,0.30));
+//        this.setDeltaMovement(0.02, 0.02, 0.02);
+//        this.move(MoverType.SELF, this.getDeltaMovement());
     }
 
     private Vec3 getPositionAlongPath(double distance) {
         double traveled = 0.0;
 
-        for (int i = 1; i < snakePath.size(); i++) {
-            SnakePoint prev = snakePath.get(i - 1);
-            SnakePoint curr = snakePath.get(i);
+        for (int i = 1; i < path.size(); i++) {
+            Vec3 prev = path.get(i - 1);
+            Vec3 curr = path.get(i);
 
             double segmentLength = prev.distanceTo(curr);
             traveled += segmentLength;
@@ -148,5 +123,15 @@ public class Sandworm extends Monster {
     @Override
     public PartEntity<?>[] getParts() {
         return this.bodies;
+    }
+
+    @Override
+    public boolean isNoGravity() {
+        return true;
+    }
+
+    @Override
+    public boolean causeFallDamage(float pFallDistance, float pMultiplier, DamageSource pSource) {
+        return false;
     }
 }

@@ -9,8 +9,10 @@ import com.chivasss.pocket_dimestions.entity.client.CoreModel;
 import com.chivasss.pocket_dimestions.entity.client.ModModelLayers;
 import com.chivasss.pocket_dimestions.entity.client.Test1EntityModel;
 import com.chivasss.pocket_dimestions.entity.client.rune_turret.RuneTurretModel;
+import com.chivasss.pocket_dimestions.entity.client.sandworm.SandwormHeadModel;
 import com.chivasss.pocket_dimestions.entity.client.sandworm.SandwormModel;
 import com.chivasss.pocket_dimestions.entity.client.spidertron.SpidertronModel;
+import com.chivasss.pocket_dimestions.entity.custom.sandworm.SandwormPart;
 import com.chivasss.pocket_dimestions.entity.custom.symbiote.SymbioteModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -31,6 +33,7 @@ public class ModEventBusClientEvents {
         event.registerLayerDefinition(ModModelLayers.LAYER_LOCATION, SandwormModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.SPIDERTRON_LAYER, SpidertronModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.SYMBIOTE_LAYER, SymbioteModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.LAYER_LOCATION, SandwormHeadModel::createBodyLayer);
     }
 
     @SubscribeEvent
