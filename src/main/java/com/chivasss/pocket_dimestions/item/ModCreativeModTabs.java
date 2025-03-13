@@ -36,6 +36,7 @@ public class ModCreativeModTabs {
                                 pOutput.accept(ModItems.QUARTZ_SWORD.get());
                                 pOutput.accept(ModItems.MURMILLON_AMULET.get());
                                 pOutput.accept(ModItems.BORE.get());
+                                pOutput.accept(ModItems.AI_TEST_ITEM.get());
 
                                 pOutput.accept(ModBlocks.CAST_IRON_BLOCK.get());
                                 pOutput.accept(ModBlocks.ASPHALT.get());

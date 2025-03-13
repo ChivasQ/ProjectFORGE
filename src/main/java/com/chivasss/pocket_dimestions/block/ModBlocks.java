@@ -66,6 +66,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> THERMAL_QUARTZ = registerBlock("thermal_quartz", () -> new Block(BlockBehaviour.Properties.copy(Blocks.GLASS).strength(0.3F)
             .sound(SoundType.GLASS).lightLevel((state) -> {return 11;})));
 
+    public static final RegistryObject<Block> AI_TEST_BLOCK = registerBlock("ai_test_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.FIRE)
+            .sound(SoundType.AMETHYST).noCollission()));
+
     public static final RegistryObject<Block> ELECTRO_TURRET_BLOCK = registerBlock("electro_turret",
             () -> new ElectroTurretBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
             .strength(4f)));

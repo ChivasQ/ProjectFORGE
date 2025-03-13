@@ -18,6 +18,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.ASPHALT);
         blockWithItem(ModBlocks.ZINC_BLOCK);
         blockWithItem(ModBlocks.ZINC_LAMP);
+        blockWithItem(ModBlocks.AI_TEST_BLOCK);
         //blockWithItem(ModBlocks.ALTAR);
         blockWithItem(ModBlocks.ZINC_ORE);
         blockWithItem(ModBlocks.DEEPSLATE_ZINC_ORE);

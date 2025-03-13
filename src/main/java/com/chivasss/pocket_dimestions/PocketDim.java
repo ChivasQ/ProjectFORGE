@@ -95,7 +95,10 @@ public class PocketDim {
             EntityRenderers.register(ModEntityTypes.RUNE_TURRET.get(), RuneTurretRenderer::new);
             EntityRenderers.register(ModEntityTypes.TEST.get(), (context) -> new Test1EntityRenderer<>(context, ModModelLayers.TEST1_LAYER));
             EntityRenderers.register(ModEntityTypes.BOLA.get(), NoopRenderer::new);
-            EntityRenderers.register(ModEntityTypes.SANDWORM.get(), (context) -> new SandwormRenderer<>(context, ModModelLayers.LAYER_LOCATION));
+
+            EntityRenderers.register(ModEntityTypes.SANDWORM.get(), (context) -> new SandwormRenderer<>(context,
+                    ModModelLayers.WORM_HEAD_LAYER, ModModelLayers.WORM_BODY_LAYER, ModModelLayers.WORM_JOINT_LAYER));
+
             EntityRenderers.register(ModEntityTypes.SPIDERTRON.get(), (context) -> new SpidertronRenderer<>(context, ModModelLayers.SPIDERTRON_LAYER));
             EntityRenderers.register(ModEntityTypes.SYMBIOTE.get(), (context) -> new SymbioteRenderer(context, ModModelLayers.SYMBIOTE_LAYER));
 

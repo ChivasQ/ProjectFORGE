@@ -1,12 +1,10 @@
 package com.chivasss.pocket_dimestions.entity.client.sandworm;
 
 import com.chivasss.pocket_dimestions.PocketDim;
-import com.chivasss.pocket_dimestions.entity.client.Test1EntityModel;
 import com.chivasss.pocket_dimestions.entity.custom.sandworm.Sandworm;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -16,30 +14,23 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.PartEntity;
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
-
-import java.util.Optional;
-
-import static com.chivasss.pocket_dimestions.entity.custom.Test1Entity.owner;
 
 
 public class SandwormRenderer<T extends Entity> extends EntityRenderer<Sandworm> {
-    private static final ResourceLocation SANDWORM_LOCATION = new ResourceLocation(PocketDim.MODID, "textures/entity/worm_texture.png");
+    private static final ResourceLocation SANDWORM_LOCATION = new ResourceLocation(PocketDim.MODID, "textures/entity/textureworm.png");
     private static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(SANDWORM_LOCATION);
     protected final SandwormHeadModel model;
-    protected final SandwormModel partModel;
+    protected final SandwormPartModel partModel;
+    protected final SandwormJointPartModel jointPartModel;
 
 
-    public SandwormRenderer(EntityRendererProvider.Context pContext, ModelLayerLocation pLayer) {
+    public SandwormRenderer(EntityRendererProvider.Context pContext, ModelLayerLocation headLayer, ModelLayerLocation partLayer, ModelLayerLocation jointLayer) {
         super(pContext);
-        this.model = new SandwormHeadModel<>(pContext.bakeLayer(pLayer));
-        this.partModel = new SandwormModel<>(pContext.bakeLayer(pLayer));
+        this.model = new SandwormHeadModel<>(pContext.bakeLayer(headLayer));
+        this.partModel = new SandwormPartModel<>(pContext.bakeLayer(partLayer));
+        this.jointPartModel = new SandwormJointPartModel<>(pContext.bakeLayer(jointLayer));
     }
 
 //    @Override
@@ -70,7 +61,7 @@ public class SandwormRenderer<T extends Entity> extends EntityRenderer<Sandworm>
     public void render(Sandworm pEntity, float pEntityYaw, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         PartEntity[] parts = pEntity.getParts();
         VertexConsumer vertexconsumer = pBuffer.getBuffer(RENDER_TYPE);
-        Vec3 entityPos = pEntity.getPosition(pPartialTick);
+        Vec3 entityPos = pEntity.getPosition(pPartialTick).add(0,0.25,0);
 
         pPoseStack.pushPose();
         pPoseStack.translate(0, 0.5, 0);
@@ -82,7 +73,7 @@ public class SandwormRenderer<T extends Entity> extends EntityRenderer<Sandworm>
         pPoseStack.mulPose(Axis.YP.rotationDegrees(-yRot));
         pPoseStack.mulPose(Axis.XP.rotationDegrees(-xRot));
 
-        pPoseStack.translate(0, -1.5, 0);
+        pPoseStack.translate(0, -1.5, -0.25);
 
         this.model.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         pPoseStack.popPose();
@@ -103,12 +94,14 @@ public class SandwormRenderer<T extends Entity> extends EntityRenderer<Sandworm>
 
             //pPoseStack.mulPose(new Quaternionf().lookAlong(subtracted.normalize().toVector3f(), new Vector3f(0, 1, 0)));
             pPoseStack.translate(0, -1.5, 0);
-            partModel.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            if (i % 2 != 0) {
+                partModel.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            } else {
+                jointPartModel.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            }
             pPoseStack.popPose();
             entityPos = parts[i].getPosition(pPartialTick);
         }
-
-
     }
 
     private static float GetXPAngle1(Vec3 target, Vec3 vec3) {

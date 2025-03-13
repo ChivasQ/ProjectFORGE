@@ -12,16 +12,14 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.entity.PartEntity;
 
 
 public class SandwormPartRenderer<T extends SandwormPart> extends EntityRenderer<T> {
     private static final ResourceLocation SANDWORM_LOCATION = new ResourceLocation(PocketDim.MODID, "textures/entity/worm_texture.png");
     private static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(SANDWORM_LOCATION);
-    protected final SandwormModel model;
+    protected final SandwormPartModel model;
 
-    protected SandwormPartRenderer(EntityRendererProvider.Context pContext, SandwormModel model) {
+    protected SandwormPartRenderer(EntityRendererProvider.Context pContext, SandwormPartModel model) {
         super(pContext);
         this.model = model;
     }

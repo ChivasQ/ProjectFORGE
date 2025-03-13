@@ -1,6 +1,7 @@
 package com.chivasss.pocket_dimestions.entity.custom.sandworm;
 
 import com.chivasss.pocket_dimestions.entity.ai.goals.RandomWanderGoal;
+import com.chivasss.pocket_dimestions.entity.ai.goals.SpiralWanderGoal;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -17,27 +18,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sandworm extends Monster {
-    public List<Vec3> path = new ArrayList<Vec3>();
-    private float bodySpace = 1.1f;
+    public List<Vec3> path = new ArrayList<>();
+    private float bodySpace = 0.65f;
     private SandwormPart[] bodies;
 
     public Sandworm(EntityType<? extends Sandworm> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
 
-        int segmentCount = 20;
+        int segmentCount = 40;
         this.bodies = new SandwormPart[segmentCount];
-
+        boolean n = false;
         for (int i = 0; i < segmentCount; i++) {
-            this.bodies[i] = new SandwormPart(this, "bone" + (i + 1), 1.0F, 1.0F);
+//            this.bodies[i] = new SandwormPart(this, "joint" + (i + 1), .5F, .5F);
+            this.bodies[i] = new SandwormPart(this, "bone" + (i + 1), n ? 1.0F : 0.75F, 1.0F);
+            n = !n;
         }
 
         this.setNoGravity(true);
+        this.setGlowingTag(true);
+        this.noPhysics = true;
         this.noCulling = true;
     }
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new RandomWanderGoal(this, 80));
+        this.goalSelector.addGoal(0, new RandomWanderGoal(this, 40));
+        //this.goalSelector.addGoal(0, new SpiralWanderGoal(this, 80, 5000, 0.01F, 1F));
         //this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
 
     }
@@ -46,8 +52,6 @@ public class Sandworm extends Monster {
                 .add(Attributes.MAX_HEALTH, 20D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.2D)
                 .add(Attributes.ATTACK_KNOCKBACK, 20D)
-                .add(Attributes.MOVEMENT_SPEED, 0D)
-                .add(Attributes.FLYING_SPEED, 0D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 100D)
                 .add(Attributes.ATTACK_DAMAGE, 10D);
@@ -61,7 +65,7 @@ public class Sandworm extends Monster {
             avec3[j] = new Vec3(this.bodies[j].getX(), this.bodies[j].getY(), this.bodies[j].getZ());
         }
         if(this.getDeltaMovement() != Vec3.ZERO) {
-            path.add(0, new Vec3(this.getX(), this.getY(), this.getZ()));
+            path.add(0, new Vec3(this.getX(), this.getY()+0.25, this.getZ()));
         }
         if (path.size() > 1000) {
             path.remove(path.size() - 1);
@@ -128,6 +132,13 @@ public class Sandworm extends Monster {
     @Override
     public boolean isNoGravity() {
         return true;
+    }
+
+
+
+    @Override
+    public boolean isInWall() {
+        return false;
     }
 
     @Override

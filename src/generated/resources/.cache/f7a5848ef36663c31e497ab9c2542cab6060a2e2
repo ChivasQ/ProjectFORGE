@@ -1,4 +1,5 @@
-// 1.20.1	2024-02-01T19:13:46.5634338	Block States: examplemod
+// 1.20.1	2025-03-13T13:53:19.5960143	Block States: examplemod
+2395ae28d63630e11707d759de0cca3337cc0c3b assets/examplemod/blockstates/ai_test_block.json
 57a645b7dd91ebe33b6d7be9e881ed47794aee7d assets/examplemod/blockstates/asphalt.json
 54ed05dbb44510eadaa72b17b3b1c62e751bde11 assets/examplemod/blockstates/cracked_quartz_bricks.json
 af6edf8f33f6d1fe258f5f006b03f02a2a7b1b16 assets/examplemod/blockstates/deepslate_zinc_ore.json
@@ -7,6 +8,7 @@ af6edf8f33f6d1fe258f5f006b03f02a2a7b1b16 assets/examplemod/blockstates/deepslate
 096eab39bf2cbd0295b93c246ea84f08501c4ed3 assets/examplemod/blockstates/zinc_block.json
 68061a8589a3630ec7dc4298aeed09ef51ab6a4b assets/examplemod/blockstates/zinc_lamp.json
 7c29ac8fad86da3dbc82e84c7605a2a2ffb1fa61 assets/examplemod/blockstates/zinc_ore.json
+7c43c9cef092911bbba4e9ebd8b1e9c54f112529 assets/examplemod/models/block/ai_test_block.json
 05084d64558eff67eef7cb5b422813945f2b9566 assets/examplemod/models/block/asphalt.json
 f8c1be2911b5755e52641e5943a2cf3ca99598d8 assets/examplemod/models/block/cracked_quartz_bricks.json
 e4c8db08a19eef68db6cdffaae6bbd60d884421f assets/examplemod/models/block/deepslate_zinc_ore.json
@@ -15,6 +17,7 @@ b5675fce775fd18fa8248b5577d92c02a9dff696 assets/examplemod/models/block/thermal_
 39684b427d9d0368af6503e9b663fdb108b2cb21 assets/examplemod/models/block/zinc_block.json
 ad147040112b8133460a677d90864a78363c096f assets/examplemod/models/block/zinc_lamp.json
 b78a962cbb44737d1e7166fb5c2453c64205e97d assets/examplemod/models/block/zinc_ore.json
+22135aff07d8588941902208b9b9765cf88398ce assets/examplemod/models/item/ai_test_block.json
 2d08638e5d62aa7f6ec8c08c7060404f283213f2 assets/examplemod/models/item/asphalt.json
 0d299975390e0de574fe3ed097a1822e13257f6d assets/examplemod/models/item/cracked_quartz_bricks.json
 26dfaa1b8773f624276a6969b4705b7cab385e1f assets/examplemod/models/item/deepslate_zinc_ore.json

@@ -9,23 +9,25 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.Entity;
 
-public class SandwormHeadModel<T extends Entity> extends EntityModel<T> {
-    private final ModelPart part1;
+// Made with Blockbench 4.9.3
+// Exported for Minecraft version 1.17 or later with Mojang mappings
+// Paste this class into your mod and generate all required imports
+
+
+
+public class SandwormPartModel<T extends Entity> extends EntityModel<T> {
+    public final ModelPart part1;
     private final ModelPart blade0;
     private final ModelPart blade1;
     private final ModelPart blade2;
     private final ModelPart blade3;
-    private final ModelPart DRILL;
-    private final ModelPart DUR_DUR_DUR;
 
-    public SandwormHeadModel(ModelPart root) {
+    public SandwormPartModel(ModelPart root) {
         this.part1 = root.getChild("part1");
         this.blade0 = this.part1.getChild("blade0");
         this.blade1 = this.part1.getChild("blade1");
         this.blade2 = this.part1.getChild("blade2");
         this.blade3 = this.part1.getChild("blade3");
-        this.DRILL = root.getChild("DRILL");
-        this.DUR_DUR_DUR = this.DRILL.getChild("DUR_DUR_DUR");
     }
 
 
@@ -72,47 +74,14 @@ public class SandwormHeadModel<T extends Entity> extends EntityModel<T> {
                 .texOffs(64, 34).addBox(-11.0F, -7.0F, -19.0F, 0.0F, 7.0F, 21.0F, new CubeDeformation(0.0F))
                 .texOffs(68, 0).addBox(-13.5F, -2.0F, -11.0F, 8.0F, 2.0F, 11.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(9.4193F, -8.0404F, 6.1815F, -0.2618F, 0.0F, 0.0F));
 
-        PartDefinition DRILL = partdefinition.addOrReplaceChild("DRILL", CubeListBuilder.create().texOffs(0, 66).addBox(-7.0F, -7.0F, -11.7778F, 14.0F, 14.0F, 5.0F, new CubeDeformation(0.0F))
-                .texOffs(64, 62).addBox(-7.5F, -7.5F, -12.2778F, 15.0F, 15.0F, 6.0F, new CubeDeformation(0.0F))
-                .texOffs(106, 33).addBox(-3.0F, -3.0F, -12.7778F, 6.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 3.0F, 0.0278F, 1.5708F, 0.0F, 0.0F));
-
-        PartDefinition DR_r1 = DRILL.addOrReplaceChild("DR_r1", CubeListBuilder.create().texOffs(38, 78).addBox(-1.0F, -1.0F, -5.0F, 2.0F, 2.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 18.2222F, 0.0F, 0.0F, -0.5236F));
-
-        PartDefinition DR_r2 = DRILL.addOrReplaceChild("DR_r2", CubeListBuilder.create().texOffs(106, 0).addBox(-2.0F, -2.0F, -5.0F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 14.2222F, 0.0F, 0.0F, -0.4363F));
-
-        PartDefinition DR_r3 = DRILL.addOrReplaceChild("DR_r3", CubeListBuilder.create().texOffs(104, 13).addBox(-3.0F, -3.0F, -5.0F, 6.0F, 6.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 10.2222F, 0.0F, 0.0F, -0.3491F));
-
-        PartDefinition DR_r4 = DRILL.addOrReplaceChild("DR_r4", CubeListBuilder.create().texOffs(38, 66).addBox(-4.0F, -4.0F, -5.0F, 8.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 6.2222F, 0.0F, 0.0F, -0.2618F));
-
-        PartDefinition DR_r5 = DRILL.addOrReplaceChild("DR_r5", CubeListBuilder.create().texOffs(32, 99).addBox(-5.0F, -5.0F, -5.0F, 10.0F, 10.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 2.2222F, 0.0F, 0.0F, -0.1745F));
-
-        PartDefinition DR_r6 = DRILL.addOrReplaceChild("DR_r6", CubeListBuilder.create().texOffs(38, 83).addBox(-6.0F, -6.0F, -1.0F, 12.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, -5.7778F, 0.0F, 0.0F, -0.0873F));
-
-        PartDefinition DUR_DUR_DUR = DRILL.addOrReplaceChild("DUR_DUR_DUR", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, -34.7778F));
-
-        PartDefinition cube_r1 = DUR_DUR_DUR.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(106, 40).addBox(-1.25F, -1.25F, -5.25F, 2.5F, 2.5F, 3.5F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 53.0F, 0.0F, 0.0F, -0.5236F));
-
-        PartDefinition cube_r2 = DUR_DUR_DUR.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(104, 23).addBox(-2.25F, -2.25F, -5.25F, 4.5F, 4.5F, 4.5F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 49.0F, 0.0F, 0.0F, -0.4363F));
-
-        PartDefinition cube_r3 = DUR_DUR_DUR.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(102, 83).addBox(-3.25F, -3.25F, -5.25F, 6.5F, 6.5F, 4.5F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 45.0F, 0.0F, 0.0F, -0.3491F));
-
-        PartDefinition cube_r4 = DUR_DUR_DUR.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(0, 101).addBox(-4.25F, -4.25F, -5.25F, 8.5F, 8.5F, 4.5F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 41.0F, 0.0F, 0.0F, -0.2618F));
-
-        PartDefinition cube_r5 = DUR_DUR_DUR.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(0, 85).addBox(-5.25F, -5.25F, -5.25F, 10.5F, 10.5F, 4.5F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 37.0F, 0.0F, 0.0F, -0.1745F));
-
-        PartDefinition cube_r6 = DUR_DUR_DUR.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(68, 13).addBox(-6.25F, -6.25F, -1.25F, 12.5F, 12.5F, 4.5F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 29.0F, 0.0F, 0.0F, -0.0873F));
-
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
-
 
     @Override
     public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.part1.getAllParts().forEach(ModelPart::resetPose);
-        this.DRILL.getAllParts().forEach(ModelPart::resetPose);
         this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
     }
-
     private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
 //        pNetHeadYaw = Mth.clamp(pNetHeadYaw, -30.0F, 30.0F);
 //        pHeadPitch = Mth.clamp(pHeadPitch, -25.0F, 45.0F);
@@ -120,13 +89,11 @@ public class SandwormHeadModel<T extends Entity> extends EntityModel<T> {
 //        this.turret_main.setRotation(0,0,0);
 
 
-        this.part1.yRot = pNetHeadYaw * ((float) Math.PI / 180F);
-        this.part1.xRot = pHeadPitch * ((float) Math.PI / 180F);
+        this.part1.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
+        this.part1.xRot = pHeadPitch * ((float)Math.PI / 180F);
     }
-
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         part1.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        DRILL.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }

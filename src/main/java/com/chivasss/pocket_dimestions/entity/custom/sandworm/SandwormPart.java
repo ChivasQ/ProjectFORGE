@@ -67,9 +67,9 @@ public class SandwormPart extends PartEntity<Sandworm> {
     /**
      * Called when the entity is attacked.
      */
-//    public boolean hurt(DamageSource pSource, float pAmount) {
-//        return this.isInvulnerableTo(pSource) ? false : this.parentMob.hurt(this, pSource, pAmount);
-//    }
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        return ! this.isInvulnerableTo(pSource) && this.parentMob.hurt(pSource, pAmount);
+    }
 
     /**
      * Returns {@code true} if Entity argument is equal to this Entity

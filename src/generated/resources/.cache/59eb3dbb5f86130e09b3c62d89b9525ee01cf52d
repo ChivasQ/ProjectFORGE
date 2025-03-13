@@ -1,4 +1,5 @@
-// 1.20.1	2024-02-01T19:13:46.5654351	Loot Tables
+// 1.20.1	2025-03-13T13:53:19.5980173	Loot Tables
+f3f4c76393f8ae3d087e13c3d93b7dc526a21ddc data/examplemod/loot_tables/blocks/ai_test_block.json
 0d84e3ef589aed2c07665f2a51d7a034178fdc37 data/examplemod/loot_tables/blocks/altar_column.json
 c046da33201fa33a0909bc4acd74d0a01a1af1d9 data/examplemod/loot_tables/blocks/asphalt.json
 a35c06fd084dc0e06f781a6c640391a713c4fb6f data/examplemod/loot_tables/blocks/cast_iron_block.json
