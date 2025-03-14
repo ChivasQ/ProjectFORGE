@@ -15,35 +15,36 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 public class RandomWanderGoal extends Goal {
     private Vec3 randomTarget;
-    private int tickToChangeTarget;
-    private final int _tickToChangeTarget;
     private final Mob mob;
 
-    public RandomWanderGoal(Mob warm, int tickToChangeTarget) {
-        this.mob = warm;
+    public RandomWanderGoal(Mob mob, int tickToChangeTarget) {
+        this.mob = mob;
         findWanderTarget();
-        this._tickToChangeTarget = tickToChangeTarget;
     }
 
     protected Vec3 findWanderTarget() {
         Vec3 pos = mob.position();
         Level level = mob.level();
 
-        Optional<BlockPos> optionalBlockPos = BlockPos.betweenClosedStream(
-                        new BlockPos((int) pos.x - 50, (int) pos.y - 50, (int) pos.z - 50),
-                        new BlockPos((int) pos.x + 50, (int) pos.y + 50, (int) pos.z + 50))
-                .filter(blockPos -> level.getBlockState(blockPos).getBlock() == ModBlocks.AI_TEST_BLOCK.get())
-                .findFirst();
+//        Optional<BlockPos> optionalBlockPos = BlockPos.betweenClosedStream(
+//                        new BlockPos((int) pos.x - 50, (int) pos.y - 50, (int) pos.z - 50),
+//                        new BlockPos((int) pos.x + 50, (int) pos.y + 50, (int) pos.z + 50))
+//                .filter(blockPos -> level.getBlockState(blockPos).getBlock() == ModBlocks.AI_TEST_BLOCK.get())
+//                .findFirst();
+        Optional<Entity> entity1 = level.getEntities(mob, new AABB(new BlockPos((int) pos.x - 20, (int) pos.y - 20, (int) pos.z - 20),
+                new BlockPos((int) pos.x + 20, (int) pos.y + 20, (int) pos.z + 20))).stream().filter(entity -> entity instanceof LivingEntity).findFirst();
 
-        if (optionalBlockPos.isPresent()) {
-            BlockPos obsidianPos = optionalBlockPos.get();
-            randomTarget = Vec3.atCenterOf(obsidianPos);
-        }else randomTarget = mob.position();
+        if (entity1.isPresent()) {
+//            BlockPos obsidianPos = optionalBlockPos.get();
+            System.out.println(entity1.get().position().toString());
+            randomTarget = entity1.get().position();
+        }else randomTarget = Vec3.ZERO;
 
 
 
@@ -55,7 +56,7 @@ public class RandomWanderGoal extends Goal {
     @Override
     public boolean canUse() {
         findWanderTarget();
-        return mob.getTarget() == null;
+        return true;
     }
 
     public boolean canContinueToUse() {
@@ -70,8 +71,13 @@ public class RandomWanderGoal extends Goal {
 //        } else {
 //            mob.getLookControl().setLookAt(randomTarget.x, randomTarget.y, randomTarget.z);
 //        }
-        lookAt(mob,randomTarget,10, 30);
-        mob.addDeltaMovement(mob.getLookAngle().scale(0.08f));
+
+        if (randomTarget == Vec3.ZERO) {
+            mob.setDeltaMovement(Vec3.ZERO);
+        } else {
+            lookAt(mob, randomTarget, 10, 30);
+            mob.addDeltaMovement(mob.getLookAngle().scale(0.1f));
+        }
     }
 
 
@@ -90,7 +96,7 @@ public class RandomWanderGoal extends Goal {
         mob.setYRot(newYaw);
         mob.setYHeadRot(newYaw);
 
-        mob.getLookControl().setLookAt(target.x, target.y, target.z, maxYRotIncrease/10, maxXRotIncrease*3);
+        mob.getLookControl().setLookAt(target.x, target.y, target.z, maxYRotIncrease, 90);
     }
 
     private float rotlerp(float pAngle, float pTargetAngle, float pMaxIncrease) {
