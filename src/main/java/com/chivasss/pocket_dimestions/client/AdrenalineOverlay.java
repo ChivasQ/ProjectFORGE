@@ -35,6 +35,7 @@ public class AdrenalineOverlay {
         ItemStack itemstack = Minecraft.getInstance().player.getInventory().getArmor(3);
         if (itemstack.is(Items.DIAMOND_HELMET) && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
             renderTextureOverlay(guiGraphics, TEXTURE, 1.0F, screenWidth, screenHeight);
+            ShaderExample.applyDistortion();
         }
         if (itemstack.is(Items.IRON_HELMET) && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
             renderConfusionOverlay(guiGraphics, 1.0F, screenWidth, screenHeight);

@@ -1,0 +1,4 @@
+{
+  "vertex": "minecraft:position_color",
+  "fragment": "examplemod:myeffect"
+}

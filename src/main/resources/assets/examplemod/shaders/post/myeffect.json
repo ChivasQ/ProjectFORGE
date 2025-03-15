@@ -1,0 +1,12 @@
+{
+  "targets": ["minecraft:main"],
+  "passes": [
+    {
+      "name": "myeffect",
+      "intarget": "minecraft:main",
+      "outtarget": "minecraft:main",
+      "auxtargets": [],
+      "program": "examplemod:shaders/program/myeffect"
+    }
+  ]
+}
