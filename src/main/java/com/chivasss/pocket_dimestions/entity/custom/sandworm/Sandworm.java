@@ -1,6 +1,7 @@
 package com.chivasss.pocket_dimestions.entity.custom.sandworm;
 
 import com.chivasss.pocket_dimestions.entity.ai.goals.RandomWanderGoal;
+import com.chivasss.pocket_dimestions.entity.ai.goals.RetreatGoal;
 import com.chivasss.pocket_dimestions.entity.custom.rune_turret.RuneTurretEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.PartEntity;
 
@@ -28,7 +30,7 @@ public class Sandworm extends Monster {
     public List<Vec3> path = new ArrayList<>();
     private float bodySpace = 0.65f;
     private SandwormPart[] bodies;
-    AttackPhase attackPhase = AttackPhase.WANDER;
+    public AttackPhase attackPhase = AttackPhase.WANDER;
     private Vec3 moveTargetPoint = Vec3.ZERO;
 
     public Sandworm(EntityType<? extends Sandworm> pEntityType, Level pLevel) {
@@ -51,6 +53,7 @@ public class Sandworm extends Monster {
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new RandomWanderGoal(this, 40));
+        this.goalSelector.addGoal(2, new RetreatGoal(this, 40));
         //this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 1, false, false, new Sandworm.SandwormAttackSelector(this)));
 
     }
@@ -146,7 +149,7 @@ public class Sandworm extends Monster {
     @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
         if (level().isClientSide()) return false;
-        System.out.println("Sandworm received damage: " + pAmount + " " + this.getHealth()); // Для отладки
+        //System.out.println("Sandworm received damage: " + pAmount + " " + this.getHealth()); // Для отладки
         return super.hurt(pSource.getEntity().damageSources().generic(), 2); // Применяем урон к основному телу
     }
     @Override
@@ -177,12 +180,17 @@ public class Sandworm extends Monster {
             Sandworm.this.yBodyRot = Sandworm.this.getYRot();
         }
     }
-    enum AttackPhase {
+    public enum AttackPhase {
         RETREAT,
         APPROACH,
         WANDER
     }
 
+    @Override
+    public void kill() {
+        this.remove(Entity.RemovalReason.KILLED);
+        this.gameEvent(GameEvent.ENTITY_DIE);
+    }
 
     private void hurt(List<Entity> pEntities) {
         for(Entity entity : pEntities) {
@@ -224,7 +232,7 @@ public class Sandworm extends Monster {
                     for (Player player : list) {
                         if (Sandworm.this.canAttack(player, TargetingConditions.DEFAULT)) {
                             Sandworm.this.setTarget(player);
-                            System.out.println("d");
+                            //System.out.println("d");
                             return true;
                         }
                     }

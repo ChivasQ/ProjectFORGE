@@ -1,9 +1,6 @@
 package com.chivasss.pocket_dimestions.entity.ai.goals;
 
 
-import com.chivasss.pocket_dimestions.block.ModBlocks;
-import com.chivasss.pocket_dimestions.entity.custom.sandworm.Sandworm;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -11,58 +8,38 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Comparator;
 import java.util.Optional;
-import java.util.stream.Stream;
 
-public class RandomWanderGoal extends Goal {
+public class RetreatGoal extends Goal {
     private Vec3 randomTarget;
     private final Mob mob;
 
-    public RandomWanderGoal(Mob mob, int tickToChangeTarget) {
+    public RetreatGoal(Mob mob, int tickToChangeTarget) {
         this.mob = mob;
-        findWanderTarget();
+        retreatToTarget();
     }
 
-    protected Vec3 findWanderTarget() {
+    protected Vec3 retreatToTarget() {
         Vec3 pos = mob.position();
         Level level = mob.level();
 
-//        Optional<BlockPos> optionalBlockPos = BlockPos.betweenClosedStream(
-//                        new BlockPos((int) pos.x - 50, (int) pos.y - 50, (int) pos.z - 50),
-//                        new BlockPos((int) pos.x + 50, (int) pos.y + 50, (int) pos.z + 50))
-//                .filter(blockPos -> level.getBlockState(blockPos).getBlock() == ModBlocks.AI_TEST_BLOCK.get())
-//                .findFirst();
+        BlockPos moveToPos = mob.blockPosition().offset(level.random.nextInt(20) - 10, level.random.nextInt(20) - 10, level.random.nextInt(20) - 10);
+        randomTarget = moveToPos.getCenter();
 
-        Optional<Entity> entity1 = level.getEntities(mob,
-                new AABB(new BlockPos((int) pos.x - 20, (int) pos.y - 20, (int) pos.z - 20),
-                        new BlockPos((int) pos.x + 20, (int) pos.y + 20, (int) pos.z + 20))).stream()
-                .filter(entity -> entity instanceof LivingEntity)
-                .sorted(Comparator.comparingDouble(entity -> entity.position().distanceToSqr(pos)))
-                .findFirst();
-
-        if (entity1.isPresent() && ! (entity1.get() instanceof Sandworm)) {
-            mob.setTarget((LivingEntity) entity1.get());
-            randomTarget = entity1.get().position().add(0,0.5,0);
-        }
-        else randomTarget = Vec3.ZERO;
-
-
-
-        return randomTarget;
+        return moveToPos.getCenter();
     }
 
 
 
     @Override
     public boolean canUse() {
-        findWanderTarget();
-        return randomTarget.distanceToSqr(this.mob.position()) > 9;
+        retreatToTarget();
+        if (mob.getTarget() == null) return false;
+        return mob.getTarget().distanceToSqr(this.mob.position()) <= 20;
     }
 
     public boolean canContinueToUse() {
