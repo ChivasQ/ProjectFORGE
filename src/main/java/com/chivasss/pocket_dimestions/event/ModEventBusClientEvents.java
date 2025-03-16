@@ -56,7 +56,11 @@ public class ModEventBusClientEvents {
 
     @SubscribeEvent
     public static void registerGuiOverlay(RegisterGuiOverlaysEvent event){
-        event.registerBelow(VanillaGuiOverlay.HOTBAR.id(), "adrenaline", AdrenalineOverlay.OVERLAY_ADRENALINE);
+        event.registerAboveAll( "adrenaline", AdrenalineOverlay.OVERLAY_ADRENALINE);
+        //event.registerAbove(VanillaGuiOverlay.CHAT_PANEL.id(), "adrenaline", AdrenalineOverlay.OVERLAY_ADRENALINE);
+        //event.registerBelow(VanillaGuiOverlay.HOTBAR.id(), "adrenaline", AdrenalineOverlay.OVERLAY_ADRENALINE);
+
+        //        event.registerBelow(VanillaGuiOverlay.HOTBAR.id(), "adrenaline", AdrenalineOverlay.OVERLAY_ADRENALINE);
     }
 
     @SubscribeEvent

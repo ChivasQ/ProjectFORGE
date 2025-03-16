@@ -32,12 +32,21 @@ public class AdrenalineOverlay {
 
 
     public static final IGuiOverlay OVERLAY_ADRENALINE = ((gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
-        ItemStack itemstack = Minecraft.getInstance().player.getInventory().getArmor(3);
-        if (itemstack.is(Items.DIAMOND_HELMET) && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
-            renderTextureOverlay(guiGraphics, TEXTURE, 1.0F, screenWidth, screenHeight);
+        Minecraft mc = Minecraft.getInstance();
+        ItemStack itemstack = mc.player.getInventory().getArmor(3);
+
+
+
+        if (itemstack.is(Items.DIAMOND_HELMET) && mc.options.getCameraType().isFirstPerson()) {
+            if (mc.screen != null) {
+                return; // Не рендерим оверлей, если открыто меню или инвентарь
+            } else ShaderExample.stopDistortion();
             ShaderExample.applyDistortion();
-        }
-        if (itemstack.is(Items.IRON_HELMET) && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
+
+            //renderTextureOverlay(guiGraphics, TEXTURE, 1.0F, screenWidth, screenHeight);
+
+        } else ShaderExample.stopDistortion();
+        if (itemstack.is(Items.IRON_HELMET) && mc.options.getCameraType().isFirstPerson()) {
             renderConfusionOverlay(guiGraphics, 1.0F, screenWidth, screenHeight);
         }
         if (itemstack.is(Items.GOLDEN_HELMET)) {
