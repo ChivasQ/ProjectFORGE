@@ -150,7 +150,10 @@ public class Sandworm extends Monster {
     public boolean hurt(DamageSource pSource, float pAmount) {
         if (level().isClientSide()) return false;
         //System.out.println("Sandworm received damage: " + pAmount + " " + this.getHealth()); // Для отладки
-        return super.hurt(pSource.getEntity().damageSources().generic(), 2); // Применяем урон к основному телу
+        Entity entity = pSource.getEntity();
+        if (entity == null)
+            return false;
+        return super.hurt(entity.damageSources().generic(), 2); // Применяем урон к основному телу
     }
     @Override
     public boolean isInWall() {

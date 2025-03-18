@@ -80,7 +80,7 @@ public class ModItems {
     public static final RegistryObject<Item> INFECTION_ITEM = ITEMS.register("experimental_infection_item",
             () -> new Infection(new Item.Properties()));
 
-    public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("test123",
+    public static final RegistryObject<Item> TEST_ITEM = ITEMS.register("teleporter",
             () -> new TestItem1(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> AI_TEST_ITEM = ITEMS.register("ai_test_item",

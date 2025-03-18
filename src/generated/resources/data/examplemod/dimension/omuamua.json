@@ -1,11 +1,11 @@
 {
-  "type": "examplemod:pocketdim_type",
+  "type": "examplemod:omuamua_type",
   "generator": {
     "type": "minecraft:noise",
     "biome_source": {
       "type": "minecraft:fixed",
       "biome": "minecraft:the_void"
     },
-    "settings": "minecraft:amplified"
+    "settings": "minecraft:floating_islands"
   }
 }

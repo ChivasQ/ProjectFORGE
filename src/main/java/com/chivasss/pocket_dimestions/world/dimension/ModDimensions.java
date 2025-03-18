@@ -1,7 +1,6 @@
 package com.chivasss.pocket_dimestions.world.dimension;
 
 import com.chivasss.pocket_dimestions.PocketDim;
-import com.ibm.icu.impl.Pair;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -17,22 +16,21 @@ import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 
-import java.util.List;
 import java.util.OptionalLong;
 
 
 public class ModDimensions {
-    public static final ResourceKey<LevelStem> POCKET_KEY = ResourceKey.create(Registries.LEVEL_STEM,
-            new ResourceLocation(PocketDim.MODID, "pocketdim"));
-    public static final ResourceKey<Level> POCKET_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
-            new ResourceLocation(PocketDim.MODID, "pocketdim"));
-    public static final ResourceKey<DimensionType> POCKET_KEY_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
-            new ResourceLocation(PocketDim.MODID, "pocketdim_type"));
+    public static final ResourceKey<LevelStem> OMUAMUA_KEY = ResourceKey.create(Registries.LEVEL_STEM,
+            new ResourceLocation(PocketDim.MODID, "omuamua"));
+    public static final ResourceKey<Level> OMUAMUA_LEVEL_KEY = ResourceKey.create(Registries.DIMENSION,
+            new ResourceLocation(PocketDim.MODID, "omuamua"));
+    public static final ResourceKey<DimensionType> OMUAMUA_KEY_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
+            new ResourceLocation(PocketDim.MODID, "omuamua_type"));
 
 
 
     public static void bootstrapType(BootstapContext<DimensionType> context) {
-        context.register(POCKET_KEY_TYPE, new DimensionType(
+        context.register(OMUAMUA_KEY_TYPE, new DimensionType(
                 OptionalLong.of(12000), // fixedTime
                 false, // hasSkylight
                 false, // hasCeiling
@@ -57,11 +55,11 @@ public class ModDimensions {
 
         NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
                 new FixedBiomeSource(biomeRegistry.getOrThrow(Biomes.THE_VOID)),
-                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.AMPLIFIED));
+                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.FLOATING_ISLANDS));
 
-        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimensions.POCKET_KEY_TYPE), wrappedChunkGenerator);
+        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimensions.OMUAMUA_KEY_TYPE), wrappedChunkGenerator);
 
-        context.register(POCKET_KEY, stem);
+        context.register(OMUAMUA_KEY, stem);
     }
 }
 
