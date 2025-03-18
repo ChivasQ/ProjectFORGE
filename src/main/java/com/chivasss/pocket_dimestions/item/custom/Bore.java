@@ -39,7 +39,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
-
+//TODO: split to different files
 public class Bore extends Item {
     private SoundInstance loopingSound;
     private SoundInstance cooldownSound;
@@ -310,6 +310,7 @@ public class Bore extends Item {
     }
     @OnlyIn(Dist.CLIENT)
     private void playLoopingSound(Player player) {
+        //TODO: add sound packet handler
         if (loopingSound == null) {
             loopingSound = new SimpleSoundInstance(
                     ModSounds.LASERBORE_LOOP.getId(),

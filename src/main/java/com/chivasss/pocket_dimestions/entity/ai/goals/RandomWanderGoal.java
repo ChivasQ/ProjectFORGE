@@ -48,7 +48,7 @@ public class RandomWanderGoal extends Goal {
 
         if (entity1.isPresent() && ! (entity1.get() instanceof Sandworm)) {
             mob.setTarget((LivingEntity) entity1.get());
-            randomTarget = entity1.get().position().add(0,0.5,0);
+            randomTarget = entity1.get().getEyePosition();
         }
         else randomTarget = Vec3.ZERO;
 

@@ -39,10 +39,10 @@ public class AdrenalineOverlay {
 
         if (itemstack.is(Items.DIAMOND_HELMET) && mc.options.getCameraType().isFirstPerson()) {
             if (mc.screen != null) {
-                return; // Не рендерим оверлей, если открыто меню или инвентарь
+                return;
             } else ShaderExample.stopDistortion();
             ShaderExample.applyDistortion();
-
+            // TODO: play with shaders
             //renderTextureOverlay(guiGraphics, TEXTURE, 1.0F, screenWidth, screenHeight);
 
         } else ShaderExample.stopDistortion();
