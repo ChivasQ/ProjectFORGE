@@ -26,6 +26,7 @@ public class MixinLevelRenderer {
     
     @Inject(method = "renderSky", at = @At("TAIL"))
     private void onRenderSky(PoseStack pPoseStack, Matrix4f pProjectionMatrix, float pPartialTick, Camera pCamera, boolean pIsFoggy, Runnable pSkyFogSetup, CallbackInfo ci) {
+        // TODO: maybe render asteroid when spyglass is used?
         //System.out.println("haha");
         if (! pIsFoggy) {
             FogType fogtype = pCamera.getFluidInCamera();
