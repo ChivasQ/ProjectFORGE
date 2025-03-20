@@ -1,9 +1,10 @@
-// 1.20.1	2025-03-13T13:53:19.5960143	Block States: examplemod
+// 1.20.1	2025-03-19T18:44:13.7952124	Block States: examplemod
 2395ae28d63630e11707d759de0cca3337cc0c3b assets/examplemod/blockstates/ai_test_block.json
 57a645b7dd91ebe33b6d7be9e881ed47794aee7d assets/examplemod/blockstates/asphalt.json
 54ed05dbb44510eadaa72b17b3b1c62e751bde11 assets/examplemod/blockstates/cracked_quartz_bricks.json
 af6edf8f33f6d1fe258f5f006b03f02a2a7b1b16 assets/examplemod/blockstates/deepslate_zinc_ore.json
 73ceb5a28ca84f6d4fda64d6a875276e43d089eb assets/examplemod/blockstates/sand_quartz.json
+6d6603ae47d64c3b30539745d2776e46ad18b64c assets/examplemod/blockstates/test_block.json
 9c38146868e0a97fad3b60aad36943de028e9770 assets/examplemod/blockstates/thermal_quartz.json
 096eab39bf2cbd0295b93c246ea84f08501c4ed3 assets/examplemod/blockstates/zinc_block.json
 68061a8589a3630ec7dc4298aeed09ef51ab6a4b assets/examplemod/blockstates/zinc_lamp.json
@@ -13,6 +14,7 @@ af6edf8f33f6d1fe258f5f006b03f02a2a7b1b16 assets/examplemod/blockstates/deepslate
 f8c1be2911b5755e52641e5943a2cf3ca99598d8 assets/examplemod/models/block/cracked_quartz_bricks.json
 e4c8db08a19eef68db6cdffaae6bbd60d884421f assets/examplemod/models/block/deepslate_zinc_ore.json
 47a29e1ded09972dc327a32d9ecb37ea60d2ed53 assets/examplemod/models/block/sand_quartz.json
+1d58ef40abbb37fdba8718b547d718cfeca69015 assets/examplemod/models/block/test_block.json
 b5675fce775fd18fa8248b5577d92c02a9dff696 assets/examplemod/models/block/thermal_quartz.json
 39684b427d9d0368af6503e9b663fdb108b2cb21 assets/examplemod/models/block/zinc_block.json
 ad147040112b8133460a677d90864a78363c096f assets/examplemod/models/block/zinc_lamp.json
@@ -22,6 +24,7 @@ b78a962cbb44737d1e7166fb5c2453c64205e97d assets/examplemod/models/block/zinc_ore
 0d299975390e0de574fe3ed097a1822e13257f6d assets/examplemod/models/item/cracked_quartz_bricks.json
 26dfaa1b8773f624276a6969b4705b7cab385e1f assets/examplemod/models/item/deepslate_zinc_ore.json
 2f70f5af290b87f39a6ec8e30006a24e596b5eca assets/examplemod/models/item/sand_quartz.json
+f08c32b6488712def7b1e5700592e99d25b9aa55 assets/examplemod/models/item/test_block.json
 dbc9df44f79cdb9cc4e4b95bd64c0dfc9b989183 assets/examplemod/models/item/thermal_quartz.json
 485cfdbf38c035488e7b68db6cd677bf6472cdf2 assets/examplemod/models/item/zinc_block.json
 3c7fc97c96440c89d8fa8125c5c0056b77f76b6b assets/examplemod/models/item/zinc_lamp.json

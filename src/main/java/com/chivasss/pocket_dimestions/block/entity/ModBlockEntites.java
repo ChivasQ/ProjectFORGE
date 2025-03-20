@@ -23,6 +23,10 @@ public class ModBlockEntites {
                     () -> BlockEntityType.Builder.of(ElectroTurretBlockEntity::new,
                             ModBlocks.ELECTRO_TURRET_BLOCK.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<testBlockEntity>> TEST_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("test_block_entity",
+                    () -> BlockEntityType.Builder.of(testBlockEntity::new,
+                            ModBlocks.TEST_BLOCK.get()).build(null));
 
 
 

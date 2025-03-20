@@ -36,6 +36,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.THERMAL_QUARTZ.get());
         this.dropSelf(ModBlocks.ELECTRO_TURRET_BLOCK.get());
         this.dropSelf(ModBlocks.AI_TEST_BLOCK.get());
+        this.dropSelf(ModBlocks.TEST_BLOCK.get());
 
         this.add(ModBlocks.ZINC_ORE.get(),
                 block -> createCopperOreLikeDrops(ModBlocks.ZINC_ORE.get(), ModItems.RAW_ZINC.get()));

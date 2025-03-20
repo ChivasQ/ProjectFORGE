@@ -27,6 +27,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(ModBlocks.SAND_QUARTZ);
         //blockWithItem(ModBlocks.SUSPICIOUS_SAND_QUARTZ);
         blockWithItem(ModBlocks.THERMAL_QUARTZ);
+        blockWithItem(ModBlocks.TEST_BLOCK);
         //blockWithItem(ModBlocks.ELECTRO_TURRET_BLOCK);
     }
 

@@ -3,6 +3,7 @@ package com.chivasss.pocket_dimestions.event;
 import com.chivasss.pocket_dimestions.PocketDim;
 import com.chivasss.pocket_dimestions.block.entity.ModBlockEntites;
 import com.chivasss.pocket_dimestions.block.entity.client.ElectroTurretBlockEntityRenderer;
+import com.chivasss.pocket_dimestions.block.entity.client.testBlockEntityRenderer;
 import com.chivasss.pocket_dimestions.client.AdrenalineOverlay;
 import com.chivasss.pocket_dimestions.entity.client.BoreModel;
 import com.chivasss.pocket_dimestions.entity.client.CoreModel;
@@ -52,6 +53,7 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event){
         event.registerBlockEntityRenderer(ModBlockEntites.ELECTRO_TURRET_BLOCK_ENTITY.get(), ElectroTurretBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntites.TEST_BLOCK_ENTITY.get(), testBlockEntityRenderer::new);
     }
 
     @SubscribeEvent

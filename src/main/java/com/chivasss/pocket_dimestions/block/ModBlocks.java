@@ -1,22 +1,14 @@
 package com.chivasss.pocket_dimestions.block;
 
 import com.chivasss.pocket_dimestions.PocketDim;
-import com.chivasss.pocket_dimestions.block.custom.AltarColumn;
-import com.chivasss.pocket_dimestions.block.custom.ElectroTurretBlock;
-import com.chivasss.pocket_dimestions.block.custom.ZincLamp;
-import com.chivasss.pocket_dimestions.block.custom.asphalt;
+import com.chivasss.pocket_dimestions.block.custom.*;
 import com.chivasss.pocket_dimestions.item.ModItems;
-import net.minecraft.client.resources.sounds.Sound;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -73,6 +65,11 @@ public class ModBlocks {
             () -> new ElectroTurretBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
             .strength(4f)));
 
+    public static final RegistryObject<Block> TEST_BLOCK = registerBlock("test_block", () -> new testBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
+            .sound(SoundType.AMETHYST)));
+
+    public static final RegistryObject<Block> ALTAR_BLOCK = registerBlock("altar_block", () -> new AltarBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
+            .sound(SoundType.AMETHYST)));
 
 
 
