@@ -18,13 +18,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.lang.reflect.Method;
+
 @Mixin(LevelRenderer.class)
 public class MixinLevelRenderer {
     private static final ResourceLocation OMUAMUA_LOCATION = new ResourceLocation(PocketDim.MODID, "textures/environment/omuamua.png");
     @Unique
     private final Minecraft minecraft = Minecraft.getInstance();
-    
-    @Inject(method = "renderSky", at = @At("TAIL"))
+    //TODO: fix Mixin apply failed err
+    @Inject(
+            method = "renderSky",
+            at = @At("TAIL")
+    )
     private void onRenderSky(PoseStack pPoseStack, Matrix4f pProjectionMatrix, float pPartialTick, Camera pCamera, boolean pIsFoggy, Runnable pSkyFogSetup, CallbackInfo ci) {
         // TODO: maybe render asteroid when spyglass is used?
         //System.out.println("haha");

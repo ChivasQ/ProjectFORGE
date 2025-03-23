@@ -14,6 +14,7 @@ import com.chivasss.pocket_dimestions.item.ModItems;
 import com.chivasss.pocket_dimestions.screen.AltarColumnScreen;
 import com.chivasss.pocket_dimestions.screen.ModMenuTypes;
 import com.chivasss.pocket_dimestions.sound.ModSounds;
+import com.chivasss.pocket_dimestions.weather.WeatherEventHandler;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -66,6 +67,8 @@ public class PocketDim {
         ModMenuTypes.register(modEventBus);
         ModSounds.register(modEventBus);
         ModEffects.register(modEventBus);
+        MinecraftForge.EVENT_BUS.register(WeatherEventHandler.class);
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
