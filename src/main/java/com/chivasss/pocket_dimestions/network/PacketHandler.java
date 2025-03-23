@@ -33,6 +33,11 @@ public class PacketHandler {
                 .decoder(S2CUpdateLaserUsePacket::new)
                 .consumerMainThread(S2CUpdateLaserUsePacket::handle)
                 .add();
+        INSTANCE.messageBuilder(S2CSetCustomWeather.class, nextId(), NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(S2CSetCustomWeather::encode)
+                .decoder(S2CSetCustomWeather::new)
+                .consumerMainThread(S2CSetCustomWeather::handle)
+                .add();
     }
 
     public static void sendToServer(Object msg) {

@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.server.command.ConfigCommand;
 
-@Mod.EventBusSubscriber(modid = PocketDim.MODID)
+@Mod.EventBusSubscriber(modid = PocketDim.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEventBusEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
@@ -28,12 +28,12 @@ public class ModEventBusEvents {
         event.put(ModEntityTypes.SYMBIOTE.get(), SymbioteEntity.createAttributes().build());
 
     }
-    @SubscribeEvent
-    public static void onCommandRegister(RegisterCommandsEvent event) {
-        new TestCommand(event.getDispatcher());
-
-        ConfigCommand.register(event.getDispatcher());
-    }
+//    @SubscribeEvent
+//    public static void onCommandRegister(RegisterCommandsEvent event) {
+//        new TestCommand(event.getDispatcher());
+//
+//        ConfigCommand.register(event.getDispatcher());
+//    }
 
 //    public static void onPlayerCloneEvent(PlayerEvent.Clone event) {
 //        if (!event.getOriginal().level().isClientSide()) {

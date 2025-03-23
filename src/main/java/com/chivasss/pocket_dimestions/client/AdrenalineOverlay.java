@@ -1,6 +1,7 @@
 package com.chivasss.pocket_dimestions.client;
 
 import com.chivasss.pocket_dimestions.PocketDim;
+import com.chivasss.pocket_dimestions.network.S2CSetCustomWeather;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -45,6 +46,13 @@ public class AdrenalineOverlay {
             // TODO: play with shaders
             //renderTextureOverlay(guiGraphics, TEXTURE, 1.0F, screenWidth, screenHeight);
 
+        }
+
+        if (S2CSetCustomWeather.customWeatherActive) {
+            if (mc.screen != null) {
+                return;
+            } else ShaderExample.stopDistortion();
+            ShaderExample.applyDistortion();
         } else ShaderExample.stopDistortion();
         if (itemstack.is(Items.IRON_HELMET) && mc.options.getCameraType().isFirstPerson()) {
             renderConfusionOverlay(guiGraphics, 1.0F, screenWidth, screenHeight);
