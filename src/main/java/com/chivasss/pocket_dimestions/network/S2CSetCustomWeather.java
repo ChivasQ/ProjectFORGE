@@ -1,12 +1,10 @@
 package com.chivasss.pocket_dimestions.network;
 
-import com.chivasss.pocket_dimestions.client.ShaderExample;
+import com.chivasss.pocket_dimestions.weather.WeatherManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -14,7 +12,6 @@ import java.util.function.Supplier;
 
 public class S2CSetCustomWeather {
     private final CustomWeather weather;
-    public static boolean customWeatherActive = false;
 
     public S2CSetCustomWeather(CustomWeather weather) {
         this.weather = weather;
@@ -31,9 +28,9 @@ public class S2CSetCustomWeather {
         if (level == null) return;
         Vec3 vec3 = player.getEyePosition();
         if (weather == CustomWeather.EMISSION) {
-            customWeatherActive = true;
+            WeatherManager.setActive(true);
         } else {
-            customWeatherActive = false;
+            WeatherManager.setActive(false);
         }
 //        for (int i = 0; i < 24; i++) {
 //            Vec3 vec2 = new Vec3(1,0,0).yRot(i*15);

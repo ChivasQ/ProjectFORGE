@@ -48,12 +48,6 @@ public class AdrenalineOverlay {
 
         }
 
-        if (S2CSetCustomWeather.customWeatherActive) {
-            if (mc.screen != null) {
-                return;
-            } else ShaderExample.stopDistortion();
-            ShaderExample.applyDistortion();
-        } else ShaderExample.stopDistortion();
         if (itemstack.is(Items.IRON_HELMET) && mc.options.getCameraType().isFirstPerson()) {
             renderConfusionOverlay(guiGraphics, 1.0F, screenWidth, screenHeight);
         }
