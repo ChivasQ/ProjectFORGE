@@ -35,8 +35,14 @@ public class WeatherManager {
         activeWeather.remove(weather.getWeatherType());
     }
 
-    public Weather getActiveWeather(WeatherType type) {
-        return activeWeather.get(type);
+    public static Weather getActiveWeather(WeatherType type) {
+        try{
+            return activeWeather.get(type);
+        } catch (Exception e) {
+            return null;
+        }
+
+
     }
 
     public void resetAllWeather(Level level) {

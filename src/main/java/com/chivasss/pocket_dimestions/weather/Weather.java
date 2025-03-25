@@ -43,6 +43,7 @@ public class Weather {
     }
 
     public WeatherType getWeatherType() {
+        if (weatherType == null) return WeatherType.CLEAR;
         return weatherType;
     }
 
