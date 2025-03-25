@@ -9,7 +9,7 @@ import net.minecraft.network.chat.Component;
 
 public class TestCommand {
     public TestCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("test").then(Commands.literal("test1").executes((context) -> {
+        dispatcher.register(Commands.literal("weatherapi").then(Commands.literal("setweather").executes((context) -> {
             return test1(context.getSource().source);
         })));
     }

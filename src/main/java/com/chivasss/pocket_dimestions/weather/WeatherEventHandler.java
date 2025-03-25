@@ -42,13 +42,13 @@ public class WeatherEventHandler {
 
     private static void startMyCustomWeather(Level world) {
         System.out.println("Starting custom weather event!");
-        S2CSetCustomWeather packet = new S2CSetCustomWeather(S2CSetCustomWeather.CustomWeather.EMISSION);
+        S2CSetCustomWeather packet = new S2CSetCustomWeather(WeatherType.EMISSION);
         PacketHandler.sendToAllClients(packet);
     }
 
     private static void stopMyCustomWeather(Level world) {
         System.out.println("Stopping custom weather event!");
-        S2CSetCustomWeather packet = new S2CSetCustomWeather(S2CSetCustomWeather.CustomWeather.NONE);
+        S2CSetCustomWeather packet = new S2CSetCustomWeather(WeatherType.CLEAR);
         PacketHandler.sendToAllClients(packet);
     }
 }

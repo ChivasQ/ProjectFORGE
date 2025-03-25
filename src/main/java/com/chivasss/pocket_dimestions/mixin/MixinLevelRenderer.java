@@ -27,7 +27,7 @@ public class MixinLevelRenderer {
     private final Minecraft minecraft = Minecraft.getInstance();
     //TODO: fix Mixin apply failed err
     @Inject(
-            method = "renderSky",
+            method = "Lnet/minecraft/client/renderer/LevelRenderer;renderSky(Lcom/mojang/blaze3d/vertex/PoseStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V",
             at = @At("TAIL")
     )
     private void onRenderSky(PoseStack pPoseStack, Matrix4f pProjectionMatrix, float pPartialTick, Camera pCamera, boolean pIsFoggy, Runnable pSkyFogSetup, CallbackInfo ci) {

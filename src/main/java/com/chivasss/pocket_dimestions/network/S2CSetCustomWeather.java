@@ -1,6 +1,7 @@
 package com.chivasss.pocket_dimestions.network;
 
 import com.chivasss.pocket_dimestions.weather.WeatherManager;
+import com.chivasss.pocket_dimestions.weather.WeatherType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,14 +12,14 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class S2CSetCustomWeather {
-    private final CustomWeather weather;
+    private final WeatherType weather;
 
-    public S2CSetCustomWeather(CustomWeather weather) {
+    public S2CSetCustomWeather(WeatherType weather) {
         this.weather = weather;
     }
 
     public S2CSetCustomWeather(FriendlyByteBuf byteBuf) {
-        this.weather = byteBuf.readEnum(CustomWeather.class);
+        this.weather = byteBuf.readEnum(WeatherType.class);
     }
 
     public void handle(Supplier<NetworkEvent.Context> contextSupplier) {
@@ -27,7 +28,7 @@ public class S2CSetCustomWeather {
         Level level = player.level();
         if (level == null) return;
         Vec3 vec3 = player.getEyePosition();
-        if (weather == CustomWeather.EMISSION) {
+        if (weather == WeatherType.EMISSION) {
             WeatherManager.setActive(true);
         } else {
             WeatherManager.setActive(false);
@@ -42,11 +43,5 @@ public class S2CSetCustomWeather {
 
     public void encode(FriendlyByteBuf byteBuf) {
         byteBuf.writeEnum(weather);
-    }
-
-
-    public enum CustomWeather {
-        EMISSION,
-        NONE
     }
 }

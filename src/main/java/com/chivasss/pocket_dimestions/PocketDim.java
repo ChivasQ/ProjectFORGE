@@ -2,6 +2,7 @@ package com.chivasss.pocket_dimestions;
 
 import com.chivasss.pocket_dimestions.block.ModBlocks;
 import com.chivasss.pocket_dimestions.block.entity.ModBlockEntites;
+import com.chivasss.pocket_dimestions.commands.MyCommands;
 import com.chivasss.pocket_dimestions.effect.ModEffects;
 import com.chivasss.pocket_dimestions.entity.ModEntityTypes;
 import com.chivasss.pocket_dimestions.entity.client.*;
@@ -70,6 +71,7 @@ public class PocketDim {
         ModEffects.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(WeatherEventHandler.class);
         MinecraftForge.EVENT_BUS.register(SkyColorHandler.class);
+        MinecraftForge.EVENT_BUS.register(MyCommands.class);
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 

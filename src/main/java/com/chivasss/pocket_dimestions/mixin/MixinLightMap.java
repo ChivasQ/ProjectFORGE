@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(LightTexture.class)
 public class MixinLightMap {
-    @Inject(method = "updateLightTexture", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/LightTexture;blockLightRedFlicker:F"), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "Lnet/minecraft/client/renderer/LightTexture;updateLightTexture(F)V", at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/LightTexture;blockLightRedFlicker:F"), locals = LocalCapture.CAPTURE_FAILHARD)
     private void doOurLightMap(float partialTicks, CallbackInfo ci, ClientLevel clientLevel, float v, float v1, float v2, float v3, float v4, float v5, float v6, Vector3f skyVector) {
         Player player = Minecraft.getInstance().player;
         BlockPos blockPos = player.blockPosition();
