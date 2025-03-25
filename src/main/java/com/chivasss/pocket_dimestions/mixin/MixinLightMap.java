@@ -19,18 +19,18 @@ public class MixinLightMap {
     private void doOurLightMap(float partialTicks, CallbackInfo ci, ClientLevel clientLevel, float v, float v1, float v2, float v3, float v4, float v5, float v6, Vector3f skyVector) {
         Player player = Minecraft.getInstance().player;
         BlockPos blockPos = player.blockPosition();
-        if (WeatherManager.isActive()) {
-            int blocksAbove = 0;
-            for (int y = blockPos.getY(); y < player.level().getMaxBuildHeight(); y++) {
-                if (clientLevel.getBlockState(new BlockPos(blockPos.getX(), y, blockPos.getZ())).isSolid())
-                    blocksAbove++;
-                if (blocksAbove >= 3) break;
-            }
-            if (blocksAbove == 0) skyVector.mul(1.0f, 0.0f, 0.0f);
-            else if (blocksAbove == 1) skyVector.mul(0.7f, 0.3f, 0.3f);
-            else if (blocksAbove == 2) skyVector.mul(0.7f, 0.7f, 0.7f);
-            else return;
-        }
+//        if (WeatherManager.isActive()) {
+//            int blocksAbove = 0;
+//            for (int y = blockPos.getY(); y < player.level().getMaxBuildHeight(); y++) {
+//                if (clientLevel.getBlockState(new BlockPos(blockPos.getX(), y, blockPos.getZ())).isSolid())
+//                    blocksAbove++;
+//                if (blocksAbove >= 3) break;
+//            }
+//            if (blocksAbove == 0) skyVector.mul(1.0f, 0.0f, 0.0f);
+//            else if (blocksAbove == 1) skyVector.mul(0.7f, 0.3f, 0.3f);
+//            else if (blocksAbove == 2) skyVector.mul(0.7f, 0.7f, 0.7f);
+//            else return;
+//        }
 
     }
 }

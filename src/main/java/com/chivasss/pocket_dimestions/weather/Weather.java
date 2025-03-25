@@ -18,7 +18,7 @@ public class Weather {
     }
 
     public void start(Level level) {
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal(weatherType.name() + Minecraft.getInstance().player.getUUID()));
+        Minecraft.getInstance().player.sendSystemMessage(Component.literal(weatherType.name() + Minecraft.getInstance().player.getUUID() + " * " + duration));
         S2CSetCustomWeather packet = new S2CSetCustomWeather(weatherType);
         PacketHandler.sendToAllClients(packet);
     }
@@ -36,7 +36,7 @@ public class Weather {
 
     }
 
-    private void stop(Level level) {
+    public void stop(Level level) {
         Minecraft.getInstance().player.sendSystemMessage(Component.literal("End of: " + weatherType.name() + Minecraft.getInstance().player.getUUID()));
         S2CSetCustomWeather packet = new S2CSetCustomWeather(WeatherType.CLEAR);
         PacketHandler.sendToAllClients(packet);

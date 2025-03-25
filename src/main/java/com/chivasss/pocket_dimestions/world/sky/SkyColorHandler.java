@@ -22,17 +22,17 @@ public class SkyColorHandler {
     @SubscribeEvent
     public static void onSkyRender(net.minecraftforge.client.event.ViewportEvent.ComputeFogColor event) {
 
-        float targetRed = WeatherManager.isActive() ? TARGET_RED_ON : TARGET_RED_OFF;
-        float targetGreen = WeatherManager.isActive() ? TARGET_GREEN_ON : TARGET_GREEN_OFF;
-        float targetBlue = WeatherManager.isActive() ? TARGET_BLUE_ON : TARGET_BLUE_OFF;
-
-        currentRed = approach(currentRed, targetRed, TRANSITION_SPEED);
-        currentGreen = approach(currentGreen, targetGreen, TRANSITION_SPEED);
-        currentBlue = approach(currentBlue, targetBlue, TRANSITION_SPEED);
-
-        event.setRed(currentRed);
-        event.setGreen(currentGreen);
-        event.setBlue(currentBlue);
+//        float targetRed = WeatherManager.isActive() ? TARGET_RED_ON : TARGET_RED_OFF;
+//        float targetGreen = WeatherManager.isActive() ? TARGET_GREEN_ON : TARGET_GREEN_OFF;
+//        float targetBlue = WeatherManager.isActive() ? TARGET_BLUE_ON : TARGET_BLUE_OFF;
+//
+//        currentRed = approach(currentRed, targetRed, TRANSITION_SPEED);
+//        currentGreen = approach(currentGreen, targetGreen, TRANSITION_SPEED);
+//        currentBlue = approach(currentBlue, targetBlue, TRANSITION_SPEED);
+//
+//        event.setRed(currentRed);
+//        event.setGreen(currentGreen);
+//        event.setBlue(currentBlue);
     }
 
     private static float approach(float current, float target, float delta) {

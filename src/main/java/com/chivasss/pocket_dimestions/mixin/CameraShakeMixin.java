@@ -23,24 +23,24 @@ public class CameraShakeMixin {
     private void injectCameraShake(BlockGetter pLevel, Entity pEntity, boolean pDetached, boolean pThirdPersonReverse, float pPartialTick, CallbackInfo ci) {
         Player player = Minecraft.getInstance().player;
         BlockPos blockPos = player.blockPosition();
-        if (WeatherManager.isActive() ) {
-            int blocksAbove = 0;
-            for (int y = blockPos.getY(); y < player.level().getMaxBuildHeight(); y++) {
-                if (pLevel.getBlockState(new BlockPos(blockPos.getX(), y, blockPos.getZ())).isSolid())
-                    blocksAbove++;
-                if (blocksAbove >= 3) break;
-            }
-
-
-            double shakeAmount = (double) Math.abs(blocksAbove - 3) / 9;
-            double offsetX = (Math.random() - 0.5) * shakeAmount;
-            double offsetY = (Math.random() - 0.5) * shakeAmount;
-            double offsetZ = (Math.random() - 0.5) * shakeAmount;
-
-            Camera camera = (Camera) (Object) this;
-            camera.setPosition(camera.getPosition().x + offsetX, camera.getPosition().y + offsetY, camera.getPosition().z + offsetZ);
-            camera.setRotation((float) (camera.getYRot() + offsetX*10), (float) ( camera.getXRot() + offsetY*10));
-        }
+//        if (WeatherManager.isActive() ) {
+//            int blocksAbove = 0;
+//            for (int y = blockPos.getY(); y < player.level().getMaxBuildHeight(); y++) {
+//                if (pLevel.getBlockState(new BlockPos(blockPos.getX(), y, blockPos.getZ())).isSolid())
+//                    blocksAbove++;
+//                if (blocksAbove >= 3) break;
+//            }
+//
+//
+//            double shakeAmount = (double) Math.abs(blocksAbove - 3) / 9;
+//            double offsetX = (Math.random() - 0.5) * shakeAmount;
+//            double offsetY = (Math.random() - 0.5) * shakeAmount;
+//            double offsetZ = (Math.random() - 0.5) * shakeAmount;
+//
+//            Camera camera = (Camera) (Object) this;
+//            camera.setPosition(camera.getPosition().x + offsetX, camera.getPosition().y + offsetY, camera.getPosition().z + offsetZ);
+//            camera.setRotation((float) (camera.getYRot() + offsetX*10), (float) ( camera.getXRot() + offsetY*10));
+//        }
     }
 
     private static float approach(float current, float target, float delta) {

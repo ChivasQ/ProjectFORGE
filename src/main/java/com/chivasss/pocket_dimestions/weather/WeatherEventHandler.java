@@ -7,31 +7,19 @@ import com.chivasss.pocket_dimestions.network.S2CSetCustomWeather;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 
 public class WeatherEventHandler {
-    static int c = 0;
-    static boolean hasStarted = false;
-    static int duration = 0;
+
     @SubscribeEvent
     public static void onWorldTick(TickEvent.LevelTickEvent event) {
-        if (!event.level.isClientSide()) {
-            if (c >= 20) {
-                c = 0;
-                if (shouldStartMyWeather(event.level)) {
-                    hasStarted = true;
-                }
-                if (hasStarted) {
-                    startMyCustomWeather(event.level);
-                    duration++;
-                }
-                if (duration > 100) {
-                    stopMyCustomWeather(event.level);
-                    hasStarted = false;
-                    duration = 0;
-                }
-            } else {
-                c++;
-            }
+        if (!event.level.isClientSide()
+                && event.side == LogicalSide.SERVER
+                && event.phase == TickEvent.Phase.END
+                && event.level.dimension() == Level.OVERWORLD) {
+
+                WeatherManager.update(event.level);
+
         }
     }
 
