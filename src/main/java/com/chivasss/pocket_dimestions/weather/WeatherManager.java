@@ -7,12 +7,13 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 public class WeatherManager {
-    private static final Map<WeatherType, Weather> activeWeather = new ConcurrentHashMap<>();
+    private static final Map<WeatherType, Weather> activeWeather = new HashMap<>();
 
     public static void startWeather(Level level, Weather weather) {
         if (!activeWeather.containsKey(weather.getWeatherType())) {
@@ -22,12 +23,18 @@ public class WeatherManager {
     }
 
     public static void update(Level level) {
-        activeWeather.values().forEach(weather -> {
+        Iterator<Map.Entry<WeatherType, Weather>> iterator = activeWeather.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<WeatherType, Weather> entry = iterator.next();
+            Weather weather = entry.getValue();
+
             weather.update(level);
+
             if (weather.getRemainingTime() <= 0) {
-                stopWeather(level, weather);
+                weather.stop(level);
+                iterator.remove();
             }
-        });
+        }
     }
 
     public static void stopWeather(Level level, Weather weather) {

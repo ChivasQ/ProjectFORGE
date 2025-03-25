@@ -29,9 +29,10 @@ public class Emission extends Weather{
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 40, 0, false, false));
             }
 
-            if (duration - getRemainingTime() > 40 && blocksAbove == 0) {
+            if (duration - getRemainingTime() > 100 && blocksAbove == 0) {
                 player.hurt(player.damageSources().magic(), 1);
             }
+
         }
     }
 }

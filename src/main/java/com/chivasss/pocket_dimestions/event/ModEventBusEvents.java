@@ -1,7 +1,6 @@
 package com.chivasss.pocket_dimestions.event;
 
 import com.chivasss.pocket_dimestions.PocketDim;
-import com.chivasss.pocket_dimestions.commands.TestCommand;
 import com.chivasss.pocket_dimestions.entity.ModEntityTypes;
 import com.chivasss.pocket_dimestions.entity.custom.CoreEntity;
 import com.chivasss.pocket_dimestions.entity.custom.rune_turret.RuneTurretEntity;
@@ -9,13 +8,10 @@ import com.chivasss.pocket_dimestions.entity.custom.sandworm.Sandworm;
 import com.chivasss.pocket_dimestions.entity.custom.spidertron.Spidertron;
 import com.chivasss.pocket_dimestions.entity.custom.symbiote.SymbioteEntity;
 import com.chivasss.pocket_dimestions.network.PacketHandler;
-import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.server.command.ConfigCommand;
 
 @Mod.EventBusSubscriber(modid = PocketDim.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModEventBusEvents {

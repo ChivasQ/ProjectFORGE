@@ -4,10 +4,10 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.server.command.ConfigCommand;
 
-public class MyCommands {
+public class ModCommands {
     @SubscribeEvent
     public static void onCommandRegister(RegisterCommandsEvent event) {
-        new TestCommand(event.getDispatcher());
+        new WeatherCommand(event.getDispatcher());
 
         ConfigCommand.register(event.getDispatcher());
     }
