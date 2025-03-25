@@ -7,7 +7,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 @AutoRegisterCapability
 public class ChunkManaCapability implements INBTSerializable<CompoundTag> {
-    private int mana = 0;
+    private int mana = 6;
 
     public int getMana() {
         return mana;
