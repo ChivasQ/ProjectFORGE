@@ -36,6 +36,7 @@ public class ManaManager extends SavedData {
 
     public int getMana(BlockPos pos) {
         Mana mana = getManaInternal(pos);
+        setDirty();
         return mana.getMana();
     }
 
@@ -54,6 +55,7 @@ public class ManaManager extends SavedData {
     public ManaManager() {
 
     }
+
     public ManaManager(CompoundTag tag) {
         ListTag listTag = tag.getList("mana", Tag.TAG_COMPOUND);
         for (Tag t : listTag) {
@@ -74,6 +76,7 @@ public class ManaManager extends SavedData {
             manaTag.putInt("mana", mana.getMana());
             listTag.add(manaTag);
         });
+        tag.put("mana", listTag);
         return tag;
     }
 }
