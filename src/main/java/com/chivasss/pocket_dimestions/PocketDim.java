@@ -2,7 +2,7 @@ package com.chivasss.pocket_dimestions;
 
 import com.chivasss.pocket_dimestions.block.ModBlocks;
 import com.chivasss.pocket_dimestions.block.entity.ModBlockEntites;
-import com.chivasss.pocket_dimestions.capabilities.ModCapabilities;
+
 import com.chivasss.pocket_dimestions.commands.ModCommands;
 import com.chivasss.pocket_dimestions.effect.ModEffects;
 import com.chivasss.pocket_dimestions.entity.ModEntityTypes;

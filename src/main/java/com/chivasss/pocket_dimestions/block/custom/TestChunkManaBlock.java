@@ -1,6 +1,6 @@
 package com.chivasss.pocket_dimestions.block.custom;
 
-import com.chivasss.pocket_dimestions.world.chunk.ChunkManaManager;
+import com.chivasss.pocket_dimestions.mana.data.ManaManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -20,11 +20,9 @@ public class TestChunkManaBlock extends Block {
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (pLevel.isClientSide()) return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
-        LevelChunk chunk = pLevel.getChunkAt(pPos);
-        int mana = ChunkManaManager.getMana(chunk);
-        pPlayer.sendSystemMessage(Component.literal("Mana in this chunk: " + mana));
-        ChunkManaManager.setMana(chunk, mana + 10);
-        pPlayer.sendSystemMessage(Component.literal("Mana in this chunk: " + ChunkManaManager.getMana(chunk)));
+
+        int i = ManaManager.get(pLevel).getMana(pPos);
+        pPlayer.displayClientMessage(Component.literal(String.valueOf(i)), true);
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }
 }

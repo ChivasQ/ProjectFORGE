@@ -72,7 +72,7 @@ public class ModBlocks {
             .sound(SoundType.AMETHYST)));
 
 
-    public static final RegistryObject<Block> CHUNK_TEST_BLOCK = registerBlock("chunk_test_block", () -> new AltarBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
+    public static final RegistryObject<Block> CHUNK_TEST_BLOCK = registerBlock("chunk_test_block", () -> new TestChunkManaBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
             .sound(SoundType.AMETHYST)));
 
 
