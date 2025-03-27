@@ -86,9 +86,12 @@ public class ModItems {
     public static final RegistryObject<Item> AI_TEST_ITEM = ITEMS.register("ai_test_item",
             () -> new AiTestItem(new Item.Properties().stacksTo(1)));
 
-
     public static final RegistryObject<Item> PROGRESSIVE_BREAKER = ITEMS.register("pickaxe",
             () -> new ProgressiveBlockBreaker(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> STRUCT_CREATOR_ITEM = ITEMS.register("struct_item",
+            () -> new StructCreatorItem(new Item.Properties()));
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

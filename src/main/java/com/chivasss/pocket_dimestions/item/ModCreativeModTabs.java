@@ -52,7 +52,9 @@ public class ModCreativeModTabs {
                                 pOutput.accept(ModBlocks.THERMAL_QUARTZ.get());
                                 pOutput.accept(ModBlocks.ELECTRO_TURRET_BLOCK.get());
                                 pOutput.accept(ModBlocks.CHUNK_TEST_BLOCK.get());
+                                pOutput.accept(ModItems.STRUCT_CREATOR_ITEM.get());
 
+                                pOutput.accept(ModBlocks.MOD_FURNACE.get());
 
 
 

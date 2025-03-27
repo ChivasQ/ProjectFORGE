@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.synth.PerlinNoise;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +21,7 @@ public class ManaManager extends SavedData {
 
     private final Map<ChunkPos, Mana> manaMap = new HashMap<>();
     private final Random random = new Random();
+
     @NotNull
     public static ManaManager get(Level level) {
         if (level.isClientSide()) {
@@ -28,10 +30,11 @@ public class ManaManager extends SavedData {
         DimensionDataStorage storage = ((ServerLevel)level).getDataStorage();
         return storage.computeIfAbsent(ManaManager::new, ManaManager::new, "manamanager");
     }
+
     @NotNull
     private Mana getManaInternal(BlockPos pos) {
         ChunkPos chunkPos = new ChunkPos(pos);
-        return manaMap.computeIfAbsent(chunkPos, cp -> new Mana(random.nextInt(100))); //TODO: make noise generator
+        return manaMap.computeIfAbsent(chunkPos, cp -> new Mana(20 + random.nextInt(80))); //TODO: make noise generator
     }
 
     public int getMana(BlockPos pos) {
@@ -40,7 +43,7 @@ public class ManaManager extends SavedData {
         return mana.getMana();
     }
 
-    public int setMana(BlockPos pos) {
+    public int extractMana(BlockPos pos) {
         Mana mana = getManaInternal(pos);
         int present = mana.getMana();
         if (present > 0) {
@@ -51,6 +54,34 @@ public class ManaManager extends SavedData {
         return 0;
     }
 
+    public int addMana(BlockPos pos) {
+        Mana mana = getManaInternal(pos);
+        int present = mana.getMana();
+        if (present > 0) {
+            mana.setMana(present + 1);
+            setDirty();
+            return 1;
+        }
+        return 0;
+    }
+    public int addMana(BlockPos pos, int amount) {
+        Mana mana = getManaInternal(pos);
+        int present = mana.getMana();
+        if (present > 0) {
+            mana.setMana(present + amount);
+            setDirty();
+            return 1;
+        }
+        return 0;
+    }
+
+    public int setMana(BlockPos pos) {
+        Mana mana = getManaInternal(pos);
+        int present = mana.getMana();
+        mana.setMana(present + 1);
+        setDirty();
+        return 1;
+    }
 
     public ManaManager() {
 
@@ -67,6 +98,7 @@ public class ManaManager extends SavedData {
 
     }
     @Override
+    @NotNull
     public CompoundTag save(CompoundTag tag) {
         ListTag listTag = new ListTag();
         manaMap.forEach((chunkPos, mana) -> {

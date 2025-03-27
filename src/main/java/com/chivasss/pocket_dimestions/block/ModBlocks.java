@@ -75,6 +75,10 @@ public class ModBlocks {
     public static final RegistryObject<Block> CHUNK_TEST_BLOCK = registerBlock("chunk_test_block", () -> new TestChunkManaBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
             .sound(SoundType.AMETHYST)));
 
+    public static final RegistryObject<Block> MOD_FURNACE = registerBlock("mod_furnace", () -> new ModFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
+            .sound(SoundType.AMETHYST)));
+
+    public static final RegistryObject<Block> MULTIBLOCK_FILLER = registerBlock("multi_block_filler", () -> new MultiBlockFiller(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
 
 

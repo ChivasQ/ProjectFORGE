@@ -2,6 +2,8 @@ package com.chivasss.pocket_dimestions.block.entity;
 
 import com.chivasss.pocket_dimestions.PocketDim;
 import com.chivasss.pocket_dimestions.block.ModBlocks;
+import com.chivasss.pocket_dimestions.block.custom.MultiBlockFiller;
+import com.chivasss.pocket_dimestions.mana.data.ManaManager;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -28,14 +30,10 @@ public class ModBlockEntites {
                     () -> BlockEntityType.Builder.of(testBlockEntity::new,
                             ModBlocks.TEST_BLOCK.get()).build(null));
 
-
-
-
-
-
-
-
-
+    public static final RegistryObject<BlockEntityType<MultiBlockFillerEntity>> MULTI_BLOCK_FILLER =
+            BLOCK_ENTITIES.register("multi_block_filler",
+                    () -> BlockEntityType.Builder.of(MultiBlockFillerEntity::new,
+                            ModBlocks.MULTIBLOCK_FILLER.get()).build(null));;
 
 
     public static void register(IEventBus eventBus){
