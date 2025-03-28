@@ -1,13 +1,25 @@
 package com.chivasss.pocket_dimestions.item.custom;
 
 import com.chivasss.pocket_dimestions.PocketDim;
+import com.chivasss.pocket_dimestions.util.StructureUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Optional;
 
 public class StructCreatorItem extends Item {
     public StructCreatorItem(Properties pProperties) {
@@ -43,7 +55,18 @@ public class StructCreatorItem extends Item {
 //                }
 //            }
 //        }
-
+        StructureUtils structureUtils = new StructureUtils();
+        CompoundTag modFurnace = structureUtils.readNBTFromResource(pContext.getLevel().getServer(), "mod_furnace_structure");
+        System.out.println(modFurnace != null);
+        structureUtils.loadBlocksFromNBT(modFurnace, pPos, pLevel);
+        //StructureUtils.build(pPos, pLevel);
+        if (structureUtils.structureValidator(pPos, pLevel)) {
+            StructureUtils structureUtils1 = new StructureUtils();
+            System.out.println("s");
+            CompoundTag modFurnace1 = structureUtils1.readNBTFromResource(pContext.getLevel().getServer(), "mod_furnace_multiblock");
+            structureUtils1.loadBlocksFromNBT(modFurnace1, pPos, pLevel);
+            structureUtils1.build(pPos, pLevel);
+        }
         return super.useOn(pContext);
     }
 }

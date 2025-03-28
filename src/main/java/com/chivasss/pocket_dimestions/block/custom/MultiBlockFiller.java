@@ -1,9 +1,11 @@
 package com.chivasss.pocket_dimestions.block.custom;
 
 import com.chivasss.pocket_dimestions.block.entity.MultiBlockFillerEntity;
+import com.chivasss.pocket_dimestions.util.StructureUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,10 +24,9 @@ public class MultiBlockFiller extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        System.out.println("a");
+        //System.out.println("a");
         return new MultiBlockFillerEntity(pPos, pState);
     }
-
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
@@ -34,14 +35,25 @@ public class MultiBlockFiller extends BaseEntityBlock {
 
             if (entity instanceof MultiBlockFillerEntity fillerEntity) {
                 System.out.println("d");
-                BlockState storedBlock = fillerEntity.getStoredBlock();
-                System.out.println(storedBlock.toString());
-                if (storedBlock != null && !storedBlock.isAir()) {
-                    pLevel.setBlock(pPos, storedBlock, 3);
+                BlockPos relPos = fillerEntity.getRelativePosition();
+                BlockPos startPos = pPos.subtract(relPos);
+
+                MinecraftServer server = pLevel.getServer();
+                if (server != null) {
+                    StructureUtils structureUtils = new StructureUtils();
+                    CompoundTag nbtData = structureUtils.readNBTFromResource(server, "mod_furnace_structure");
+                    if (nbtData != null) {
+                        structureUtils.loadBlocksFromNBT(nbtData, startPos, pLevel);
+                        structureUtils.build(startPos, pLevel);
+                        System.out.println("Structure rebuilt at: " + startPos);
+                    } else {
+                        System.out.println("Failed to load structure NBT.");
+                    }
+                } else {
+                    System.out.println("Server is null, cannot rebuild structure.");
                 }
             }
             super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
         }
     }
 }
-
