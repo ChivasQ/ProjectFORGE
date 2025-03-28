@@ -27,6 +27,8 @@ public class MultiBlockFiller extends BaseEntityBlock {
         //System.out.println("a");
         return new MultiBlockFillerEntity(pPos, pState);
     }
+    // TODO: add a file that corresponds from what structure to what structure, add a tag so that the filler knows what structure it represents.
+    // TODO: add multiblock class
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {
