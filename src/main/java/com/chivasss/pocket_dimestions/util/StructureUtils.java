@@ -2,8 +2,10 @@ package com.chivasss.pocket_dimestions.util;
 
 import com.chivasss.pocket_dimestions.PocketDim;
 import com.chivasss.pocket_dimestions.block.entity.MultiBlockFillerEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -26,16 +29,19 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class StructureUtils {
     private List<ImmutablePair<Integer, Vec3i>> blockPos;
     private List<Block> blockList;
     private CompoundTag structureNBT;
+    private Random random;
 
     public StructureUtils() {
         blockList = new ArrayList<>();
         blockPos = new ArrayList<>();
         structureNBT = new CompoundTag();
+        random = new Random();
     }
 
 
@@ -132,7 +138,7 @@ public class StructureUtils {
             if (blockEntity instanceof MultiBlockFillerEntity) {
                 MultiBlockFillerEntity multiBlockFiller = (MultiBlockFillerEntity) blockEntity;
 
-                multiBlockFiller.setStoredBlock(blockInstance.defaultBlockState());  // Например, устанавливаем хранимый блок
+                multiBlockFiller.setStoredBlock(blockInstance.defaultBlockState());
                 multiBlockFiller.setRelativePosition(new BlockPos(block.right.getX(), block.right.getY(), block.right.getZ()));
 
                 multiBlockFiller.setChanged();
@@ -141,16 +147,24 @@ public class StructureUtils {
             world.sendBlockUpdated(pos, state, state, 3);
         }
     }
-    public boolean structureValidator(BlockPos startPos, Level world) {
-        for (ImmutablePair<Integer, Vec3i> block : blockPos) {
-            Block blockInstance = blockList.get(block.left);
-            if (blockInstance == null) continue;
-            BlockState state = blockInstance.defaultBlockState();
+    @Nullable
+    public BlockPos structureValidator(BlockPos startPos, Level world) {
+        for (ImmutablePair<Integer, Vec3i> block1 : blockPos) {
+            boolean b = true;
+            for (ImmutablePair<Integer, Vec3i> block : blockPos) {
+                Block blockInstance = blockList.get(block.left);
+                if (blockInstance == null) continue;
+                BlockState state = blockInstance.defaultBlockState();
 
-            BlockPos pos = startPos.offset(block.right);
-            if(!(world.getBlockState(pos).getBlock().defaultBlockState() == state)) return false;
+                BlockPos pos = startPos.offset(block.right).subtract(block1.right);
+                if(!(world.getBlockState(pos).getBlock().defaultBlockState() == state)) {
+                    b = false;
+                    break;
+                }
+            }
+            if (b) return startPos.subtract(block1.right);
         }
-        return true;
-    }
 
+        return null;
+    }
 }

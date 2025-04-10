@@ -32,7 +32,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.QUARTZ_SWORD);
         simpleItem(ModItems.MURMILLON_AMULET);
         simpleItem(ModItems.AI_TEST_ITEM);
-
+        simpleItem(ModItems.STRUCT_CREATOR_ITEM);
 
 
     }

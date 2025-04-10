@@ -2,7 +2,9 @@ package com.chivasss.pocket_dimestions.item.custom;
 
 import com.chivasss.pocket_dimestions.PocketDim;
 import com.chivasss.pocket_dimestions.util.StructureUtils;
+import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtIo;
@@ -11,6 +13,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
@@ -30,6 +34,7 @@ public class StructCreatorItem extends Item {
     public InteractionResult useOn(UseOnContext pContext) {
         Level pLevel = pContext.getLevel();
         BlockPos pPos = pContext.getClickedPos();
+        //pLevel.addParticle(ParticleTypes.FALLING_OBSIDIAN_TEAR, pPos.getX(), pPos.getY(), pPos.getZ(), 0, 0.1, 0);
         if (pLevel.isClientSide()) return super.useOn(pContext);
 
         ResourceLocation structureID = new ResourceLocation(PocketDim.MODID, "modfurnace");
@@ -60,13 +65,16 @@ public class StructCreatorItem extends Item {
         System.out.println(modFurnace != null);
         structureUtils.loadBlocksFromNBT(modFurnace, pPos, pLevel);
         //StructureUtils.build(pPos, pLevel);
-        if (structureUtils.structureValidator(pPos, pLevel)) {
+        BlockPos structureValidator = structureUtils.structureValidator(pPos, pLevel);
+        if (structureValidator != null) {
             StructureUtils structureUtils1 = new StructureUtils();
             System.out.println("s");
             CompoundTag modFurnace1 = structureUtils1.readNBTFromResource(pContext.getLevel().getServer(), "mod_furnace_multiblock");
-            structureUtils1.loadBlocksFromNBT(modFurnace1, pPos, pLevel);
-            structureUtils1.build(pPos, pLevel);
+            structureUtils1.loadBlocksFromNBT(modFurnace1, structureValidator, pLevel);
+            structureUtils1.build(structureValidator, pLevel);
+            pLevel.playSound(null, pPos, SoundEvents.ANVIL_USE, SoundSource.PLAYERS, 0.7f, .5f); // or set pitch to 5.0f idk
         }
-        return super.useOn(pContext);
+
+        return InteractionResult.SUCCESS;
     }
 }
