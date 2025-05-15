@@ -4,8 +4,8 @@
     "srcrgb": "srcalpha",
     "dstrgb": "1-srcalpha"
   },
-  "vertex": "gbook:rendertype_bright_solid",
-  "fragment": "gbook:rendertype_bright_solid",
+  "vertex": "rendertype_bright_solid",
+  "fragment": "rendertype_bright_solid",
   "attributes": [
     "Position",
     "Color",

@@ -52,7 +52,6 @@ public class AltarColumnMenu extends AbstractContainerMenu {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);
         int progressArrowSize = 66;
-
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
 

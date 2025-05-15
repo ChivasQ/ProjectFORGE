@@ -67,16 +67,16 @@ public class ModEventBusClientEvents {
 
     @SubscribeEvent
     public static void registerShader(RegisterShadersEvent event) throws IOException {
-//        event.registerShader(new ShaderInstance(
-//                event.getResourceProvider(),
-//                new ResourceLocation(PocketDim.MODID, "rendertype_bright_solid"),
-//                DefaultVertexFormat.NEW_ENTITY)
-//        , shaderInstance -> CustomRenderTypes.brightSolidShader = shaderInstance);
+        event.registerShader(new ShaderInstance(
+                event.getResourceProvider(),
+                new ResourceLocation(PocketDim.MODID, "rendertype_bright_solid"),
+                DefaultVertexFormat.NEW_ENTITY)
+        , shaderInstance -> CustomRenderTypes.brightSolidShader = shaderInstance);
 //        TODO: FIX.
     }
 
 
-    private static class CustomRenderTypes extends RenderType
+    public static class CustomRenderTypes extends RenderType
     {
         // Holds the object loaded via RegisterShadersEvent
         private static ShaderInstance brightSolidShader;

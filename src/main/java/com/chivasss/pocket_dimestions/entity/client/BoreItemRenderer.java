@@ -1,6 +1,7 @@
 package com.chivasss.pocket_dimestions.entity.client;
 
 import com.chivasss.pocket_dimestions.PocketDim;
+import com.chivasss.pocket_dimestions.event.ModEventBusClientEvents;
 import com.chivasss.pocket_dimestions.item.custom.Bore;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -28,7 +29,7 @@ public class BoreItemRenderer extends BlockEntityWithoutLevelRenderer {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PocketDim.MODID, "textures/entity/bore.png");
     private static final ResourceLocation TEXTURE_GUI = new ResourceLocation(PocketDim.MODID, "textures/item/no_icon.png");
     public static final ResourceLocation BEAM_LOCATION = new ResourceLocation("textures/entity/beacon_beam.png");
-    private static final RenderType RENDER_TYPE = RenderType.entityCutoutNoCull(TEXTURE_GUI);
+    private static final RenderType RENDER_TYPE = ModEventBusClientEvents.CustomRenderTypes.BRIGHT_SOLID.apply(TEXTURE_GUI);
 
     public BoreItemRenderer() {
         super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
@@ -78,16 +79,18 @@ public class BoreItemRenderer extends BlockEntityWithoutLevelRenderer {
             int n = 0;
             if (pStack.getItem() instanceof Bore bore) {
                 //isInUse = Minecraft.getInstance().player.isUsingItem();
-                beamDistance = pStack.getTag().getDouble("distance");
+
                 if (pStack.getTag() != null) {
+                    beamDistance = pStack.getTag().getDouble("distance");
                     isInUse = pStack.getTag().getBoolean("isInUse");
                     heating = pStack.getTag().getInt("cooldownTimer");
+                    isOverheated = pStack.getTag().getBoolean("isOverheated");
+                    n = pStack.getTag().getInt("temperature");
                 }
-                isOverheated = pStack.getTag().getBoolean("isOverheated");
-                n = pStack.getTag().getInt("temperature");
+
             }
 
-            VertexConsumer vertexConsumer = pBuffer.getBuffer(RenderType.entityCutout(TEXTURE));
+            VertexConsumer vertexConsumer = pBuffer.getBuffer(ModEventBusClientEvents.CustomRenderTypes.BRIGHT_SOLID.apply(TEXTURE));
             this.model.renderToBuffer(pPoseStack, vertexConsumer, pPackedLight, pPackedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
             pPoseStack.popPose();
             pPoseStack.pushPose();

@@ -49,8 +49,8 @@ public class AltarColumnBlockEntity extends BlockEntity implements MenuProvider 
             @Override
             public int get(int pIndex) {
                 return switch (pIndex){
-                    case 0 -> AltarColumnBlockEntity.this.progress;
-                    case 1 -> AltarColumnBlockEntity.this.maxProgress;
+                    case 0 -> progress;
+                    case 1 -> maxProgress;
                     default -> 0;
                 };
             }
@@ -58,14 +58,14 @@ public class AltarColumnBlockEntity extends BlockEntity implements MenuProvider 
             @Override
             public void set(int pIndex, int pValue) {
                 switch (pIndex) {
-                    case 0 -> AltarColumnBlockEntity.this.progress = pValue;
-                    case 1 -> AltarColumnBlockEntity.this.maxProgress = pValue;
+                    case 0 -> progress = pValue;
+                    case 1 -> maxProgress = pValue;
                 }
             }
 
             @Override
             public int getCount() {
-                return 0;
+                return 2;
             }
         };
     }
