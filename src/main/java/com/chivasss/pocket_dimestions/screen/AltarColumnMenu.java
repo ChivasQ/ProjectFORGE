@@ -31,17 +31,17 @@ public class AltarColumnMenu extends AbstractContainerMenu {
         this.level = inventory.player.level();
         this.data = data;
 
-        addPlayerInventory(inventory);
-        addPlayerHotbar(inventory);
+//        addPlayerInventory(inventory);
+//        addPlayerHotbar(inventory);
 
-        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 79, 33));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 79, 5));
-            this.addSlot(new SlotItemHandler(iItemHandler, 2, 103, 49));
-            this.addSlot(new SlotItemHandler(iItemHandler, 3, 56, 49));
-        });
-
-        addDataSlots(data);
+//        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
+//            this.addSlot(new SlotItemHandler(iItemHandler, 0, 79, 33));
+//            this.addSlot(new SlotItemHandler(iItemHandler, 1, 79, 5));
+//            this.addSlot(new SlotItemHandler(iItemHandler, 2, 103, 49));
+//            this.addSlot(new SlotItemHandler(iItemHandler, 3, 56, 49));
+//        });
+//
+//        addDataSlots(data);
     }
 
     public boolean isCrafting(){
