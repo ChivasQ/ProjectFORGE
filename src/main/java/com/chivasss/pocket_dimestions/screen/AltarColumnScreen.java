@@ -10,11 +10,10 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AltarColumnScreen extends AbstractContainerScreen<AltarColumnMenu> {
     private static final ResourceLocation TEXTURE =
@@ -27,6 +26,7 @@ public class AltarColumnScreen extends AbstractContainerScreen<AltarColumnMenu> 
     private boolean dragging = false;
     private int dragStartX, dragStartY;
     private int imageOffsetX = 0, imageOffsetY = 0;
+    private final List<ResearchNode> nodes = new ArrayList<>();
 
 
     public AltarColumnScreen(AltarColumnMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
@@ -36,9 +36,23 @@ public class AltarColumnScreen extends AbstractContainerScreen<AltarColumnMenu> 
     @Override
     protected void init() {
         super.init();
+        this.imageOffsetX = 469;
+        this.imageOffsetY = 243;
         this.inventoryLabelY = 1000;
         this.titleLabelY = 1000;
+
+        if (nodes.isEmpty()) {
+            ResearchNode node0 = new ResearchNode(0, 0, "node0!", ModItems.EIGTH_BALL.get().getDefaultInstance(), true);
+            ResearchNode node1 = new ResearchNode(100, 0, "node1!", ModItems.ZINC.get().getDefaultInstance(), true).connectTo(node0);
+            ResearchNode node2 = new ResearchNode(100, 90, "node2!", ModItems.CHALK.get().getDefaultInstance(), true).connectTo(node0);
+            ResearchNode node3 = new ResearchNode(150, 150, "node3!", ModItems.BORE.get().getDefaultInstance(), true).connectTo(node2);
+            nodes.add(node0);
+            nodes.add(node1);
+            nodes.add(node2);
+            nodes.add(node3);
+        }
     }
+
 
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
@@ -59,26 +73,16 @@ public class AltarColumnScreen extends AbstractContainerScreen<AltarColumnMenu> 
                 0xFFFFFF,
                 false
         );
-        //renderProgress(pGuiGraphics, x, y);
 
         renderBg(pGuiGraphics, x, y,-imageOffsetX, -imageOffsetY);
-        renderFrame(pGuiGraphics, imageOffsetX + x + imageWidth/2, imageOffsetY + y + imageHeight/2, x, y, pMouseX, pMouseY);
-
+        //renderFrame(pGuiGraphics, imageOffsetX + x + imageWidth/2, imageOffsetY + y + imageHeight/2, x, y, pMouseX, pMouseY);
         pGuiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
+
+        renderResearchTree(pGuiGraphics, imageOffsetX, imageOffsetY, pMouseX, pMouseY, x, y);
     }
 
-    private void renderProgress(GuiGraphics graphics, int x, int y){
-        if (menu.isCrafting()){
-            graphics.blit(TEXTURE,x+10, y+9, 176,0,9, menu.getScaledProgress());
-        }
-    }
-    private void renderBg(GuiGraphics graphics, int x, int y, int pMouseX, int pMouseY){
-        if (menu.isCrafting()){
-            graphics.blit(TEXTURE_BG,x+10, y+9, pMouseX,pMouseY,235, 238);
-        }
-    }
-    private void renderFrame(GuiGraphics graphics, int imageOffsetX, int imageOffsetY, int x, int y, int pMouseX, int pMouseY){
-        if (menu.isCrafting()) {
+    private void renderResearchTree(GuiGraphics graphics, int baseX, int baseY, int mouseX, int mouseY, int x, int y) {
+        for (ResearchNode node : nodes) {
             int textureSize = 24;
             int clipX = x + 10;
             int clipY = y + 9;
@@ -92,21 +96,71 @@ public class AltarColumnScreen extends AbstractContainerScreen<AltarColumnMenu> 
             int scissorY = (int)((screenHeight / scale - clipY - clipHeight) * scale);
             int scissorW = (int)(clipWidth * scale);
             int scissorH = (int)(clipHeight * scale);
+            int nodeX = baseX + node.xPos;
+            int nodeY = baseY + node.yPos;
 
             RenderSystem.enableScissor(scissorX, scissorY, scissorW, scissorH);
 
-            graphics.blit(TEXTURE_FRAME, imageOffsetX, imageOffsetY, 0, 0, textureSize, textureSize, textureSize, textureSize);
-            graphics.renderItem(ModItems.CHALK.get().getDefaultInstance(), imageOffsetX + 4, imageOffsetY + 4);
+            graphics.blit(TEXTURE_FRAME, nodeX-4, nodeY-4, 0, 0, textureSize, textureSize, textureSize, textureSize);
+            graphics.renderItem(node.itemToDisplay, nodeX, nodeY);
 
-//            if (isHovering(0, 0, 100, 100, pMouseX - x , pMouseY - y)) {
-//                graphics.renderTooltip(this.font, ModItems.CHALK.get().getDefaultInstance(), imageOffsetX, imageOffsetY);
-//            }
+            if (mouseX >= nodeX && mouseX < nodeX + 16 && mouseY >= nodeY && mouseY < nodeY + 16) {
+                graphics.renderTooltip(this.font, Component.literal(node.description), mouseX, mouseY);
+            }
+
+            renderConnections(graphics, baseX, baseY);
 
             RenderSystem.disableScissor();
         }
-
     }
 
+    private void renderConnections(GuiGraphics graphics, int baseX, int baseY) {
+        for (ResearchNode node : nodes) {
+            int startX = baseX + node.xPos + 8; // центр иконки
+            int startY = baseY + node.yPos + 8;
+
+            for (ResearchNode target : node.connectedTo) {
+                int endX = baseX + target.xPos + 8;
+                int endY = baseY + target.yPos + 8;
+                if (target.isUnlocked) {
+                    drawLine(graphics, startX, startY, endX, endY, 0xFFFFFFFF);
+                }
+            }
+        }
+    }
+
+    private void drawLine(GuiGraphics graphics, int x1, int y1, int x2, int y2, int color) {
+        int dx = x2 - x1;
+        int dy = y1 - y2;
+
+        if (Math.abs(dx) > Math.abs(dy)) {
+            float slope = dy / (float) dx;
+            for (int i = 0; i <= Math.abs(dx); i++) {
+                int x = x1 + (dx > 0 ? i : -i);
+                int y = y1 + Math.round(i * slope);
+                graphics.fill(x, y, x + 1, y + 1, color);
+            }
+        } else {
+            float slope = dx / (float) dy;
+            for (int i = 0; i <= Math.abs(dy); i++) {
+                int y = y1 + (dy > 0 ? -i : i);
+                int x = x1 + Math.round(i * slope);
+                graphics.fill(x, y, x + 1, y + 1, color);
+            }
+        }
+    }
+
+    private void renderProgress(GuiGraphics graphics, int x, int y){
+        if (menu.isCrafting()){
+            graphics.blit(TEXTURE,x+10, y+9, 176,0,9, menu.getScaledProgress());
+        }
+    }
+
+    private void renderBg(GuiGraphics graphics, int x, int y, int pMouseX, int pMouseY){
+        if (menu.isCrafting()){
+            graphics.blit(TEXTURE_BG,x+10, y+9, pMouseX,pMouseY,235, 238);
+        }
+    }
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
