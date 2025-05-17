@@ -17,6 +17,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> SYMBIOTE_SCREAM = registerSoundEvent("symbiote_scream");
     public static final RegistryObject<SoundEvent> LASERBORE_LOOP = registerSoundEvent("laserbore_loop");
     public static final RegistryObject<SoundEvent> LASERBORE_OVERHEAT = registerSoundEvent("laserbore_overheat_start");
+    public static final RegistryObject<SoundEvent> RESEARCH_BOOR_OPEN = registerSoundEvent("research_book_open");
 
 
 

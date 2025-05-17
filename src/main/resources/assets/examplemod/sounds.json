@@ -22,5 +22,11 @@
     "sounds": [
       "examplemod:laserbore_overheat_start"
     ]
+  },
+    "research_book_open": {
+    "subtitles": "sounds.examplemod.research_book_open",
+    "sounds": [
+      "examplemod:research_book_open"
+    ]
   }
 }

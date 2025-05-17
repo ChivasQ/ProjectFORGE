@@ -2,6 +2,7 @@ package com.chivasss.pocket_dimestions.screen;
 
 import com.chivasss.pocket_dimestions.PocketDim;
 import com.chivasss.pocket_dimestions.item.ModItems;
+import com.chivasss.pocket_dimestions.sound.ModSounds;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -51,6 +52,7 @@ public class AltarColumnScreen extends AbstractContainerScreen<AltarColumnMenu> 
             nodes.add(node2);
             nodes.add(node3);
         }
+        Minecraft.getInstance().player.playSound(ModSounds.RESEARCH_BOOR_OPEN.get(), 1.0F, 1.0F);
     }
 
 
